@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.gdut.idlegoods.dao.GoodsDao">
+ <insert id="saveGoods">
+ INSERT INTO ss_goods
+ (goods_name, goods_price, goods_num, goods_imgurl, goods_desp, goods_type, goods_cdate) 
+ VALUES 
+ (#{goodsName}, #{goodsPrice}, #{goodsNum}, #{goodsImgurl}, #{goodsDesp}, #{goodsType}, #{goodsCdate}) </insert>
+</mapper>
