@@ -136,10 +136,4 @@ public class GoodsController {
 	public String testJsp() {
 		return "myCart";
 	}
-	@RequestMapping("/testMapping")
-	public String testMapping(HttpServletRequest request) {
-		Integer id = (Integer)request.getSession().getAttribute("id");
-		System.out.println(id);
-		return "gg";
-	}
 }

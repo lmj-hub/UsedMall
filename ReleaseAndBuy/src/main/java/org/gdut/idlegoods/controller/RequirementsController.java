@@ -27,7 +27,6 @@ public class RequirementsController {
 	public Message releaseRequirments(Requirement re,HttpServletRequest request) {
 		String userId =(String) request.getSession().getAttribute("userId");
 		re.setUserId(Integer.parseInt(userId));
-		System.out.println(re);
 		boolean result = requirementsService.saveRequirements(re);
 		if(result) {
 			return Message.success();
