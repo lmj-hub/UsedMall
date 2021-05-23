@@ -6,8 +6,8 @@
   <packaging>pom</packaging>
   <modules>
   	<module>ReleaseAndBuy</module>
-    <module>ListAndDetail</module>
     <module>Devcloud</module>
+    <module>Order</module>
   </modules>
 
   
