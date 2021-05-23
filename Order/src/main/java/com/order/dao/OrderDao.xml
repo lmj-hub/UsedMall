@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.order.dao.OrderDao">
+
+    <insert id="creatOrder" parameterType="order">
+        insert into ss_order (buyerId,sellerId,oType,goodsList,generateDate,status,address,paidAccount,evaluation)
+        values (#{buyerId},#{sellerId},#{oType},#{goodsList},#{generateDate},#{status},#{address},#{paidAccount},#{evaluation});
+    </insert>
+
+    <delete id="deleteOrder" parameterType="int">
+        delete from ss_order where orderId = #{oid};
+    </delete>
+    
+    <update id="updateOrder" parameterType="order">
+        update ss_order set
+        buyerId=#{buyerId},sellerId=#{sellerId},oType=#{oType},goodsList=#{goodsList},generateDate=#{generateDate},status=#{status},address=#{address},paidAccount=#{paidAccount},evaluation=#{evaluation}
+        where orderId = #{orderId};
+    </update>
+
+    <update id="cancelOrder" parameterType="int">
+        update ss_order set
+        status="订单已取消"
+        where orderId=#{oid};
+    </update>
+
+    <select id="findAll" resultType="order">
+        select * from ss_order;
+    </select>
+
+    <select id="findByBuyerId" resultType="order">
+        select * from ss_order where buyerId=#{uid};
+    </select>
+
+    <select id="findBySellerId" resultType="order">
+        select * from ss_order where sellerId=#{uid};
+    </select>
+
+    <update id="confirmOrder" parameterType="int">
+        update ss_order set
+            status="订单已完成"
+        where orderId=#{oid};
+    </update>
+</mapper>
