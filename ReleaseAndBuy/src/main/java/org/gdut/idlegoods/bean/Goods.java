@@ -1,5 +1,7 @@
 package org.gdut.idlegoods.bean;
 
+import javax.validation.constraints.Pattern;
+
 /**
  * @author mj
  *封装商品信息
@@ -7,12 +9,18 @@ package org.gdut.idlegoods.bean;
 public class Goods {
 	//goodsName,goodsPrice,goodsNum,goodsImgurl,goodsDesp,goodsType,goodsCdate
 	private Integer goodsId;
+	@Pattern(regexp ="^(.|\\n){2,100}$")
 	private String goodsName;
+	@Pattern(regexp ="^(.|\\n){2,100}$")
 	private String goodsPrice;
 	private Integer goodsNum;
+	@Pattern(regexp ="^(.|\\n){2,100}$")
 	private String goodsImgurl;
+	@Pattern(regexp ="^(.|\\n){2,100}$")
 	private String goodsDesp;
+	@Pattern(regexp ="^(.|\\n){2,100}$")
 	private String goodsType;
+	@Pattern(regexp = "\\d{4}-\\d{2}-\\d{2}")
 	private String goodsCdate;
 	public Integer getGoodsId() {
 		return goodsId;

@@ -15,6 +15,15 @@
     <artifactId>pagehelper</artifactId>
     <version>5.2.0</version>
 </dependency>
+
+<!-- 添加校验框架，后台校验数据 -->
+<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-validator -->
+<dependency>
+    <groupId>org.hibernate</groupId>
+    <artifactId>hibernate-validator</artifactId>
+    <version>5.4.1.Final</version>
+</dependency>
+
   
   <!-- 返回json格式 -->
   <dependency>

@@ -1,7 +1,9 @@
 package org.gdut.idlegoods.controller;
 
+import javax.servlet.annotation.HandlesTypes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.gdut.idlegoods.bean.Message;
 import org.gdut.idlegoods.bean.Requirement;
@@ -9,6 +11,8 @@ import org.gdut.idlegoods.dao.RequirementsDao;
 import org.gdut.idlegoods.service.RequirementsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -22,9 +26,13 @@ public class RequirementsController {
 	@Autowired
 	RequirementsService requirementsService;
 	
+
 	@ResponseBody
 	@RequestMapping("/publishRequirement")
-	public Message releaseRequirments(Requirement re,HttpServletRequest request) {
+	public Message releaseRequirments(@Valid Requirement re,BindingResult errors,HttpServletRequest request) {
+		if(errors.hasErrors()) {
+			return Message.fail();
+		}
 		String userId =(String) request.getSession().getAttribute("userId");
 		re.setUserId(Integer.parseInt(userId));
 		boolean result = requirementsService.saveRequirements(re);

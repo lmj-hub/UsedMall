@@ -30,7 +30,7 @@ public class Message {
 	 public static Message fail() {
 		 Message message = new Message();
 		 message.setCode(-1);
-		 message.setMsg("处理失败,请刷新后重试哟~");
+		 message.setMsg("处理失败！请检查您的输入格式或刷新后重试哟~");
 		 return message;
 	 }
 	 

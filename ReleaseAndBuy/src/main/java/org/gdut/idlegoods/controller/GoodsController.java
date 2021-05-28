@@ -12,6 +12,7 @@ import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.gdut.idlegoods.bean.Cart;
 import org.gdut.idlegoods.bean.Goods;
@@ -20,6 +21,7 @@ import org.gdut.idlegoods.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,8 +50,12 @@ public class GoodsController {
 	//发布商品
 	@ResponseBody
 	@RequestMapping(value="/publishGoods",method=RequestMethod.POST)
-	public Message releaseGoods(@RequestParam(value = "file",required=false) MultipartFile file,Goods goods,
+	public Message releaseGoods(@RequestParam(value = "file",required=false) MultipartFile file,
+			@Valid Goods goods,BindingResult errors,
 			HttpServletRequest request) throws IOException {
+		if(errors.hasErrors()) {
+			return Message.fail();
+		}
 		if(file!=null) {
 			Goods dealedGoods = getImgUrl(file,goods,request);
 			boolean result = goodService.saveGoods(dealedGoods);

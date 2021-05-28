@@ -1,5 +1,10 @@
 package org.gdut.idlegoods.bean;
 
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Length;
+import org.springframework.format.annotation.DateTimeFormat;
+
 /**
  * @author mj
  *封装用户需求信息
@@ -8,6 +13,8 @@ public class Requirement {
 	//需求id
 	private Integer reId;
 	//需求内容
+	//Pattern(regexp="",message="")
+	@Length(min =1 ,max = 100)
 	private String reMsg;
 	//上传时间
 	private String reDate;

@@ -8,5 +8,9 @@
 </head>
 <body>
 
+<%
+session.setAttribute("userId","1");
+%>
+<a href="http://localhost:8080/ReleaseAndBuy/myRelease">我的发布</a>
 </body>
 </html>
