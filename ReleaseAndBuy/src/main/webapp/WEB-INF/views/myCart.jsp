@@ -10,8 +10,9 @@
 pageContext.setAttribute("PATH",request.getContextPath());
 String userId = (String)session.getAttribute("userId");
 Cart cart= (Cart)session.getAttribute(userId);
-//由于el表达式对于键为数字的key会直接输出在屏幕上，所以要在这个页面上转换
-//一下购物车的key,方便用el表达式获取相应的值
+/*由于el表达式对于键为数字的key会直接输出在屏幕上，所以要在这个页面上转换
+一下购物车的key,方便用el表达式获取相应的值
+*/
 session.setAttribute("cart", cart);
 %>
 <meta charset="UTF-8">
@@ -100,6 +101,7 @@ session.setAttribute("cart", cart);
 			</div>
 		</c:if>
 	<div id="footer">
+	
 		<c:if test="${cart.hasGoods==false}">
 		<div class="text-muted offset-md-4"><h3>您的购物车空空如也~</h3></div>
 		</c:if>

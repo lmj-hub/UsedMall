@@ -139,7 +139,13 @@ public class GoodsController {
 	}
 	
 	@RequestMapping("/checkMyCart")
-	public String testJsp() {
+	public String showCart(HttpServletRequest request,Map<String,Object> map) {
+		String userId= (String)request.getSession().getAttribute("userId");
+		Cart cart =(Cart) request.getSession().getAttribute(userId);
+		if(cart==null) {
+			cart = new Cart();
+			map.put(userId,cart);
+		}
 		return "myCart";
 	}
 }
