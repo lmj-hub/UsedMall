@@ -10,10 +10,19 @@
     <title>商品列表</title>
     <link rel="stylesheet" type="text/css" href="css/detail.css"/>
     <link href="css/bootstrap.min.css" rel="stylesheet">
-<link href="css/index.css" rel="stylesheet">
-<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
-<script type="text/javascript" src="js/bootstrap.min.js"></script>
-<script type="text/javascript" src="js/index.js"></script>
+    <link href="css/index.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery-ui.js"></script>
+    <script type="text/javascript" src="js/bg-canvas.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="js/onloada.js"></script>
 
 
 
@@ -52,18 +61,22 @@
 
 
 
-<c:forEach items="${good}" var="good">
-<a href="GoodServlet?id=${good.goods_id}">
-    <div class="card" style="width: 18rem;">
-        <img src="${good.goods_imgurl}" class="card-img-top" alt="图片消失了">
-        <div class="card-body">
-            <h5 class="card-title">${good.goods_name}</h5>
-            <p class="card-text">￥${good.goods_price}</p>
-            <p class="card-text">${good.goods_desp}</p>
-        </div>
-    </div>
-</a>
-</c:forEach>
+
+
+<div class="content">
+    <c:forEach items="${good}" var="good">
+        <a href="GoodServlet?id=${good.goods_id}">
+            <div class="product">
+                <img src="${good.goods_imgurl}">
+                <span class="brand">${good.goods_name}</span>
+                <span class="title">${good.goods_desp}</span>
+                <span class="price">${good.goods_price}</span>
+            </div>
+        </a>
+    </c:forEach>
+</div>
+
+
 
 
 </body>

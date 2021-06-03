@@ -1,0 +1,231 @@
+/* 容器 */
+.container{
+    background-color: #eaeaea;
+    /*height: 1000px;*/
+}
+/* 头部 */
+.header{
+    background-color: white;
+    height: 60px;
+    padding: 10px;
+    display:flex;
+    justify-content: space-between;
+    /*line-height: 60px;*/
+}
+.logo{
+    margin-right: 30px;
+}
+
+.logo_box{
+    font-size: 20px;
+    color:#FF0064;
+    display: flex;
+    font-weight: bold;
+    /*line-height: 60px;*/
+    align-items: center;
+    /*height: 60px;*/
+}
+
+
+.logoout_box{
+    margin-right: 50px;
+    color: #8A8A8A;
+    font-size: 14px;
+
+}
+.logoout_box a{
+    text-decoration: none;
+}
+.logouot_box:hover{
+    text-decoration: underline;
+    color: #FF0064;
+}
+
+
+/* 用户信息的div */
+.user_info{
+    background: #ff0064;
+    font-weight: bold;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+/* 用户头像的div */
+.user_head{
+    width: 60px;
+    border-radius: 50%;
+    margin: 10px;
+}
+/* 中间 */
+.middle{
+    /*height: 500px;*/
+    /*background-color: white;*/
+    /* 与上面的header有10个像素的外边距 */
+    margin-top:10px ;
+    display: flex;
+}
+/* 中间左边 */
+.middle_left{
+    width: 20%;
+    margin-right: 10px;
+    background-color: white;
+    transition: all 1s;
+}
+/* 所有a共享的样式 */
+.middle_left a{
+    background-color: #EAEAEA;
+    color: #8a8a8a;
+    text-decoration: none;
+    display: block;
+    margin: 10px 5px;
+    text-align: center;
+    height: 45px;
+    line-height: 45px;
+    font-weight: bold;
+    background-repeat: no-repeat;
+    background-position: 40px center;
+}
+/* 全部a的hover */
+.middle_left a:hover{
+    background-color:#FF0064 ;
+    color:white ;
+}
+/*超链接*/
+/* 商品管理 */
+.a_product{
+    background-image: url(../img/商品管理.png);
+}
+.a_product:hover{
+    background-image: url(../img/商品管理-hover.png);
+}
+/* 分类管理 */
+.a_category{
+    background-image: url(../img/分类管理.png);
+}
+.a_category:hover{
+    background-image: url(../img/分类管理-hover.png);
+}
+/* 订单管理 */
+.a_order{
+    background-image: url(../img/订单管理.png);
+}
+.a_order:hover{
+    background-image: url(../img/订单管理-hover.png);
+}
+/* 评论管理 */
+.a_comment{
+    background-image: url(../img/评论管理.png);
+}
+.a_comment:hover{
+    background-image: url(../img/评论管理-hover.png);
+}
+/* 用户管理 */
+.a_user{
+    background-image: url(../img/用户管理.png);
+}
+.a_user:hover{
+    background-image: url(../img/用户管理-hover.png);
+}
+/* 购物车管理 */
+.a_cart{
+    background-image: url(../img/购物车.png);
+}
+.a_cart:hover{
+    background-image: url(../img/购物车-hover.png);
+}
+
+/* 中间右边 */
+.middle_right{
+    width: 80%;
+    margin-left: 10px;
+    background-color: white;
+}
+/* 这是右边头部横幅 */
+.current_loc{
+    background-color: #EAEAEA;
+    margin: 10px;
+    padding: 10px;
+    color: #8A8A8A;
+}
+/* 这是右边中间表格 */
+.table_style{
+    width: 80%;
+    margin: 20px auto;
+    text-align: center;
+    color: #404040;
+    font-weight: bold;
+    /* 去除边框间隙 */
+    border-collapse: collapse;
+}
+.table_style th,.table_style td{
+    border: 3px solid #EAEAEA;
+    /*font-size: 12px;*/
+}
+.table_style th{
+    background-color: #FF0064;
+    color: white;
+}
+.table_style td{
+    font-size: 14px;
+}
+.table_style a{
+    text-decoration: none;
+    color: #8A8A8A;
+}
+.table_style a:hover{
+    text-decoration: underline;
+    color: #FF0064;
+}
+/* 设置表格隔行变色效果 这里是偶数行*/
+.table_style tr:nth-child(even){
+    background-color: #FFFAFA;
+}
+/* 设置表格隔行变色效果 这里是奇数行*/
+.table_style tr:nth-child(odd){
+    background-color: #FFE1FF;
+}
+/* 选中翻页按钮的div*/
+.page_bar_box{
+    width: 80%;
+    margin: 0px auto;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: flex-end;
+}
+/* 选中翻页按钮超链接的div*/
+.page_bar_box a{
+    border: 1px solid #EAEAEA;
+    color: #8A8A8A;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin: 0px 5px;
+
+}
+
+.page_bar_box a:hover{
+    background-color: #FF6347;
+    color: white;
+}
+/* 底部 */
+.footer{
+    height: 60px;
+    background-color: white;
+    margin-top: 10px;
+    text-align: center;
+    padding: 10px 0px;
+}
+/* 选中友情链接的div */
+.friend_link_box{
+    margin-top: 10px;
+}
+.friend_link_box a{
+    text-decoration: none;
+    color:#8A8A8A;
+    font-size: 14px;
+}
+.friend_link_box a:hover{
+    text-decoration: underline;
+    color: #FF0064;
+}
