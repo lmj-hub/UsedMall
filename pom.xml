@@ -8,7 +8,7 @@
   	<module>ReleaseAndBuy</module>
     <module>Order</module>
     <module>ListAndDemand</module>
-    <module>market</module>
+      <module>User</module>
   </modules>
 
   
