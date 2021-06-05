@@ -17,7 +17,7 @@
 <script>
 
     // 请求路径
-    var httpurl = "${ctx}/user/login";
+    var login_httpurl = "/User/user/login";
     // 数据请求
     function myClick() {
         var usernamestr = document.getElementById("username").value;
@@ -32,7 +32,7 @@
         }
 
         $.ajax({
-            url: httpurl,//请求的url地址
+            url:  login_httpurl,//请求的url地址
             type: 'post',//设置请求的http方式，method也可以
             dataType: 'json',//将服务器端返回的数据直接认定为是这个格式，然后会做一些自动的处理(如果是json字符串，会自动转化为js对象),服务器返回的默认格式是text/html格式
             data: {//向服务器端发送的数据
@@ -41,10 +41,13 @@
                 uniqueDeviceIdentifier: 2
             },
             success: function (data, textStatus, jqXHR) {//请求成功之后执行的回调函数
-                if(data.resultCode!=200){
+                if(data==false){
                     alert("用户名或密码错误")
                     return;
+                }else{
+                	window.location.href="#"
                 }
+            	
 
             },
             error: function (jqXHR, textStatus, errorThrown) {//请求失败之后执行的回调函数
@@ -104,7 +107,7 @@
                         <input id="phone" type="text" class="input">
                     </div>
                     <div class="group">
-                        <input type="submit" class="button" value="注册">
+                        <input type="submit" class="button" value="注册" onclick="register()">
                     </div>
                     <div class="hr"></div>
                     <div class="foot-lnk">
@@ -133,11 +136,11 @@
 <script>
 
     // 请求路径
-    var httpurl = "${ctx}/user/register";
+    var httpurl = "/User/user/register";
     // 数据请求
     function register() {
-        var username1 = document.getElementById("username").value;
-        var password1 = document.getElementById("password").value;
+        var username1 = document.getElementById("username1").value;
+        var password1 = document.getElementById("password1").value;
         var phone = document.getElementById("phone").value;
         if(username1==""||username1==null){
             alert("用户名为空");
@@ -163,7 +166,13 @@
                 uniqueDeviceIdentifier: 2
             },
             success:function (res) {
-                window.alert(res.msg);
+            	if(res==true){
+            		alert("注册成功")
+            		window.location.reload()
+            	}else{
+            		alert("注册失败，请刷新后重试")
+            	}
+                
             },
             error: function () {//请求失败之后执行的回调函数
                 window.alert('请求失败');
