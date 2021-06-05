@@ -4,16 +4,16 @@
 <mapper namespace="com.feng.dao.UserDao">
 
     <select id="selectUserByUserName" resultType="com.feng.model.User">
-        select * from User where username= ${username}
+        select * from User where username= #{username} and password=#{password}
     </select>
 
     <insert id="insertUser" parameterType="com.feng.model.User">
         insert into User (username,password)
-        values (${username},${password})
+        values (#{username},#{password})
     </insert>
 
     <delete id="delUser" parameterType="com.feng.model.User">
-        delete from User where username = ${username} and password = ${password}
+        delete from User where username = #{username} and password = #{password}
     </delete>
 
 </mapper>

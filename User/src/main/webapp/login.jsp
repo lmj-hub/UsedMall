@@ -5,7 +5,7 @@
 </head>
 <body>
 
-<form action="${ctx}/user/login" method="post">
+<form action="/User/user/login" method="post">
     <table border="0" align="center">
         <caption>
             用户登陆
