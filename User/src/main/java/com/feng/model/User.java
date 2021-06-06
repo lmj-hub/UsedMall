@@ -10,12 +10,12 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class User {
 	
     private Integer userId;
-	@NotEmpty
+	@Pattern(regexp = "^(.){2,8}$")
     private String username;
-	@NotEmpty
+	@Pattern(regexp = "^(.){6,12}$")
     private String password;
-	
     private String address;
+    @Pattern(regexp = "^1\\d{10}$")
     private String phone;
     private Date rdate;
 	public int getUserId() {

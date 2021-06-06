@@ -8,8 +8,8 @@
     </select>
 
     <insert id="insertUser" parameterType="com.feng.model.User">
-        insert into User (username,password)
-        values (#{username},#{password})
+        insert into User (username,password,address,phone,rdate)
+        values (#{username},#{password},#{address},#{phone},#{rdate})
     </insert>
 
     <delete id="delUser" parameterType="com.feng.model.User">
