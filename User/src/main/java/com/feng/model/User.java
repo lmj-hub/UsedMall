@@ -17,7 +17,7 @@ public class User {
     private String address;
     @Pattern(regexp = "^1\\d{10}$")
     private String phone;
-    private Date rdate;
+    private String rdate;
 	public int getUserId() {
 		return userId;
 	}
@@ -44,10 +44,10 @@ public class User {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	public Date getRdate() {
+	public String getRdate() {
 		return rdate;
 	}
-	public void setRdate(Date rdate) {
+	public void setRdate(String rdate) {
 		this.rdate = rdate;
 	}
 	public String getUsername() {

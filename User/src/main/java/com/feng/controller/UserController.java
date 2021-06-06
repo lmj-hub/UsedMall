@@ -7,11 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.Date;
+import java.text.SimpleDateFormat;
 
 import javax.print.attribute.standard.Severity;
 import javax.servlet.ServletContext;
@@ -52,6 +54,8 @@ public class UserController {
     	if(result.hasErrors()) {
     		return false;
     	}
+    	String rdate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+    	user.setRdate(rdate);
         boolean flag = userService.insertUser(user);
         return flag;
     }
