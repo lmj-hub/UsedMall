@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.awt.print.PrinterGraphics;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -21,8 +22,10 @@ public class Order implements Serializable {
     private String address;             //交易地址
     private double paidAccount;          //交易金额
     private String evaluation;             //对卖家的交易星数评价和文字评价+对买家的
+    private String phone;                  //收货人联系电话
+    private String receiverName;
 
-    public Order(int buyerId, int sellerId, String oType, String goodsList, Date generateDate, String status, String address, double paidAccount, String evaluation) {
+    public Order(int buyerId, int sellerId, String oType, String goodsList, Date generateDate, String status, String address, double paidAccount, String evaluation, String phone, String receiverName) {
         this.buyerId = buyerId;
         this.sellerId = sellerId;
         this.oType = oType;
@@ -32,7 +35,10 @@ public class Order implements Serializable {
         this.address = address;
         this.paidAccount = paidAccount;
         this.evaluation = evaluation;
+        this.phone = phone;
+        this.receiverName = receiverName;
     }
+
 
 //    evaluation = "对卖家的星数&&" + "对卖家的评价$$" + "对买家的星数&&" +"对买家的评价";
 }

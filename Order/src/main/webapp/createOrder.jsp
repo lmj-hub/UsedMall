@@ -11,7 +11,7 @@
     <title>新建订单</title>
 </head>
 <body>
-<form action="order/create" method="post">
+<form action="create" method="post">
     买家id：<input type="text" name="buyerId"/><br/>
     卖家id：<input type="text" name="sellerId"/><br/>
     订单类型：<select name="oType">
@@ -22,6 +22,8 @@
     商品详情：<input type="text" name="goodsList"/><br/>
     交易地址：<input type="text" name="address"/><br/>
     总交易金额：<input type="text" name="paidAccount"/><br/>
+    联系电话：<input type="text" name="phone"><br/>
+    收货人姓名：<input type="text" name="receiverName"><br/>
     <input type="submit" value="生成订单">
 </form>
 

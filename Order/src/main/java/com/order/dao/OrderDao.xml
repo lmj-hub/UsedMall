@@ -6,17 +6,17 @@
 <mapper namespace="com.order.dao.OrderDao">
 
     <insert id="creatOrder" parameterType="order">
-        insert into ss_order (buyerId,sellerId,oType,goodsList,generateDate,status,address,paidAccount,evaluation)
-        values (#{buyerId},#{sellerId},#{oType},#{goodsList},#{generateDate},#{status},#{address},#{paidAccount},#{evaluation});
+        insert into ss_order (buyerId,sellerId,oType,goodsList,generateDate,status,address,paidAccount,evaluation,phone,receiverName)
+        values (#{buyerId},#{sellerId},#{oType},#{goodsList},#{generateDate},#{status},#{address},#{paidAccount},#{evaluation},#{phone},#{receiverName});
     </insert>
 
     <delete id="deleteOrder" parameterType="int">
         delete from ss_order where orderId = #{oid};
     </delete>
-    
+
     <update id="updateOrder" parameterType="order">
         update ss_order set
-        buyerId=#{buyerId},sellerId=#{sellerId},oType=#{oType},goodsList=#{goodsList},generateDate=#{generateDate},status=#{status},address=#{address},paidAccount=#{paidAccount},evaluation=#{evaluation}
+        buyerId=#{buyerId},sellerId=#{sellerId},oType=#{oType},goodsList=#{goodsList},generateDate=#{generateDate},status=#{status},address=#{address},paidAccount=#{paidAccount},evaluation=#{evaluation},phone=#{phone},receiverName=#{receiverName}
         where orderId = #{orderId};
     </update>
 
