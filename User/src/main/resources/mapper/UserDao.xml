@@ -3,17 +3,51 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.feng.dao.UserDao">
 
-    <select id="selectUserByUserName" resultType="com.feng.model.User">
-        select * from User where username= #{username} and password=#{password}
-    </select>
-
-    <insert id="insertUser" parameterType="com.feng.model.User">
-        insert into User (username,password,address,phone,rdate)
-        values (#{username},#{password},#{address},#{phone},#{rdate})
+    <insert id="insert" parameterType="com.feng.model.User">
+        insert into User (userid,username,password,phone,address,realname,sno,clazz,createtime,modify)
+        values(#{userid},#{username},#{password},#{phone},#{address},#{realname},#{sno},#{clazz},#{createtime},#{modify})
     </insert>
 
-    <delete id="delUser" parameterType="com.feng.model.User">
-        delete from User where username = #{username} and password = #{password}
+    <insert id="insertSelective" parameterType="com.feng.model.User">
+        insert into User (userid,username,password,phone,address,realname,sno,clazz,createtime,modify)
+        values(#{userid},#{username},#{password},#{phone},#{address},#{realname},#{sno},#{clazz},#{createtime},#{modify})
+    </insert>
+
+    <delete id="deleteByPrimarykey" parameterType="com.feng.model.User">
+        delete from User where userid=#{userid}
     </delete>
+
+    <update id="updateByPrimaryKey" parameterType="com.feng.modelUser">
+        update User set userid=#{userid},username=#{username},password=#{password},phone=#{phone},address=#{address},realname=#{realname},sno=#{sno},clazz=#{clazz},createtime=#{createtime},modify=#{modify}
+    </update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.feng.model.User">
+        update User set userid=#{userid},username=#{username},password=#{password},phone=#{phone},address=#{address},realname=#{realname},sno=#{sno},clazz=#{clazz},createtime=#{createtime},modify=#{modify}
+    </update>
+
+    <select id="selectUseridByPhone" parameterType="com.feng.model.User">
+        select userid from User where phone =#{phone}
+    </select>
+
+    <select id="selectByPrimaryKey" parameterType="com.feng.model.User">
+        select all from User where userid=#{userid}
+    </select>
+
+
+
+
+
+<!--    <select id="selectUserByUserName" resultType="com.feng.model.User">-->
+<!--        select * from User where username= #{username} and password=#{password}-->
+<!--    </select>-->
+
+<!--    <insert id="insertUser" parameterType="com.feng.model.User">-->
+<!--        insert into User (username,password,address,phone,rdate)-->
+<!--        values (#{username},#{password},#{address},#{phone},#{rdate})-->
+<!--    </insert>-->
+
+<!--    <delete id="delUser" parameterType="com.feng.model.User">-->
+<!--        delete from User where username = #{username} and password = #{password}-->
+<!--    </delete>-->
 
 </mapper>

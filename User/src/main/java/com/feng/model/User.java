@@ -1,5 +1,6 @@
 package com.feng.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.validation.constraints.NotNull;
@@ -7,25 +8,39 @@ import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-public class User {
+public class User implements Serializable {
 	
-    private Integer userId;
+    private Integer userid;//用户id
+
 	@Pattern(regexp = "^(.){2,8}$")
-    private String username;
+    private String username;//用户名
+
 	@Pattern(regexp = "^(.){6,12}$")
-    private String password;
-    private String address;
+    private String password;//密码
+
+    private String address;//宿舍地址
+
     @Pattern(regexp = "^1\\d{10}$")
-    private String phone;
-    private String rdate;
-	public int getUserId() {
-		return userId;
+    private String phone;//联系电话
+
+	private String realname;//真实姓名
+
+	private String sno;//学号
+
+    private String clazz;//班级
+
+    private Date rdate;//创建时间
+
+	private Date modify;//修改时间
+
+	public Integer getUserid() {
+		return userid;
 	}
-	public void setUserId(int userId) {
-		this.userId = userId;
+
+	public void setUserid(Integer userid) {
+		this.userid = userid;
 	}
-	
-	
+
 	public String getPassword() {
 		return password;
 	}
@@ -44,11 +59,11 @@ public class User {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	public String getRdate() {
-		return rdate;
+	public Date getRdate() {
+		return rdate==null ? null : (Date)rdate.clone();
 	}
-	public void setRdate(String rdate) {
-		this.rdate = rdate;
+	public void setRdate(Date rdate) {
+		this.rdate = rdate==null ? null:(Date) rdate.clone();
 	}
 	public String getUsername() {
 		return username;
@@ -56,11 +71,53 @@ public class User {
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
+	public String getRealname() {
+		return realname;
+	}
+
+	public void setRealname(String realname) {
+		this.realname = realname;
+	}
+
+	public String getSno() {
+		return sno;
+	}
+
+	public void setSno(String sno) {
+		this.sno = sno;
+	}
+
+	public String getClazz() {
+		return clazz;
+	}
+
+	public void setClazz(String clazz) {
+		this.clazz = clazz;
+	}
+
+	public Date getModify() {
+		return modify;
+	}
+
+	public void setModify(Date modify) {
+		this.modify = modify;
+	}
+
 	@Override
 	public String toString() {
-		return "User [userId=" + userId + ", username=" + username + ", password=" + password + ", address=" + address
-				+ ", phone=" + phone + ", rdate=" + rdate + "]";
+		return "User{" +
+				"userid=" + userid +
+				", username='" + username + '\'' +
+				", password='" + password + '\'' +
+				", address='" + address + '\'' +
+				", phone='" + phone + '\'' +
+				", realname='" + realname + '\'' +
+				", sno='" + sno + '\'' +
+				", clazz='" + clazz + '\'' +
+				", rdate=" + rdate +
+				", modify=" + modify +
+				'}';
 	}
-	
 }
    
