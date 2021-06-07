@@ -3,6 +3,8 @@ package org.gdut.idlegoods.service;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.gdut.idlegoods.bean.Cart;
 import org.gdut.idlegoods.bean.Goods;
 import org.gdut.idlegoods.dao.GoodsDao;
@@ -63,4 +65,18 @@ public class GoodsService {
 	
 	//结算购物车上的某件（些）商品
 
+	
+	//获取图片的存储路径
+	public String getImgUrl(HttpServletRequest request) {
+		//获得当前项目根路径
+		String realPath = request.getServletContext().getRealPath("");
+		//最后一个"\"的索引
+		int index1 = realPath.lastIndexOf("\\");
+		String temPath = realPath.substring(0, index1);
+		//当前最后一个"\"的索引，即相对于整个工作路径的倒数第二个索引
+		int index2 = temPath.lastIndexOf("\\");
+		String imgUrl = realPath.substring(0,index2)+"/ROOT";
+		return imgUrl;
+		
+	}
 }

@@ -8,8 +8,12 @@
 <head>
 <%
 pageContext.setAttribute("PATH",request.getContextPath());
-String userId = (String)session.getAttribute("userId");
-Cart cart= (Cart)session.getAttribute(userId);
+ServletContext context = request.getSession().getServletContext();
+ServletContext targetContext = context.getContext("/User");
+HttpSession login_session = (HttpSession)targetContext.getAttribute(request.getSession().getId());
+Integer userId =(Integer) login_session.getAttribute("userId");
+String idstr=userId.intValue()+"";
+Cart cart =(Cart) session.getAttribute(idstr);
 /*由于el表达式对于键为数字的key会直接输出在屏幕上，所以要在这个页面上转换
 一下购物车的key,方便用el表达式获取相应的值
 */

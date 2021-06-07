@@ -47,7 +47,7 @@
             <li class="item"><a href="#">个人中心</a></li>
             <li class="item"><a href="#">我的订单</a></li>
             <li class="item"><a href="#">收藏夹</a></li>
-            <li class="item"><a href="#">购物车</a></li>
+            <li class="item"><a href="/ReleaseAndBuy/checkMyCart">购物车</a></li>
         </ul>
     </div>
 
@@ -74,7 +74,7 @@
             data:"goodsName=${one.goods_name}&goodsId=${one.goods_id}&goodsPrice=${one.goods_price}&goodsImgurl=${one.goods_imgurl}&goodsDesp=${one.goods_desp}",
 
             success:function (res) {
-                console.log(res.msg)
+                alert(res.msg)
             },
             async:false,
             error:function() {

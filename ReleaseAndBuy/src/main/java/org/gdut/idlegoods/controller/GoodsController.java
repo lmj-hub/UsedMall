@@ -6,12 +6,15 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.gdut.idlegoods.bean.Cart;
@@ -67,12 +70,20 @@ public class GoodsController {
 	}
 	
 	
-	//获取图片路径，并把上传图片存在工程路径下
+	//获取图片路径，并把上传图片存在服务器的ROOT文件夹下
 	public Goods getImgUrl(MultipartFile file,Goods goods,HttpServletRequest request) throws IOException {
-			//获取工程路径，把图片保存在工程路径之下
-			ServletContext sctx = request.getServletContext();
-			String realPath = sctx.getRealPath("/Imags");
-			String name = file.getOriginalFilename();
+			ServletContext sctx = request.getServletContext();//获取工程路径，把图片保存在工程路径之下
+			String ip = request.getServerName();//获取服务器名称(ip)
+			int port = request.getServerPort();	//获取服务器端口号
+			String date = new Date().getTime()+"";//获取时间戳
+			String userPicturePath ="/picture"+getUserId(request);//获取用户对应的图片文件夹
+			String rootPath = goodService.getImgUrl(request);//服务器的ROOT文件夹
+			String realPath=rootPath+userPicturePath;
+			String name = date+file.getOriginalFilename();
+			File dir = new File(realPath);
+			if(!dir.exists()) {
+				dir.mkdir();
+			}
 			File path = new File(realPath,name);
 			InputStream in = file.getInputStream();
 			FileOutputStream out= new FileOutputStream(path);
@@ -84,7 +95,7 @@ public class GoodsController {
 				while((len=bsi.read(b))!=-1) {
 					bso.write(b,0,len);
 					bso.flush();
-					goods.setGoodsImgurl(path.getPath());
+					goods.setGoodsImgurl("http://"+ip+":"+port+userPicturePath+"/"+name);
 				}
 			}finally {
 				in.close();
@@ -99,7 +110,7 @@ public class GoodsController {
 	@ResponseBody
 	@RequestMapping(value="/addToCart",method=RequestMethod.POST)
 	public Message addToCart(Goods goods,HttpServletRequest request,Map<String,Object> map) {
-		String userId =(String) request.getSession().getAttribute("userId");
+		String userId = getUserId(request);
 		Cart cart =(Cart) request.getSession().getAttribute(userId);
 		if(cart==null) {
 			cart = new Cart();
@@ -113,7 +124,7 @@ public class GoodsController {
 	@ResponseBody
 	@RequestMapping(value="/deleteGoods/{goodsId}",method=RequestMethod.DELETE)
 	public Message deleteGoods(@PathVariable("goodsId") String goodsId,HttpServletRequest request) {
-		String userId =(String) request.getSession().getAttribute("userId");
+		String userId = getUserId(request);
 		Cart cart = (Cart)request.getSession().getAttribute(userId);
 		if(goodsId.contains("-")) {
 		//删除多个
@@ -132,20 +143,31 @@ public class GoodsController {
 	@ResponseBody
 	@RequestMapping(value="/clearCart",method=RequestMethod.DELETE)
 	public Message clearGoods(HttpServletRequest request) {
-		String userId= (String)request.getSession().getAttribute("userId");
+		String userId = getUserId(request);
 		Cart cart =(Cart) request.getSession().getAttribute(userId);
 		goodService.clear(cart);
 		return Message.success();
 	}
 	
+	//查看购物车
 	@RequestMapping("/checkMyCart")
 	public String showCart(HttpServletRequest request,Map<String,Object> map) {
-		String userId= (String)request.getSession().getAttribute("userId");
+		String userId = getUserId(request);
 		Cart cart =(Cart) request.getSession().getAttribute(userId);
 		if(cart==null) {
 			cart = new Cart();
 			map.put(userId,cart);
 		}
 		return "myCart";
+	}
+	
+	//获取用户id
+	public String getUserId(HttpServletRequest request) {
+		ServletContext context = request.getSession().getServletContext();
+		ServletContext targetContext = context.getContext("/User");
+		HttpSession session = (HttpSession)targetContext.getAttribute(request.getSession().getId());
+		Integer userId =(Integer) session.getAttribute("userId");
+		String idstr=userId.intValue()+"";
+		return idstr;
 	}
 }
