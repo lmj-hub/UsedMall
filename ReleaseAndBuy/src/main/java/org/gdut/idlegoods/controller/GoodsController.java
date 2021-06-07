@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
@@ -169,5 +170,12 @@ public class GoodsController {
 		Integer userId =(Integer) session.getAttribute("userId");
 		String idstr=userId.intValue()+"";
 		return idstr;
+	}
+	
+	//获取所有商品种类
+	@ResponseBody
+	@RequestMapping("/categories")
+	public List getCategroies() {
+		return goodService.getCategroies();
 	}
 }

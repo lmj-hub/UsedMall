@@ -8,4 +8,8 @@
  (goods_name, goods_price, goods_num, goods_imgurl, goods_desp, goods_type, goods_cdate) 
  VALUES 
  (#{goodsName}, #{goodsPrice}, #{goodsNum}, #{goodsImgurl}, #{goodsDesp}, #{goodsType}, #{goodsCdate}) </insert>
+ 
+ <select id="getCategories" resultType="org.gdut.idlegoods.bean.Category">
+ 	select * from ss_category;
+ </select>
 </mapper>

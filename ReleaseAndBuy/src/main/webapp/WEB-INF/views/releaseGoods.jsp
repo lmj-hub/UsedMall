@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"
+    import="java.util.Date"
+    import="java.text.SimpleDateFormat"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,14 +39,16 @@ pageContext.setAttribute("PATH",request.getContextPath());
   <div class="form-row">
     <div class="form-group col-md-4">
       <label for="goods_type">商品类型</label>
-      <input id="goods_type" class="form-control transparency" name="goodsType"
-      placeholder="请输入该商品类型(必填)" valid="false">
+      <select id="goods_type" class=" custom-select form-control transparency" name="goodsType"
+       valid="false">
+      </select>
       <span></span>
     </div>
     <div class="form-group col-md-7">
       <label for="goods_cdate">上传日期</label>
       <input type="text" class="form-control transparency" id="goods_cdate" name="goodsCdate" 
-      placeholder="请按照正确格式填入上传商品的时间，如2020-04-15(必填)" valid="false">
+      valid="true" value="<%=new SimpleDateFormat("yyyy-MM-dd").format(new Date())%>"
+      readonly>
       <span id="date_warning"></span>
       
     </div>

@@ -1,4 +1,5 @@
 ﻿$(function(){
+	getProductCategories()
 	//输出校验信息
 	dealform("#publish_goods_form","#publish_goods_btn","/ReleaseAndBuy/publishGoods")
 	dealform("#publish_re_form","#publish_re_btn","/ReleaseAndBuy/publishRequirement")
@@ -9,6 +10,7 @@
 		removeOne()//删除单件商品
 		clearCart()//清空购物车
 		removePatch()//批量删除商品
+		 
 	
 	 
 /*	$("#publish_goods_btn").click(function(){
@@ -110,7 +112,7 @@ function validated_add_re_form(){
 }
 //获取表单检验结果
 function result(ele){
-	var object = $(ele).find("input[valid=false],textarea[valid=false]")
+	var object = $(ele).find("input[valid=false],textarea[valid=false],select[valid=false]")
 	return object;
 	
 }
@@ -191,7 +193,7 @@ function removeClass(ele,status){
 
 //清除表单所有元素检验样式
 function removeAllClass(ele){
-	var object = $(ele).find("input[valid],textarea[valid]")
+	var object = $(ele).find("input[valid],textarea[valid],select[valid]")
 	$.each(object,function(){
 		var idSelector = "#"+$(this).prop("id");
 		removeClass(idSelector,200)
@@ -291,6 +293,22 @@ function removePatch(){
 }
 
 
+//从数据库获取商品类型
+function getProductCategories(){
+	$("#publish_goods_form select").empty()
+	$.ajax({
+		url:"/ReleaseAndBuy/categories",
+		async:false,
+		type:"get",
+		success:function(result){
+			//console.log(result)
+			$("#publish_goods_form select").append($("<option></option>").append("请选择您的商品种类").attr("hidden",true))
+			$.each(result,function(index,item){
+				$("#publish_goods_form select").append($("<option></option>").append(item.category).attr("value",item.category))
+			})
+		}
+	})
+}
 
 
 

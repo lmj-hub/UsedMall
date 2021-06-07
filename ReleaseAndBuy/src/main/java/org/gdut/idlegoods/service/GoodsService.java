@@ -79,4 +79,9 @@ public class GoodsService {
 		return imgUrl;
 		
 	}
+	
+	//获取所有商品种类
+	public List getCategroies() {
+		return goodsDao.getCategories();
+	}
 }
