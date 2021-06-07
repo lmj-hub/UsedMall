@@ -37,7 +37,9 @@
 } catch (ClassNotFoundException | SQLException e) {
     e.printStackTrace();
 } %>
-
+<%
+pageContext.setAttribute("PATH",request.getContextPath());
+%>
 <div class="topbar">
     <!-- layout样式控制页眉内容的宽度 -->
     <div class="layout">
@@ -54,7 +56,7 @@
             <li class="item"><a href="#">个人中心</a></li>
             <li class="item"><a href="#">我的订单</a></li>
             <li class="item"><a href="#">收藏夹</a></li>
-            <li class="item"><a href="#">购物车</a></li>
+            <li class="item"><a href="/ReleaseAndBuy/checkMyCart">购物车</a></li>
         </ul>
     </div>
 </div>

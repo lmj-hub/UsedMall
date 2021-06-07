@@ -12,8 +12,8 @@ public class UserServiceImpl implements UserService{
     @Resource
     private UserDao userDao;
     @Override
-    public User selectUserByUserName(String username) {
-        return userDao.selectUserByUserName(username);
+    public User selectUserByUserName(String username,String password) {
+        return userDao.selectUserByUserName(username,password);
     }
 
     @Override
@@ -25,4 +25,6 @@ public class UserServiceImpl implements UserService{
     public boolean delUser(User user) {
         return userDao.delUser(user);
     }
+    
+    
 }

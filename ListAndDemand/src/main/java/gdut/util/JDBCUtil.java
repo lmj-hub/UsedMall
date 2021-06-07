@@ -3,9 +3,9 @@ import java.sql.*;
 
 public class JDBCUtil {
     private static String DRIVER="com.mysql.cj.jdbc.Driver";
-    private static String URL="jdbc:mysql://localhost:3306/ss_goods?characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&autoReconnect=true";
+    private static String URL="jdbc:mysql://localhost:3306/idlegoodstrading?characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&autoReconnect=true";
     private static String USERNAME="root";//用户名
-    private static String PWD="123456";//密码
+    private static String PWD="991109";//密码
 
 
     public static Connection getConnection() throws ClassNotFoundException, SQLException {//获得连接
