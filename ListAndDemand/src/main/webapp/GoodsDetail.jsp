@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="gdut.entity.Goods" %>
-<%@ page import="gdut.Dao.GoodsDao" %>
+<%@ page import="gdut.Dao.aaa" %>
 <%@ page import="java.sql.SQLException" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page isELIgnored="false" %>
@@ -59,7 +59,7 @@
 
 <%
     try {
-        Goods one=GoodsDao.getOneGoods(Integer.parseInt(request.getParameter("id")));
+        Goods one= aaa.getOneGoods(Integer.parseInt(request.getParameter("id")));
         request.getSession().setAttribute("one", one);
     } catch (ClassNotFoundException | SQLException e) {
         e.printStackTrace();

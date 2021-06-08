@@ -1,7 +1,9 @@
-<%@ page import="gdut.Dao.GoodsDao" %>
+<%@ page import="java.util.List" %>
 <%@ page import="gdut.entity.Goods" %>
-<%@ page import="java.util.Vector" %>
-<%@ page import="java.sql.SQLException" %>
+<%@ page import="gdut.Dao.GoodsDaoImpl" %>
+<%@ page import="gdut.servlet.GoodServlet" %>
+<%@ page import="gdut.Service.GoodService" %>
+<%@ page import="gdut.entity.PageBean" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page isELIgnored="false" %>
@@ -31,14 +33,14 @@
 
 
 
-<%   try {
-    Vector<Goods> good= GoodsDao.getAllGoods();
-    request.getSession().setAttribute("good", good);
-} catch (ClassNotFoundException | SQLException e) {
-    e.printStackTrace();
-} %>
+<%--<%   try {--%>
+<%--    Vector<Goods> good= GooDao.getAllGoods();--%>
+<%--    request.getSession().setAttribute("good", good);--%>
+<%--} catch (ClassNotFoundException | SQLException e) {--%>
+<%--    e.printStackTrace();--%>
+<%--} %>--%>
 <%
-pageContext.setAttribute("PATH",request.getContextPath());
+    pageContext.setAttribute("PATH",request.getContextPath());
 %>
 <div class="topbar">
     <!-- layout样式控制页眉内容的宽度 -->
@@ -66,20 +68,20 @@ pageContext.setAttribute("PATH",request.getContextPath());
 
 
 <div class="content">
-    <c:forEach items="${good}" var="good">
-        <a href="GoodServlet?id=${good.goods_id}">
+    <c:forEach items="${pb.beanlist}" var="goods">
+        <a href="GoodServlet?id=${goods.goods_id}">
             <div class="product">
-                <img src="${good.goods_imgurl}">
-                <span class="brand">${good.goods_name}</span>
-                <span class="title">${good.goods_desp}</span>
-                <span class="price">${good.goods_price}</span>
+                <img src="${goods.goods_imgurl}">
+                <span class="brand">${goods.goods_name}</span>
+                <span class="title">${goods.goods_desp}</span>
+                <span class="price">${goods.goods_price}</span>
             </div>
         </a>
     </c:forEach>
 </div>
 
 
-
+<%@ include file="/tab.jsp"%>
 
 </body>
 </html>

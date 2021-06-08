@@ -1,24 +1,40 @@
 package gdut.servlet;
 
-import gdut.Dao.GoodsDao;
 import gdut.entity.Goods;
+import gdut.entity.PageBean;
+import gdut.service.GoodService;
 
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLException;
 
 @WebServlet("/GoodServlet")
 public class GoodServlet extends HttpServlet {
 
+    private GoodService goodService = new GoodService();
 
-    public GoodServlet() {
-        super();
+    private int getPc(HttpServletRequest req){
+        int pc = 1;
+        String parm = req.getParameter("pc");
+        if(parm != null&& !parm.trim().isEmpty()){
+            pc = Integer.parseInt(parm);
+        }
+        return pc;
+    }
+
+
+
+    private String getUrl(HttpServletRequest req){
+        String url = req.getRequestURI()+"?"+req.getQueryString();
+
+        int index = url.lastIndexOf("&pc=");
+        if(index != -1){
+            url = url.substring(0,index);
+        }
+        return url;
     }
 
 
@@ -27,56 +43,31 @@ public class GoodServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        try {
-            Goods one=GoodsDao.getOneGoods(Integer.parseInt(req.getParameter("id")));
-            req.getSession().setAttribute("one", one);
-            req.getRequestDispatcher("/GoodsDetail.jsp").forward(req, resp);
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-        }
-//        int goods_id =Integer.parseInt(req.getParameter("goods_id"));
-//
-//        Goods one = null;
 //        try {
-//            one = GoodsDao.getOneGoods(goods_id);
-//        } catch (ClassNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//
-//        try {
-//            req.setAttribute("one", one);
+//            Goods one= GooDao.getOneGoods(Integer.parseInt(req.getParameter("id")));
+//            req.getSession().setAttribute("one", one);
 //            req.getRequestDispatcher("/GoodsDetail.jsp").forward(req, resp);
-//
-//        } catch (Exception e) {
+//        } catch (ClassNotFoundException | SQLException e) {
 //            e.printStackTrace();
 //        }
+
+        this.doPost(req,resp);
     }
 
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
+
+        req.setCharacterEncoding("UTF-8");
+        resp.setCharacterEncoding("UTF-8");
+        int pc = getPc(req);
+        String url = getUrl(req);
+        PageBean<Goods> pageBean = goodService.findByPage(pc);
+        pageBean.setUrl(url);
+        req.setAttribute("pb",pageBean);
+        req.getRequestDispatcher("/GoodsList.jsp").forward(req,resp);
     }
 
 
-//    public void findGoodsById(HttpServletRequest req, HttpServletResponse resp) throws SQLException, ClassNotFoundException {
-//
-//
-//        int goods_id =Integer.parseInt(req.getParameter("goods_id"));
-//
-//        Goods one = GoodsDao.getOneGoods(goods_id);
-//
-//        try {
-//            req.setAttribute("one", one);
-//            req.getRequestDispatcher("/GoodsDetail.jsp").forward(req, resp);
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
-//
-//
-    }
+}
 
