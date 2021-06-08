@@ -107,6 +107,83 @@ public class UserController {
         return "redirect:/";
     }
 
+    //查看用户基本信息
+    @RequestMapping(value = "/user_info")
+    private String userInfo(HttpServletRequest request,Model model){
+        User user=(User) request.getSession().getAttribute("user");
+        if (StringUtils.getInstance().isNullOrEmpty(user)){
+            return"redirect:/login";
+        }
+        String userInfoToken=TokenProccessor.getInstance().makeToken();
+        request.getSession().setAttribute("userInfoToken",userInfoToken);
+        model.addAttribute("token",userInfoToken);
+        model.addAttribute("token",userInfoToken);
+        return"/";//返回用户基本信息页面
+    }
+
+    //完善用户基本信息
+    @RequestMapping(value = "/insertuserinfo",method = RequestMethod.POST)
+    @ResponseBody
+    public Map insertuserinfo(HttpServletRequest request,
+                              @RequestParam(required=false)String userName,
+                              @RequestParam(required = false)String realName,
+                              @RequestParam(required = false)String clazz,
+                              @RequestParam String token,
+                              @RequestParam(required = false)String sno,
+                              @RequestParam(required = false)String address
+                              ){
+        User user=(User)request.getSession().getAttribute("user");
+        Map<String,Integer>map=new HashMap<>();
+        map.put("request",0);
+        //该用户还未登录
+        if(StringUtils.getInstance().isNullOrEmpty(user)){
+            return map;
+        }
+        String insertuserinfoToken=(String)request.getSession().getAttribute("userToken");
+        if(StringUtils.getInstance().isNullOrEmpty(insertuserinfoToken)){
+            return map;
+        }else{
+            request.getSession().removeAttribute("insertuserinfoToken");
+        }
+        if(userName !=null){
+            userName =StringUtils.getInstance().replaceBlank(userName);
+            user.setUsername(userName);
+        }else{
+            return map;
+        }
+        if(realName !=null){
+            realName =StringUtils.getInstance().replaceBlank(realName);
+            user.setUsername(realName);
+        }else{
+            return map;
+        }
+        if(clazz !=null){
+            clazz =StringUtils.getInstance().replaceBlank(clazz);
+            user.setUsername(clazz);
+        }else{
+            return map;
+        }
+        if(sno !=null){
+            sno =StringUtils.getInstance().replaceBlank(sno);
+            user.setUsername(sno);
+        }else{
+            return map;
+        }
+        if(address !=null){
+            address =StringUtils.getInstance().replaceBlank(address);
+            user.setUsername(address);
+        }else{
+            return map;
+        }
+        int result=userService.updateByPrimaryKey(user);
+        if(result!=1){
+            return map;
+        }
+        request.getSession().setAttribute("user",user);
+        map.put("result",1);
+        return map;
+    }
+
 //    //处理登录逻辑
 //    @ResponseBody
 //    @RequestMapping(value = "/login", method = RequestMethod.POST)

@@ -7,6 +7,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Collection;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class StringUtils {
     public static class LayHolder{
@@ -57,5 +59,15 @@ public class StringUtils {
             return empty;
         }
         return false;
+    }
+
+    public String replaceBlank(String str){
+        String dest="";
+        if(str!=null){
+            Pattern p= Pattern.compile("\\s*/\t/\r/\n");
+            Matcher m=p.matcher(str);
+            dest=m.replaceAll("");
+        }
+        return dest;
     }
 }
