@@ -162,7 +162,7 @@ public class GoodsDaoImpl implements GoodsDao {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         try {
-            statement = connection.prepareStatement("select count(*) from ss_goods where goods_type=?");
+            statement = connection.prepareStatement("select count(*) from ss_goods where goods_name like CONCAT('%',?,'%')");
             statement.setString(1,goods_name);
             resultSet = statement.executeQuery();
             while (resultSet.next()){
