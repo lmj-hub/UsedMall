@@ -43,10 +43,9 @@
 
 
 <form action="/ListAndDemand/FindNameServlet" method="post">
-    <input type="text" class="input_text" name="uname" placeholder="请输入搜索内容"><!-- -->
+    <input type="text" class="input_text" name="uname" autocomplete="off" placeholder="请输入搜索内容"><!-- -->
     <input type="submit" value="搜索" class="input_sub">
 
 </form>
-
 </body>
 </html>
