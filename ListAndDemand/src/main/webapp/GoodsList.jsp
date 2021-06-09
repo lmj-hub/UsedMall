@@ -2,7 +2,7 @@
 <%@ page import="gdut.entity.Goods" %>
 <%@ page import="gdut.Dao.GoodsDaoImpl" %>
 <%@ page import="gdut.servlet.GoodServlet" %>
-<%@ page import="gdut.Service.GoodService" %>
+<%@ page import="gdut.service.GoodService" %>
 <%@ page import="gdut.entity.PageBean" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -33,12 +33,7 @@
 
 
 
-<%--<%   try {--%>
-<%--    Vector<Goods> good= GooDao.getAllGoods();--%>
-<%--    request.getSession().setAttribute("good", good);--%>
-<%--} catch (ClassNotFoundException | SQLException e) {--%>
-<%--    e.printStackTrace();--%>
-<%--} %>--%>
+
 <%
     pageContext.setAttribute("PATH",request.getContextPath());
 %>
@@ -68,8 +63,8 @@
 
 
 <div class="content">
-    <c:forEach items="${pb.beanlist}" var="goods">
-        <a href="GoodServlet?id=${goods.goods_id}">
+    <c:forEach items="${page.beanlist}" var="goods">
+        <a href="DetailServlet?id=${goods.goods_id}">
             <div class="product">
                 <img src="${goods.goods_imgurl}">
                 <span class="brand">${goods.goods_name}</span>

@@ -5,66 +5,87 @@
     <title>My tab.jsp</title>
 </head>
 <body>
-<br />
-<c:choose>
-    <c:when test="${pb.pc eq null or pb.pc eq 1 }">上一页</c:when>
-    <c:otherwise>
-        <a href="${pb.url }pc=${pb.pc - 1}">上一页</a>
-    </c:otherwise>
-</c:choose>
 
-<!-- el表达式
-  从pb对象取值,pb就是pageBean,pb对象是request.setAttribute("pb", pageBean);
-  pageBean是个对象，可通过.获取其属性，实体类中存在getter()方法，
-  即可通过maxPageNum的首字母大写MaxPageNum去查询是否存在对应的getter()，
-  存在即可获取对象的属性值
-   -->
-<c:choose>
-    <c:when test="${pb.maxPageNum < 6 }">
-        <c:set value="1" var="begin">
-        </c:set>
-        <c:set value="${pb.maxPageNum }" var="end">
-        </c:set>
-    </c:when>
-
-    <c:otherwise>
-        <c:set value="${pb.pc - 2 }" var="begin">
-        </c:set>
-        <c:set value="${pb.pc + 3 }" var="end">
-        </c:set>
-
-        <c:if test="${pb.pc < 3 }">
-            <c:set value="1" var="begin">
-            </c:set>
-            <c:set value="6" var="end">
-            </c:set>
-        </c:if>
-
-        <c:if test="${pb.pc + 3 > pb.maxPageNum }">
-            <c:set value="${pb.maxPageNum - 5 }" var="begin">
-            </c:set>
-            <c:set value="${pb.maxPageNum }" var="end">
-            </c:set>
-        </c:if>
-    </c:otherwise>
-</c:choose>
-
-<c:forEach begin="${begin }" end="${end }" var="page">
+<%--分页条的开始--%>
+<div id="page_nav">
+    <%--大于首页，才显示--%>
+    <c:if test="${requestScope.page.pc > 1}">
+    <a href="${ requestScope.page.url }&pc=1">首页</a>
+    <a href="${ requestScope.page.url }&pc=${requestScope.page.pc-1}">上一页</a>
+    </c:if>
+    <%--页码输出的开始--%>
     <c:choose>
-        <c:when test="${pb.pc eq page }">${page }</c:when>
-        <c:otherwise>
-            <a href="${pb.url }pc=${page}">${page }</a>
-        </c:otherwise>
-    </c:choose>
-</c:forEach>
-
-<c:choose>
-    <c:when test="${pb.pc eq null or pb.pc eq pb.maxPageNum }">下一页</c:when>
+        <%--情况1：如果总页码小于等于5的情况，页码的范围是：1-总页码--%>
+    <c:when test="${ requestScope.page.tp <= 5 }">
+        <c:set var="begin" value="1"/>
+        <c:set var="end" value="${requestScope.page.tp}"/>
+    </c:when>
+        <%--情况2：总页码大于5的情况--%>
+    <c:when test="${requestScope.page.tp > 5}">
+    <c:choose>
+        <%--小情况1：当前页码为前面3个：1，2，3的情况，页码范围是：1-5.--%>
+    <c:when test="${requestScope.page.pc <= 3}">
+        <c:set var="begin" value="1"/>
+        <c:set var="end" value="5"/>
+    </c:when>
+        <%--小情况2：当前页码为最后3个，8，9，10，页码范围是：总页码减4 - 总页码--%>
+    <c:when test="${requestScope.page.pc > requestScope.page.tp-3}">
+        <c:set var="begin" value="${requestScope.page.tp-4}"/>
+        <c:set var="end" value="${requestScope.page.tp}"/>
+    </c:when>
+        <%--小情况3：4，5，6，7，页码范围是：当前页码减2 - 当前页码加2--%>
     <c:otherwise>
-        <a href="${pb.url }pc=${pb.pc + 1}">下一页</a>
+        <c:set var="begin" value="${requestScope.page.pc-2}"/>
+        <c:set var="end" value="${requestScope.page.pc+2}"/>
     </c:otherwise>
-</c:choose>
+    </c:choose>
+    </c:when>
+    </c:choose>
 
+    <c:forEach begin="${begin}" end="${end}" var="i">
+    <c:if test="${i == requestScope.page.pc}">
+    【${i}】
+    </c:if>
+    <c:if test="${i != requestScope.page.pc}">
+    <a href="${ requestScope.page.url }&pc=${i}">${i}</a>
+    </c:if>
+    </c:forEach>
+    <%--页码输出的结束--%>
+
+
+    <%-- 如果已经 是最后一页，则不显示下一页，末页 --%>
+    <c:if test="${requestScope.page.pc < requestScope.page.tp}">
+    <a href="${ requestScope.page.url }&pc=${requestScope.page.pc+1}">下一页</a>
+    <a href="${ requestScope.page.url }&pc=${requestScope.page.tp}">末页</a>
+    </c:if>
+
+    共${ requestScope.page.tp }页，${ requestScope.page.all }条记录
+    <%--    到第<input value="${param.pageNo}" name="pn" id="pn_input"/>页--%>
+    <%--    <input id="searchPageBtn" type="button" value="确定">--%>
+
+    <%--    <script type="text/javascript">--%>
+
+    <%--        $(function () {--%>
+    <%--            // 跳到指定的页码--%>
+    <%--            $("#searchPageBtn").click(function () {--%>
+
+    <%--                var pageNo = $("#pn_input").val();--%>
+
+    <%--                &lt;%&ndash;var pageTotal = ${requestScope.page.pageTotal};&ndash;%&gt;--%>
+    <%--                &lt;%&ndash;alert(pageTotal);&ndash;%&gt;--%>
+
+    <%--                // javaScript语言中提供了一个location地址栏对象--%>
+    <%--                // 它有一个属性叫href.它可以获取浏览器地址栏中的地址--%>
+    <%--                // href属性可读，可写--%>
+    <%--                location.href = "${pageScope.basePath}${ requestScope.page.url }&pageNo=" + pageNo;--%>
+
+    <%--            });--%>
+    <%--        });--%>
+
+    <%--    </script>--%>
+
+    <%--</div>--%>
+    <%--&lt;%&ndash;分页条的结束&ndash;%&gt;--%>
 </body>
 
 </html>

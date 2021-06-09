@@ -46,7 +46,7 @@
                     alert("用户名或密码错误")
                     return;
                 }else{
-                	window.location.href="/ListAndDemand/GoodsList.jsp"
+                	window.location.href="/ListAndDemand/index.jsp"
                 }
             },
             error: function (jqXHR, textStatus, errorThrown) {//请求失败之后执行的回调函数

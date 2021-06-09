@@ -57,14 +57,7 @@
 
 
 
-<%
-    try {
-        Goods one= aaa.getOneGoods(Integer.parseInt(request.getParameter("id")));
-        request.getSession().setAttribute("one", one);
-    } catch (ClassNotFoundException | SQLException e) {
-        e.printStackTrace();
-    }
-%>
+
 
 <script language="JavaScript">
     function submit(){
