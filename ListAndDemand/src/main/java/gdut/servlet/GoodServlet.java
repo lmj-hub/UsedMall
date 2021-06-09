@@ -42,15 +42,6 @@ public class GoodServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-//        try {
-//            Goods one= GooDao.getOneGoods(Integer.parseInt(req.getParameter("id")));
-//            req.getSession().setAttribute("one", one);
-//            req.getRequestDispatcher("/GoodsDetail.jsp").forward(req, resp);
-//        } catch (ClassNotFoundException | SQLException e) {
-//            e.printStackTrace();
-//        }
-
         this.doPost(req,resp);
     }
 
