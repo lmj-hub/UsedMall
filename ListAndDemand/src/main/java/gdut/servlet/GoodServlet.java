@@ -55,7 +55,7 @@ public class GoodServlet extends HttpServlet {
         String url = getUrl(req);
         PageBean<Goods> pageBean = goodService.findByPage(pc);
         pageBean.setUrl(url);
-        req.setAttribute("pb",pageBean);
+        req.setAttribute("page",pageBean);
         req.getRequestDispatcher("/GoodsList.jsp").forward(req,resp);
     }
 

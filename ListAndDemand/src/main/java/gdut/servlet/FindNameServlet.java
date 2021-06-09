@@ -54,7 +54,7 @@ public class FindNameServlet extends HttpServlet {
         resp.setCharacterEncoding("UTF-8");
         int pc = getPc(req);
         String url = getUrl(req);
-        PageBean<Goods> pageBean = goodService.findNamePage(req.getParameter("ss"));
+        PageBean<Goods> pageBean = goodService.findNamePage(req.getParameter("uname"));
         pageBean.setUrl(url);
         req.setAttribute("page",pageBean);
         req.getRequestDispatcher("/GoodsList.jsp").forward(req,resp);
