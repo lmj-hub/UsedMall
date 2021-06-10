@@ -20,7 +20,7 @@ public class DemandDao extends JDBCUtil {
             demand.setUser_id(resultSet.getInt(4));
             demands.add(demand);
         }
-        closeAll(connection, statement,resultSet);
+        close(connection, statement,resultSet);
         return demands;
     }
 }

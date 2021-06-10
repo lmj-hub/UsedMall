@@ -1,8 +1,8 @@
 package gdut.servlet;
 
+import gdut.service.GoodService;
 import gdut.entity.Goods;
 import gdut.entity.PageBean;
-import gdut.service.GoodService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,10 +11,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/GoodServlet")
-public class GoodServlet extends HttpServlet {
+
+@WebServlet("/TypeServlet")
+public class TypeServlet extends HttpServlet {
 
     private GoodService goodService = new GoodService();
+
+
+    public TypeServlet() {
+        super();
+    }
+
 
     private int getPc(HttpServletRequest req){
         int pc = 1;
@@ -37,28 +44,20 @@ public class GoodServlet extends HttpServlet {
         return url;
     }
 
-
-
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         this.doPost(req,resp);
     }
 
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         req.setCharacterEncoding("UTF-8");
         resp.setCharacterEncoding("UTF-8");
         int pc = getPc(req);
         String url = getUrl(req);
-        PageBean<Goods> pageBean = goodService.findByPage(pc);
+        PageBean<Goods> pageBean = goodService.findTypeByPage(req.getParameter("Type"));
         pageBean.setUrl(url);
         req.setAttribute("page",pageBean);
         req.getRequestDispatcher("/GoodsList.jsp").forward(req,resp);
     }
-
-
 }
-
