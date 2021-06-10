@@ -1,19 +1,157 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.feng.dao.UserDao">
-
-    <select id="selectUserByUserName" resultType="com.feng.model.User">
-        select * from User where username= #{username} and password=#{password}
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.feng.dao.UserDao" >
+    <resultMap id="BaseResultMap" type="com.feng.model.User" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="username" property="username" jdbcType="VARCHAR" />
+        <result column="password" property="password" jdbcType="CHAR" />
+        <result column="address" property="address" jdbcType="VARCHAR" />
+        <result column="phone" property="phone" jdbcType="CHAR" />
+        <result column="realname" property="realname" jdbcType="VARCHAR" />
+        <result column="sno" property="sno" jdbcType="CHAR" />
+        <result column="clazz" property="clazz" jdbcType="VARCHAR" />
+        <result column="rdate" property="rdate" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+        id, username, password, address, phone, realname, sno, clazz, rdate
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        select
+        <include refid="Base_Column_List" />
+        from user
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="getUserList" resultMap="BaseResultMap" parameterType="String">
+        select <include refid="Base_Column_List" /> from user
+    </select>
+    <!--根据手机号查询用户-->
+    <select id="getUserByPhone" resultMap="BaseResultMap" parameterType="String" >
+        select
+        <include refid="Base_Column_List" />
+        from user
+        where phone = #{phone,jdbcType=CHAR}
     </select>
 
-    <insert id="insertUser" parameterType="com.feng.model.User">
-        insert into User (username,password,address,phone,rdate)
-        values (#{username},#{password},#{address},#{phone},#{rdate})
-    </insert>
+    <select id="getUserById" resultMap="BaseResultMap" parameterType="Integer" >
+        select
+        <include refid="Base_Column_List" />
+        from user
+        where id = #{id,jdbcType=INTEGER}
+    </select>
 
-    <delete id="delUser" parameterType="com.feng.model.User">
-        delete from User where username = #{username} and password = #{password}
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+        delete from user
+        where id = #{id,jdbcType=INTEGER}
     </delete>
+    <insert id="insert" parameterType="com.feng.model.User" useGeneratedKeys="true" keyProperty="id">
+        insert into user (id, username, password, address, phone, realname, sno, clazz, rdate)
+        values (#{id,jdbcType=INTEGER},  #{username,jdbcType=VARCHAR},#{password,jdbcType=CHAR},
+                #{phone,jdbcType=CHAR}, #{address,jdbcType=VARCHAR},#{realname,jdbcType=VARCHAR},
+                #{sno,jdbcType=CHAR}, #{clazz,jdbcType=VARCHAR},#{rdate,jdbcType=VARCHAR}
+              )
+    </insert>
+    <insert id="insertSelective" parameterType="com.feng.model.User" >
+        insert into user
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="username != null" >
+                username,
+            </if>
+            <if test="password != null" >
+                password,
+            </if>
+            <if test="phone != null" >
+                phone,
+            </if>
+            <if test="address != null" >
+                address,
+            </if>
+            <if test="realname != null" >
+                realname,
+            </if>
+            <if test="sno != null" >
+                sno,
+            </if>
+            <if test="clazz != null" >
+                clazz,
+            </if>
+            <if test="rdate != null" >
+                rdate,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="username != null" >
+                #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null" >
+                #{password,jdbcType=CHAR},
+            </if>
+            <if test="phone != null" >
+                #{phone,jdbcType=CHAR},
+            </if>
+            <if test="address != null" >
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="realname != null" >
+                #{realname,jdbcType=VARCHAR},
+            </if>
+            <if test="sno != null" >
+                #{sno,jdbcType=CHAR},
+            </if>
+            <if test="clazz != null" >
+                #{clazz,jdbcType=VARCHAR},
+            </if>
+            <if test="rdate != null" >
+                #{rdate,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.feng.model.User" >
+        update user
+        <set >
+            <if test="username != null" >
+                username=#{username,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null" >
+                password=#{password,jdbcType=CHAR},
+            </if>
+            <if test="phone != null" >
+                phone=#{phone,jdbcType=CHAR},
+            </if>
+            <if test="address != null" >
+                address=#{address,jdbcType=VARCHAR},
+            </if>
+            <if test="realname != null" >
+                realname=#{realname,jdbcType=VARCHAR},
+            </if>
+            <if test="sno != null" >
+                sno=#{sno,jdbcType=CHAR},
+            </if>
+            <if test="clazz != null" >
+                clazz=#{clazz,jdbcType=VARCHAR},
+            </if>
+            <if test="rdate != null" >
+                rdate=#{rdate,jdbcType=VARCHAR}
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.feng.model.User" >
+        update user
+        set username=#{username,jdbcType=VARCHAR},
+            password=#{password,jdbcType=CHAR},
+            phone=#{phone,jdbcType=CHAR},
+            address=#{address,jdbcType=VARCHAR},
+            realname=#{realname,jdbcType=VARCHAR},
+            sno=#{sno,jdbcType=CHAR},
+            clazz=#{clazz,jdbcType=VARCHAR},
+            rdate=#{rdate,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
 
 </mapper>
