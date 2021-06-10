@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.gdut.idlegoods.bean.Cart;
+import org.gdut.idlegoods.bean.Category;
 import org.gdut.idlegoods.bean.Goods;
 import org.gdut.idlegoods.dao.GoodsDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,7 +82,33 @@ public class GoodsService {
 	}
 	
 	//获取所有商品种类
-	public List getCategroies() {
+	public List<Category> getCategroies() {
 		return goodsDao.getCategories();
+	}
+	
+	//获取特定用户发布的商品数据
+	public List<Goods> getMyGoods(Integer userId) {
+		return goodsDao.getMyGoods(userId);
+	}
+
+	public Goods getOneGoods(String goodsId) {
+		// TODO Auto-generated method stub
+		return goodsDao.getOneGoods(goodsId);
+		
+	}
+
+	public boolean updateGoods(Goods dealedGoods) {
+		// TODO Auto-generated method stub
+		return goodsDao.updateGoods(dealedGoods);
+	}
+
+	public boolean delete(String goodsId) {
+		// TODO Auto-generated method stub
+		return goodsDao.delete(goodsId);
+	}
+
+	public boolean clearGoods(String userId) {
+		// TODO Auto-generated method stub
+		return goodsDao.clearGoods(userId);
 	}
 }

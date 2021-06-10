@@ -59,7 +59,7 @@ pageContext.setAttribute("PATH",request.getContextPath());
 								data-toggle="list" href="#my_requirements">我的需求</a>
 						</div>
 					</div>
-					<div class="col-8">
+					<div class="col-10">
 						<div class="tab-content" id="nav-tabContent">
 							<div class="tab-pane fade show active" id="list-publish_goods">
 							<jsp:include page="releaseGoods.jsp"></jsp:include></div>

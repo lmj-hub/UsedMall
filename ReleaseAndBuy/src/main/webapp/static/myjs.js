@@ -2,9 +2,13 @@
 	getProductCategories()
 	//输出校验信息
 	dealform("#publish_goods_form","#publish_goods_btn","/ReleaseAndBuy/publishGoods")
+	dealform("#update_save_form","#update_goods_save","/ReleaseAndBuy/updateGoods")
 	dealform("#publish_re_form","#publish_re_btn","/ReleaseAndBuy/publishRequirement")
+	dealform("#update_save_re_form","#update_re_save","/ReleaseAndBuy/updateRe")
 		validated_add_goods_form()//校验发布商品表单的信息
 		validated_add_re_form()//校验发布需求表单的信息
+		validated_update_goods_form()//校验编辑商品信息表单的信息
+		validated_update_re_form()//校验编辑需求信息表单的信息
 		registerSelectAll()//注册购物车全选框
 		registerSelectOne()//注册单选框
 		removeOne()//删除单件商品
@@ -105,11 +109,28 @@ function validated_add_goods_form(){
 	validated("#picture","图片",false)
 }
 
+//前端检验编辑商品表单所有元素
+function validated_update_goods_form(){
+	validated("#update_goods_name_input","商品名称",false)
+	validated("#update_goods_price_input","商品价格",false)
+	validated("#update_goods_num_input","商品数量",false)
+	validated("#update_goods_type","商品类型",false)
+	validated("#update_goods_desp_input","商品描述",false)
+	validated("#update_goods_cdate_input","日期",true,/\d{4}-\d{2}-\d{2}/)
+}
+
 
 //前端校验发布需求表单所有元素
 function validated_add_re_form(){
 	validated("#re_desp","需求描述",true,/^(.|\n){2,100}$/)
 }
+
+//前端校验编辑需求表单所有元素
+function validated_update_re_form(){
+	validated("#update_re_name_input","需求描述",true,/^(.|\n){2,100}$/)
+}
+
+
 //获取表单检验结果
 function result(ele){
 	var object = $(ele).find("input[valid=false],textarea[valid=false],select[valid=false]")

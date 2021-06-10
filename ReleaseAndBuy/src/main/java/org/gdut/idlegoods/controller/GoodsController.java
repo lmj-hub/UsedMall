@@ -6,10 +6,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,17 +21,18 @@ import org.gdut.idlegoods.bean.Goods;
 import org.gdut.idlegoods.bean.Message;
 import org.gdut.idlegoods.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 
 /**
  * @author mj
@@ -96,8 +95,10 @@ public class GoodsController {
 				while((len=bsi.read(b))!=-1) {
 					bso.write(b,0,len);
 					bso.flush();
-					goods.setGoodsImgurl("http://"+ip+":"+port+userPicturePath+"/"+name);
 				}
+				goods.setGoodsImgurl("http://"+ip+":"+port+userPicturePath+"/"+name);
+				int sellerId = Integer.parseInt(getUserId(request));
+				goods.setSellerId(sellerId);
 			}finally {
 				in.close();
 				out.close();
@@ -178,4 +179,83 @@ public class GoodsController {
 	public List getCategroies() {
 		return goodService.getCategroies();
 	}
+	
+	
+	//查看已经发布的商品
+	@RequestMapping(value="/getMyGoods",method=RequestMethod.GET)
+	@ResponseBody
+	public Message getMyGoods(@RequestParam(value="pn", defaultValue="1") Integer pn,HttpServletRequest request) {
+		Integer userId = Integer.parseInt(getUserId(request));
+		//pn为当前页，每页放5条数据
+		PageHelper.startPage(pn,5);
+		//查询数据(默认是分页查询)
+		List<Goods> goodsList = goodService.getMyGoods(userId);
+		//pageInfo封装了数据信息，里面包含了详细的分页信息，包括当前页的数据
+		PageInfo<Goods> pageInfo = new PageInfo<Goods>(goodsList,3);
+		return Message.success().add("pageInfo", pageInfo);
+	}
+	
+	//通过商品id查找商品
+	@ResponseBody
+	@RequestMapping(value="/getOneGoods/{currentId}",method = RequestMethod.GET)
+	public Message getOneGoods(@PathVariable("currentId") String goodsId) {
+		Goods goods = goodService.getOneGoods(goodsId);
+		return Message.success().add("goods", goods);
+	}
+	
+	//更新商品
+		@ResponseBody
+		@RequestMapping(value="/updateGoods",method=RequestMethod.POST)
+		public Message updateGoods(@RequestParam(value = "file",required=false) MultipartFile file,
+		@Valid Goods goods,BindingResult errors,
+		HttpServletRequest request) throws IOException {
+			if(errors.hasErrors()) {
+				return Message.fail();
+			}
+			boolean result;
+			if(file!=null&&file.getSize()!=0) {
+				Goods dealedGoods = getImgUrl(file,goods,request);
+				 result = goodService.updateGoods(dealedGoods);
+			}else {
+				 result =goodService.updateGoods(goods);
+				}
+			if(result) {
+				return Message.success();
+			}else {
+					return Message.fail();
+		}
+	}
+		
+	//删除商品
+		@ResponseBody
+		@RequestMapping(value="/delete/{goodsId}",method=RequestMethod.DELETE)
+	public Message delete(@PathVariable(value = "goodsId") String goodsId) {
+			if(goodsId.contains("-")) {
+				//删除多个
+					String[] ids=goodsId.split("-");
+					for(int i =0;i<ids.length;i++) {
+						goodService.delete(ids[i]);
+					}
+					return Message.success();
+			}else {
+				//删除单个
+						boolean result = goodService.delete(goodsId);
+						if(result) {
+							return Message.success();
+						}
+					}
+			return Message.fail();
+		}
+		
+//清空所有发布的商品
+		@ResponseBody
+		@RequestMapping(value="/clearPublishedGoods",method = RequestMethod.DELETE)
+		public Message clearPublishedGoods(HttpServletRequest request) {
+			String userId = getUserId(request);
+			boolean result = goodService.clearGoods(userId);
+			if(result) {
+				return Message.success();
+			}
+			return Message.fail();
+		}
 }

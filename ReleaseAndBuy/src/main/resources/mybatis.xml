@@ -7,6 +7,10 @@
  <!-- 驼峰与数据库命名转换 -->
  	<setting name="mapUnderscoreToCamelCase" value="true"/>
  </settings>
+ 
+  <plugins>
+ 	<plugin interceptor="com.github.pagehelper.PageInterceptor"></plugin>
+ </plugins>
  <mappers>
  </mappers>
 </configuration>
