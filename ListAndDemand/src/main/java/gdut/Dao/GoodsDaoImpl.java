@@ -11,7 +11,7 @@ import java.util.List;
 public class GoodsDaoImpl implements GoodsDao {
     @Override
     public PageBean<Goods> findByPage(int pc) {
-        int ps = 20;
+        int ps = 4;
         int all = 0;
 //        String sql = "select count(*) from ss_goods";
         Connection connection = JDBCUtil.getConnection();
@@ -69,7 +69,7 @@ public class GoodsDaoImpl implements GoodsDao {
     @Override
     public PageBean<Goods> findTypeByPage(String goods_type) {
         int pc = 1;
-        int ps = 20;
+        int ps = 4;
         int all = 0;
         Connection connection = JDBCUtil.getConnection();
         PreparedStatement statement = null;
@@ -156,7 +156,7 @@ public class GoodsDaoImpl implements GoodsDao {
     @Override
     public PageBean<Goods> findNamePage(String goods_name) {
         int pc = 1;
-        int ps = 20;
+        int ps = 4;
         int all = 0;
         Connection connection = JDBCUtil.getConnection();
         PreparedStatement statement = null;
