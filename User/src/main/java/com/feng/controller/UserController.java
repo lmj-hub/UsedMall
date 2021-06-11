@@ -1,231 +1,230 @@
 package com.feng.controller;
 
 
-
-import com.feng.controller.token.TokenProccessor;
-import com.feng.controller.tool.StringUtils;
 import com.feng.model.User;
-import com.feng.model.UserPassword;
-import com.feng.service.UserPasswordService;
 import com.feng.service.UserService;
+import com.feng.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.print.attribute.standard.Severity;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.*;
+
 
 @Controller
-@Slf4j
-@RequestMapping(value = "/user")
+@RequestMapping("/user")
 public class UserController {
-
-    @Resource
+    @Autowired
     private UserService userService;
-    @Resource
-    private UserPasswordService userPasswordService;
 
-    //进入登录界面
-    @RequestMapping(value = "/login",method = RequestMethod.GET)
-    public String login(HttpServletRequest request,Model model){
-        String token = TokenProccessor.getInstance().makeToken();
-        log.info("进入登陆界面，token为："+token);
-        request.getSession().setAttribute("token",token);
-        model.addAttribute("token",token);
-        return "redirect:/";
-    }
-
-    //退出
-    @RequestMapping(value = "/logout")
-    public String logout(HttpServletRequest request){
-        try{
-            request.getSession().removeAttribute("user");
-            request.getSession().removeAttribute("uid");
-            System.out.println("logout");
-        }catch(Exception e){
-            e.printStackTrace();
-            return "redirect:/home";
-        }
-        return "redirect:/";
-    }
-
-    //注册
-    @RequestMapping(value = "/register",method = RequestMethod.POST)
-    public String register(Model model, @RequestParam String username,@RequestParam String password,@RequestParam String phone){
-        User user=new User();
-        user.setUsername(username);//用户名
-        user.setPassword(password);//密码
-        user.setPhone(phone);//电话
-        user.setRdate(new Date());//注册时间
-        user.setModify(new Date());//修改时间
-        if(userService.insertSelective(user) == 1){
-            int uid=userService.selectUseridByPhone(phone);
-            UserPassword userPassword = new UserPassword();
-            userPassword.setModify(new Date());
-            password = StringUtils.getInstance().getMD5(password);
-            userPassword.setPassword(password);
-            userPassword.setUid(uid);
-            int result = userPasswordService.insertSelective(userPassword);
-            if(result !=1){
-                model.addAttribute("result","fall");
-                return "success";
-            }
-            model.addAttribute("result","success");
-            return "success";
-        }
-        model.addAttribute("result","fail");
-        return "success";
-    }
-
-    //验证登录
-    @RequestMapping(value="/login",method=RequestMethod.POST)
-    public String login(HttpServletRequest request,
-                        @RequestParam String token,@RequestParam String password,@RequestParam String phone) {
-        String loginToken = (String)request.getSession().getAttribute("token");
-        if(StringUtils.getInstance().isNullOrEmpty(phone) || StringUtils.getInstance().isNullOrEmpty(password)){
-            return "redirect:/login";
-        }
-        if (StringUtils.getInstance().isNullOrEmpty(token)||!token.equals(loginToken)){
-            return "redirect:/login";
-        }
-//        boolean b= getId(request,password,phone);
-//        if(!b){
-//            return "redirect:/login?msg=该号码不存在";
-//        }
-        return "redirect:/";
-    }
-
-    //查看用户基本信息
-    @RequestMapping(value = "/user_info")
-    private String userInfo(HttpServletRequest request,Model model){
-        User user=(User) request.getSession().getAttribute("user");
-        if (StringUtils.getInstance().isNullOrEmpty(user)){
-            return"redirect:/login";
-        }
-        String userInfoToken=TokenProccessor.getInstance().makeToken();
-        request.getSession().setAttribute("userInfoToken",userInfoToken);
-        model.addAttribute("token",userInfoToken);
-        model.addAttribute("token",userInfoToken);
-        return"/";//返回用户基本信息页面
-    }
-
-    //完善用户基本信息
-    @RequestMapping(value = "/insertuserinfo",method = RequestMethod.POST)
     @ResponseBody
-    public Map insertuserinfo(HttpServletRequest request,
-                              @RequestParam(required=false)String userName,
-                              @RequestParam(required = false)String realName,
-                              @RequestParam(required = false)String clazz,
-                              @RequestParam String token,
-                              @RequestParam(required = false)String sno,
-                              @RequestParam(required = false)String address
-                              ){
-        User user=(User)request.getSession().getAttribute("user");
-        Map<String,Integer>map=new HashMap<>();
-        map.put("request",0);
-        //该用户还未登录
-        if(StringUtils.getInstance().isNullOrEmpty(user)){
-            return map;
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public boolean login(@Valid User target, BindingResult result, HttpServletRequest request, Model model) {
+        //校验失败，直接返回false
+        if (result.hasErrors()) {
+            return false;
         }
-        String insertuserinfoToken=(String)request.getSession().getAttribute("userToken");
-        if(StringUtils.getInstance().isNullOrEmpty(insertuserinfoToken)){
-            return map;
-        }else{
-            request.getSession().removeAttribute("insertuserinfoToken");
+        User user = userService.selectUserByUserName(target.getUsername(), target.getPassword());
+        if (user != null) {
+            HttpSession session = request.getSession();
+            session.setAttribute("id", user.getId());
+            //方便同一个Tomcat下不同web实例共享Session
+            session.getServletContext().setAttribute(session.getId(), session);
+            return true;
         }
-        if(userName !=null){
-            userName =StringUtils.getInstance().replaceBlank(userName);
-            user.setUsername(userName);
-        }else{
-            return map;
-        }
-        if(realName !=null){
-            realName =StringUtils.getInstance().replaceBlank(realName);
-            user.setUsername(realName);
-        }else{
-            return map;
-        }
-        if(clazz !=null){
-            clazz =StringUtils.getInstance().replaceBlank(clazz);
-            user.setUsername(clazz);
-        }else{
-            return map;
-        }
-        if(sno !=null){
-            sno =StringUtils.getInstance().replaceBlank(sno);
-            user.setUsername(sno);
-        }else{
-            return map;
-        }
-        if(address !=null){
-            address =StringUtils.getInstance().replaceBlank(address);
-            user.setUsername(address);
-        }else{
-            return map;
-        }
-        int result=userService.updateByPrimaryKey(user);
-        if(result!=1){
-            return map;
-        }
-        request.getSession().setAttribute("user",user);
-        map.put("result",1);
-        return map;
+        return false;
     }
 
-//    //处理登录逻辑
+    //处理注册逻辑
+    @ResponseBody
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public boolean register(@Valid User user, BindingResult result) {
+        //校验失败，直接返回false
+        if (result.hasErrors()) {
+            return false;
+        }
+        String rdate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        user.setRdate(rdate);
+        boolean flag = userService.addUser(user);
+        return flag;
+    }
+
+
+//@Controller
+//@RequestMapping("/user")
+//public class UserController {
+//
+//    @Resource
+//    private UserService userService;
+//
+//    /**
+//     * 用户注册
+//     *
+//     * @param user1
+//     * @return
+//     */
+//    @RequestMapping(value = "/register")
+//    public String addUser(HttpServletRequest request, @ModelAttribute("user") User user1) {
+//        String url = request.getHeader("Referer");
+//        User user = userService.getUserByPhone(user1.getPhone());
+//        if (user == null) {// 检测该用户是否已经注册
+//            String t = DateUtil.getNowDate();
+//            String str = user1.getPassword();
+//            user1.setRdate(t);// 创建开始时间
+//            user1.setPassword(str);
+//            userService.addUser(user1);
+//        }
+//        return "redirect:" + url;
+//    }
+//
+//    /**
+//     * 注册验证账号
+//     * @param request
+//     * @return
+//     */
+//    @RequestMapping(value = "/register",method = RequestMethod.POST)
 //    @ResponseBody
-//    @RequestMapping(value = "/login", method = RequestMethod.POST)
-//    public boolean login(@Valid User target,BindingResult result, HttpServletRequest request, Model model) {
-//    	//校验失败，直接返回false
-//    	if(result.hasErrors()) {
-//    		return false;
-//    	}
-//        User user = userService.selectUserByUserName(target.getUsername(),target.getPassword());
-//        if (user!= null) {
-//                HttpSession session = request.getSession();
-//                session.setAttribute("userId", user.getUserId());
-//                //方便同一个Tomcat下不同web实例共享Session
-//                session.getServletContext().setAttribute(session.getId(),session);
-//                return true;
+//    public String register(HttpServletRequest request){
+//        String phone=request.getParameter("phone");
+//        User user = userService.getUserByPhone(phone);
+//        if(user==null) {
+//            return "{\"success\":true,\"flag\":false}";//用户存在，注册失败
+//        }else {
+//            return "{\"success\":true,\"flag\":true}";//用户不存在，可以注册
+//        }
+//    }
+//
+//    /**
+//     * 登陆验证密码
+//     * @param request
+//     * @return
+//     */
+//	/*@RequestMapping(value = "/password",method = RequestMethod.POST)
+//	@ResponseBody
+//	public String password(HttpServletRequest request){
+//		String phone=request.getParameter("phone");
+//		String password=request.getParameter("password");
+//		if((phone==null||phone=="")&&(password==null||password=="")) {
+//			return "{\"success\":false,\"flag\":true}";
+//		}else {
+//			User user = userService.getUserByPhone(phone);
+//			if(user==null) {
+//				return "{\"success\":false,\"flag\":false}";//账号错误
+//			}
+//			String pwd = MD5.md5(password);
+//			if (pwd.equals(user.getPassword())) {
+//				return "{\"success\":true,\"flag\":false}";//密码正确
+//			}else {
+//				return "{\"success\":true,\"flag\":true}";//密码错误
+//			}
+//		}
+//
+//	}*/
+//
+//
+//    /**
+//     * 验证登录
+//     * @param request
+//     * @param user
+//     * @param modelMap
+//     * @return
+//     */
+//    @RequestMapping(value = "/login")
+//    public ModelAndView loginValidate(HttpServletRequest request, HttpServletResponse response, User user,
+//                                      ModelMap modelMap) {
+//        User cur_user = userService.getUserByPhone(user.getPhone());
+//        String url = request.getHeader("Referer");
+//        if (cur_user != null) {
+//            String pwd = user.getPassword();
+//            if (pwd.equals(cur_user.getPassword())) {
+//                request.getSession().setAttribute("cur_user", cur_user);
+//                return new ModelAndView("redirect:" + url);
 //            }
-//        return false;
+//        }
+//        return new ModelAndView("redirect:" + url);
 //    }
 //
-//    //处理注册逻辑
-//    @ResponseBody
-//    @RequestMapping(value ="/register", method = RequestMethod.POST)
-//    public boolean register(@Valid User user,BindingResult result){
-//    	//校验失败，直接返回false
-//    	if(result.hasErrors()) {
-//    		return false;
-//    	}
-//        boolean flag = userService.insertUser(user);
-//        return flag;
-//    }
-//
-//    @RequestMapping(value = "/delUser" , method = RequestMethod.POST)
-//    public String delUser(@RequestParam("username") String username, @RequestParam("password") String password, HttpServletRequest request,Model model){
-//        System.out.println("输入的信息"+username+password);
-//        User user = new User();
-//        user.setUsername(username);
-//        user.setPassword(password);
-//
-//        boolean flag=userService.delUser(user);
-//        System.out.println(flag);
-//        return "/loginSuccess";
-//    }
-   
-  
+    /**
+     * 更改用户名
+     *
+     * @param request
+     * @param user
+     * @param modelMap
+     * @return
+     */
+    @RequestMapping(value = "/changeName")
+    public ModelAndView changeName(HttpServletRequest request, User user, ModelMap modelMap) {
+        String url = request.getHeader("Referer");
+        // 从session中获取出当前用户
+        User cur_user = (User) request.getSession().getAttribute("cur_user");
+        cur_user.setUsername(user.getUsername());// 更改当前用户的用户名
+        userService.updateUserName(cur_user);// 执行修改操作
+        request.getSession().setAttribute("cur_user", cur_user);// 修改session值
+        return new ModelAndView("redirect:" + url);
+    }
+
+    /**
+     * 完善或修改信息
+     *
+     * @param request
+     * @param user
+     * @param modelMap
+     * @return
+     */
+    @RequestMapping(value = "/updateInfo")
+    public ModelAndView updateInfo(HttpServletRequest request, User user, ModelMap modelMap) {
+        // 从session中获取出当前用户
+        User cur_user = (User) request.getSession().getAttribute("cur_user");
+        cur_user.setUsername(user.getUsername());
+        cur_user.setSno(user.getSno());
+        cur_user.setAddress(user.getAddress());
+        cur_user.setRealname(user.getRealname());
+        cur_user.setClazz(user.getClazz());
+        userService.updateUserName(cur_user);// 执行修改操作
+        request.getSession().setAttribute("cur_user", cur_user);// 修改session值
+        return new ModelAndView("redirect:/user/basic");
+    }
+
+    /**
+     * 用户退出
+     *
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/logout")
+    public String logout(HttpServletRequest request) {
+        request.getSession().setAttribute("cur_user", null);
+        return "redirect:/";
+    }
+
+    /**
+     * 个人信息设置
+     *
+     * @return
+     */
+    @RequestMapping(value = "/basic")
+    public ModelAndView basic(HttpServletRequest request) {
+        User cur_user = (User) request.getSession().getAttribute("cur_user");
+        Integer userId = cur_user.getId();
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("/user/basic");
+        return mv;
+    }
+
+
+
 }

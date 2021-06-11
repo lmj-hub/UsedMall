@@ -8,4 +8,26 @@
  (re_msg, re_date, user_id) 
  VALUES 
  (#{reMsg}, #{reDate}, #{userId})</insert>
+ 
+  <select id="getMyRequirements" resultType="org.gdut.idlegoods.bean.Requirement">
+ 	select * from ss_requirements where user_id=#{userId}
+ </select>
+  <select id="getOneRequirement" resultType="org.gdut.idlegoods.bean.Requirement">
+ 	select * from ss_requirements where re_id=#{reId}
+ </select>
+ <update id="updateRe">
+ 	update ss_requirements
+ 	<trim prefix="set" suffixOverrides=",">
+ 		<if test="reMsg!=null">
+ 			re_msg=#{reMsg},
+ 		</if>
+ 	</trim>
+ 	  where re_id = #{reId}
+ </update>
+ <delete id="delete">
+ 	delete from ss_requirements where re_id=#{reId}
+ </delete>
+ <delete id="clearRe">
+ 	delete from ss_requirements where user_id=#{userId}
+ </delete>
 </mapper>

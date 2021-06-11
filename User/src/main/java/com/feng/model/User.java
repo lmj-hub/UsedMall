@@ -10,7 +10,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 public class User implements Serializable {
 	
-    private Integer userid;//用户id
+    private Integer id;//用户id
 
 	@Pattern(regexp = "^(.){2,8}$")
     private String username;//用户名
@@ -29,47 +29,47 @@ public class User implements Serializable {
 
     private String clazz;//班级
 
-    private Date rdate;//创建时间
+    private String rdate;//创建时间
 
-	private Date modify;//修改时间
 
-	public Integer getUserid() {
-		return userid;
+	public Integer getId() {
+		return id;
 	}
 
-	public void setUserid(Integer userid) {
-		this.userid = userid;
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getPassword() {
 		return password;
 	}
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
 	public String getAddress() {
 		return address;
 	}
+
 	public void setAddress(String address) {
 		this.address = address;
 	}
+
 	public String getPhone() {
 		return phone;
 	}
+
 	public void setPhone(String phone) {
 		this.phone = phone;
-	}
-	public Date getRdate() {
-		return rdate==null ? null : (Date)rdate.clone();
-	}
-	public void setRdate(Date rdate) {
-		this.rdate = rdate==null ? null:(Date) rdate.clone();
-	}
-	public String getUsername() {
-		return username;
-	}
-	public void setUsername(String username) {
-		this.username = username;
 	}
 
 	public String getRealname() {
@@ -96,18 +96,18 @@ public class User implements Serializable {
 		this.clazz = clazz;
 	}
 
-	public Date getModify() {
-		return modify;
+	public String getRdate() {
+		return rdate;
 	}
 
-	public void setModify(Date modify) {
-		this.modify = modify;
+	public void setRdate(String rdate) {
+		this.rdate = rdate;
 	}
 
 	@Override
 	public String toString() {
 		return "User{" +
-				"userid=" + userid +
+				"id=" + id +
 				", username='" + username + '\'' +
 				", password='" + password + '\'' +
 				", address='" + address + '\'' +
@@ -116,7 +116,6 @@ public class User implements Serializable {
 				", sno='" + sno + '\'' +
 				", clazz='" + clazz + '\'' +
 				", rdate=" + rdate +
-				", modify=" + modify +
 				'}';
 	}
 }

@@ -1,23 +1,31 @@
 package com.feng.dao;
 
 import com.feng.model.User;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
 public interface UserDao {
-    int insert(User user);
+    int deleteByPrimaryKey(Integer id);
 
-    int insertSelective(User user);
+    boolean insert(User record);
 
-    int deleteByPrimarykey(Integer userid);//通过主键删除用户
+    int insertSelective(User record);
 
-    int updateByPrimaryKeySelective(User user);
+    User selectByPrimaryKey(Integer id);
 
-    int updateByPrimaryKey(User user);
+    int updateByPrimaryKeySelective(User record);
 
-    User selectByPrimaryKey(Integer userid);//通过主键查询用户
+    int updateByPrimaryKey(User record);
 
-    int selectUseridByPhone(String phone);//通过电话找到id
+    User getUserByPhone(String phone);//通过手机号查询用户
 
-    List<User> getAllForeach(List<Integer> list);
+    public List<User> getUserList();//获取所有用户
+
+    User getUserById(int id);
+
+    User selectUserByUserName(@Param("username") String username,@Param("password") String password);
+
+    List<User> getUserListByUser(@Param("phone") String phone,@Param("username") String username,@Param("sno") String sno);
+
 }

@@ -5,19 +5,18 @@ import com.feng.model.User;
 import java.util.List;
 
 public interface UserService {
-    int insert(User user);
+    boolean addUser(User user);
 
-    int insertSelective(User user);
+    public User getUserByPhone(String phone);
 
-    int deleteByPrimarykey(Integer userid);//通过主键删除用户
+    public void updateUserName(User user);
 
-    int updateByPrimaryKeySelective(User user);
+    User selectByPrimaryKey(Integer id);
 
-    int updateByPrimaryKey(User user);
+    public User getUserById(int id);
 
-    User selectByPrimaryKey(Integer userid);//通过主键查询用户
+    User selectUserByUserName(String username,String password);
 
-    int selectUseridByPhone(String phone);//通过电话找到id
-    
-    List<User> getAllForeach(List<Integer> list);
+    public void deleteUserById(String idArr);
+
 }

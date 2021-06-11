@@ -14,7 +14,7 @@ public class Goods {
 	@Pattern(regexp ="^(.|\\n){2,100}$")
 	private String goodsPrice;
 	private Integer goodsNum;
-	@Pattern(regexp ="^(.|\\n){2,100}$")
+	//@Pattern(regexp ="^(.|\\n){2,100}$")
 	private String goodsImgurl;
 	@Pattern(regexp ="^(.|\\n){2,100}$")
 	private String goodsDesp;
@@ -22,6 +22,7 @@ public class Goods {
 	private String goodsType;
 	@Pattern(regexp = "\\d{4}-\\d{2}-\\d{2}")
 	private String goodsCdate;
+	private Integer sellerId;
 	public Integer getGoodsId() {
 		return goodsId;
 	}
@@ -70,12 +71,7 @@ public class Goods {
 	public void setGoodsCdate(String goodsCdate) {
 		this.goodsCdate = goodsCdate;
 	}
-	@Override
-	public String toString() {
-		return "Goods [goodsId=" + goodsId + ", goodsName=" + goodsName + ", goodsPrice=" + goodsPrice + ", goodsNum="
-				+ goodsNum + ", goodsImgurl=" + goodsImgurl + ", goodsDesp=" + goodsDesp + ", goodsType=" + goodsType
-				+ ", goodsCdate=" + goodsCdate + "]";
-	}
+	
 	public Goods(Integer goodsId, String goodsName, String goodsPrice, Integer goodsNum, String goodsImgurl, String goodsDesp,
 			String goodsType, String goodsCdate) {
 		this.goodsId = goodsId;
@@ -89,6 +85,18 @@ public class Goods {
 	}
 	public Goods() {
 		
+	}
+	public Integer getSellerId() {
+		return sellerId;
+	}
+	public void setSellerId(Integer sellerId) {
+		this.sellerId = sellerId;
+	}
+	@Override
+	public String toString() {
+		return "Goods [goodsId=" + goodsId + ", goodsName=" + goodsName + ", goodsPrice=" + goodsPrice + ", goodsNum="
+				+ goodsNum + ", goodsImgurl=" + goodsImgurl + ", goodsDesp=" + goodsDesp + ", goodsType=" + goodsType
+				+ ", goodsCdate=" + goodsCdate + ", sellerId=" + sellerId + "]";
 	}
 	
 

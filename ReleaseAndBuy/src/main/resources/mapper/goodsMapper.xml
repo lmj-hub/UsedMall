@@ -5,11 +5,51 @@
 <mapper namespace="org.gdut.idlegoods.dao.GoodsDao">
  <insert id="saveGoods">
  INSERT INTO ss_goods
- (goods_name, goods_price, goods_num, goods_imgurl, goods_desp, goods_type, goods_cdate) 
+ (goods_name, goods_price, goods_num, goods_imgurl, goods_desp, goods_type, goods_cdate,seller_id) 
  VALUES 
- (#{goodsName}, #{goodsPrice}, #{goodsNum}, #{goodsImgurl}, #{goodsDesp}, #{goodsType}, #{goodsCdate}) </insert>
+ (#{goodsName}, #{goodsPrice}, #{goodsNum}, #{goodsImgurl}, #{goodsDesp}, #{goodsType}, #{goodsCdate}, #{sellerId}) </insert>
  
  <select id="getCategories" resultType="org.gdut.idlegoods.bean.Category">
  	select * from ss_category;
  </select>
+ 
+ <select id="getMyGoods" resultType="org.gdut.idlegoods.bean.Goods">
+ 	select * from ss_goods where seller_id=#{userId}
+ </select>
+ <select id="getOneGoods" resultType="org.gdut.idlegoods.bean.Goods">
+ select * from ss_goods where goods_id = #{goodsId}
+ </select>
+ <update id="updateGoods">
+ 	update ss_goods
+ 	
+ 	<trim prefix="set" suffixOverrides=",">
+ 		<if test="goodsName!=null">
+ 			goods_name=#{goodsName},
+ 		</if>
+ 		<if test="goodsPrice!=null">
+ 			goods_price=#{goodsPrice},
+ 		</if>
+ 		<if test="goodsNum!=null">
+ 			goods_num=#{goodsNum},
+ 		</if>
+ 		<if test="goodsDesp!=null">
+ 			goods_desp=#{goodsDesp},
+ 		</if>
+ 		<if test="goodsType!=null">
+ 			goods_type=#{goodsType},
+ 		</if>
+ 		<if test="goodsImgurl!=null">
+ 			goods_imgurl=#{goodsImgurl},
+ 		</if>
+ 	</trim>
+ 	  where goods_id = #{goodsId}
+ </update>
+ 
+ <delete id="delete">
+ 	delete from ss_goods where goods_id=#{goodsId}
+ </delete>
+ 
+ <delete id="clearGoods">
+ 	delete from ss_goods where seller_id=#{userId}
+ </delete>
 </mapper>
