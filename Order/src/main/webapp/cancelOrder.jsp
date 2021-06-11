@@ -11,8 +11,9 @@
     <title>取消订单</title>
 </head>
 <body>
-<form action="order/cancel" method="post">
-    订单id：<input type="text" name="orderId"/>
+<form action="create" method="post">
+    <input name="receiverName" type="text" readonly="readonly" value="11" />
+    <input name="address" type="text"  onfocus=this.blur() value='22' />
     <input type="submit" value="取消订单">
 </form>
 </body>
