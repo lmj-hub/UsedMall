@@ -8,7 +8,7 @@ import java.util.List;
 public interface UserDao {
     int deleteByPrimaryKey(Integer id);
 
-    int insert(User record);
+    boolean insert(User record);
 
     int insertSelective(User record);
 
@@ -23,6 +23,8 @@ public interface UserDao {
     public List<User> getUserList();//获取所有用户
 
     User getUserById(int id);
+
+    User selectUserByUserName(@Param("username") String username,@Param("password") String password);
 
     List<User> getUserListByUser(@Param("phone") String phone,@Param("username") String username,@Param("sno") String sno);
 

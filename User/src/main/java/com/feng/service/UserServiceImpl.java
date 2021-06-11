@@ -16,8 +16,8 @@ public class UserServiceImpl implements UserService {
     @Resource
     private UserDao userDao;
 
-    public void addUser(User user) {
-        userDao.insert(user);
+    public boolean addUser(User user) {
+        return userDao.insert(user);
     }
 
     public User getUserByPhone(String phone) {
@@ -59,6 +59,10 @@ public class UserServiceImpl implements UserService {
     public void deleteUserById(String ids) {
         this.userDao.deleteByPrimaryKey(Integer.parseInt(ids));
 
+    }
+    @Override
+    public User selectUserByUserName(String username,String password) {
+        return userDao.selectUserByUserName(username,password);
     }
 
 

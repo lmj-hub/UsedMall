@@ -32,6 +32,13 @@
         where phone = #{phone,jdbcType=CHAR}
     </select>
 
+    <select id="selectUserByUserName" resultMap="BaseResultMap" parameterType="String" >
+        select
+        <include refid="Base_Column_List" />
+        from user
+        where username= #{username,jdbcType=VARCHAR} and password=#{password,jdbcType=VARCHAR}
+    </select>
+
     <select id="getUserById" resultMap="BaseResultMap" parameterType="Integer" >
         select
         <include refid="Base_Column_List" />

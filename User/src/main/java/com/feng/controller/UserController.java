@@ -24,100 +24,140 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+
 @Controller
 @RequestMapping("/user")
 public class UserController {
-
-    @Resource
+    @Autowired
     private UserService userService;
 
-    /**
-     * 用户注册
-     *
-     * @param user1
-     * @return
-     */
-    @RequestMapping(value = "/addUser")
-    public String addUser(HttpServletRequest request, @ModelAttribute("user") User user1) {
-        String url = request.getHeader("Referer");
-        User user = userService.getUserByPhone(user1.getPhone());
-        if (user == null) {// 检测该用户是否已经注册
-            String t = DateUtil.getNowDate();
-            String str = user1.getPassword();
-            user1.setRdate(t);// 创建开始时间
-            user1.setPassword(str);
-            userService.addUser(user1);
-        }
-        return "redirect:" + url;
-    }
-
-    /**
-     * 注册验证账号
-     * @param request
-     * @return
-     */
-    @RequestMapping(value = "/register",method = RequestMethod.POST)
     @ResponseBody
-    public String register(HttpServletRequest request){
-        String phone=request.getParameter("phone");
-        User user = userService.getUserByPhone(phone);
-        if(user==null) {
-            return "{\"success\":true,\"flag\":false}";//用户存在，注册失败
-        }else {
-            return "{\"success\":true,\"flag\":true}";//用户不存在，可以注册
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public boolean login(@Valid User target, BindingResult result, HttpServletRequest request, Model model) {
+        //校验失败，直接返回false
+        if (result.hasErrors()) {
+            return false;
         }
+        User user = userService.selectUserByUserName(target.getUsername(), target.getPassword());
+        if (user != null) {
+            HttpSession session = request.getSession();
+            session.setAttribute("id", user.getId());
+            //方便同一个Tomcat下不同web实例共享Session
+            session.getServletContext().setAttribute(session.getId(), session);
+            return true;
+        }
+        return false;
     }
 
-    /**
-     * 登陆验证密码
-     * @param request
-     * @return
-     */
-	/*@RequestMapping(value = "/password",method = RequestMethod.POST)
-	@ResponseBody
-	public String password(HttpServletRequest request){
-		String phone=request.getParameter("phone");
-		String password=request.getParameter("password");
-		if((phone==null||phone=="")&&(password==null||password=="")) {
-			return "{\"success\":false,\"flag\":true}";
-		}else {
-			User user = userService.getUserByPhone(phone);
-			if(user==null) {
-				return "{\"success\":false,\"flag\":false}";//账号错误
-			}
-			String pwd = MD5.md5(password);
-			if (pwd.equals(user.getPassword())) {
-				return "{\"success\":true,\"flag\":false}";//密码正确
-			}else {
-				return "{\"success\":true,\"flag\":true}";//密码错误
-			}
-		}
-
-	}*/
-
-
-    /**
-     * 验证登录
-     * @param request
-     * @param user
-     * @param modelMap
-     * @return
-     */
-    @RequestMapping(value = "/login")
-    public ModelAndView loginValidate(HttpServletRequest request, HttpServletResponse response, User user,
-                                      ModelMap modelMap) {
-        User cur_user = userService.getUserByPhone(user.getPhone());
-        String url = request.getHeader("Referer");
-        if (cur_user != null) {
-            String pwd = user.getPassword();
-            if (pwd.equals(cur_user.getPassword())) {
-                request.getSession().setAttribute("cur_user", cur_user);
-                return new ModelAndView("redirect:" + url);
-            }
+    //处理注册逻辑
+    @ResponseBody
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public boolean register(@Valid User user, BindingResult result) {
+        //校验失败，直接返回false
+        if (result.hasErrors()) {
+            return false;
         }
-        return new ModelAndView("redirect:" + url);
+        String rdate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        user.setRdate(rdate);
+        boolean flag = userService.addUser(user);
+        return flag;
     }
 
+
+//@Controller
+//@RequestMapping("/user")
+//public class UserController {
+//
+//    @Resource
+//    private UserService userService;
+//
+//    /**
+//     * 用户注册
+//     *
+//     * @param user1
+//     * @return
+//     */
+//    @RequestMapping(value = "/register")
+//    public String addUser(HttpServletRequest request, @ModelAttribute("user") User user1) {
+//        String url = request.getHeader("Referer");
+//        User user = userService.getUserByPhone(user1.getPhone());
+//        if (user == null) {// 检测该用户是否已经注册
+//            String t = DateUtil.getNowDate();
+//            String str = user1.getPassword();
+//            user1.setRdate(t);// 创建开始时间
+//            user1.setPassword(str);
+//            userService.addUser(user1);
+//        }
+//        return "redirect:" + url;
+//    }
+//
+//    /**
+//     * 注册验证账号
+//     * @param request
+//     * @return
+//     */
+//    @RequestMapping(value = "/register",method = RequestMethod.POST)
+//    @ResponseBody
+//    public String register(HttpServletRequest request){
+//        String phone=request.getParameter("phone");
+//        User user = userService.getUserByPhone(phone);
+//        if(user==null) {
+//            return "{\"success\":true,\"flag\":false}";//用户存在，注册失败
+//        }else {
+//            return "{\"success\":true,\"flag\":true}";//用户不存在，可以注册
+//        }
+//    }
+//
+//    /**
+//     * 登陆验证密码
+//     * @param request
+//     * @return
+//     */
+//	/*@RequestMapping(value = "/password",method = RequestMethod.POST)
+//	@ResponseBody
+//	public String password(HttpServletRequest request){
+//		String phone=request.getParameter("phone");
+//		String password=request.getParameter("password");
+//		if((phone==null||phone=="")&&(password==null||password=="")) {
+//			return "{\"success\":false,\"flag\":true}";
+//		}else {
+//			User user = userService.getUserByPhone(phone);
+//			if(user==null) {
+//				return "{\"success\":false,\"flag\":false}";//账号错误
+//			}
+//			String pwd = MD5.md5(password);
+//			if (pwd.equals(user.getPassword())) {
+//				return "{\"success\":true,\"flag\":false}";//密码正确
+//			}else {
+//				return "{\"success\":true,\"flag\":true}";//密码错误
+//			}
+//		}
+//
+//	}*/
+//
+//
+//    /**
+//     * 验证登录
+//     * @param request
+//     * @param user
+//     * @param modelMap
+//     * @return
+//     */
+//    @RequestMapping(value = "/login")
+//    public ModelAndView loginValidate(HttpServletRequest request, HttpServletResponse response, User user,
+//                                      ModelMap modelMap) {
+//        User cur_user = userService.getUserByPhone(user.getPhone());
+//        String url = request.getHeader("Referer");
+//        if (cur_user != null) {
+//            String pwd = user.getPassword();
+//            if (pwd.equals(cur_user.getPassword())) {
+//                request.getSession().setAttribute("cur_user", cur_user);
+//                return new ModelAndView("redirect:" + url);
+//            }
+//        }
+//        return new ModelAndView("redirect:" + url);
+//    }
+//
     /**
      * 更改用户名
      *
@@ -185,6 +225,6 @@ public class UserController {
         return mv;
     }
 
-   
-  
+
+
 }
