@@ -25,12 +25,12 @@ public class OrderController {
     private OrderService orderService;
 
     @RequestMapping("/toCreate")
-    public void toCreate(HttpSession session,String goodsList,HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public @ResponseBody String toCreate(HttpSession session,@RequestParam("data") String goodsList,HttpServletRequest request, HttpServletResponse response) throws Exception {
         String[] idNum = goodsList.split(",");
-        String userId = idNum[0];
-        String goodsId = idNum[1];
-        int goodsNum = Integer.parseInt(idNum[2]);
+        String goodsId = idNum[0];
+        int goodsNum = Integer.parseInt(idNum[1]);
         Goods goods = new GoodsService().getOneGoods(goodsId);
+        String buyerId = new GoodsService().getUserId(request);
 
         session.setAttribute("goodsId",goodsId);
         session.setAttribute("goodsNum",goodsNum);
@@ -47,6 +47,7 @@ public class OrderController {
         session.setAttribute("phone","1598476325");
         session.setAttribute("paidAccount",Double.parseDouble(goods.getGoodsPrice())*goodsNum);
         request.getRequestDispatcher("WEB-INF/pages/createOrder.jsp").forward(request,response);
+        return "true";
     }
 
     @RequestMapping("/create")
