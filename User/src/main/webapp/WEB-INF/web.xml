@@ -8,19 +8,9 @@
          version="4.0">
 
   <display-name>User</display-name>
-<!--  <welcome-file-list>-->
-<!--    <welcome-file>index.jsp</welcome-file>-->
-<!--  </welcome-file-list>-->
-    <welcome-file-list>
-      <welcome-file>/</welcome-file>
-    </welcome-file-list>
-
-  <context-param>
-    <param-name>contextConfigLocation</param-name>
-    <param-value>classpath:spring/spring-*.xml</param-value>
-  </context-param>
-
-
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
 
   <servlet>
     <servlet-name>springmvc</servlet-name>
@@ -28,7 +18,7 @@
     <init-param>
       <!--上下文配置的位置的制定-->
       <param-name>contextConfigLocation</param-name>
-      <param-value>classpath:</param-value>
+      <param-value>classpath:spring/spring-*.xml</param-value>
     </init-param>
   </servlet>
 
@@ -36,7 +26,6 @@
     <servlet-name>springmvc</servlet-name>
     <url-pattern>/*</url-pattern>
   </servlet-mapping>
-
 
   <filter>
     <filter-name>characterEncodingFilter</filter-name>
@@ -65,14 +54,5 @@
     <filter-name>hiddenHttpMethodFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
-
-  <!--spring监听器-->
-  <listener>
-    <listener-class>org.springframework.web.context.ContextCleanupListener</listener-class>
-  </listener>
-  <!--防止spring内存溢出监听器-->
-  <listener>
-    <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
-  </listener>
 
 </web-app>

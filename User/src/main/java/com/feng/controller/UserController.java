@@ -219,10 +219,18 @@ public class UserController {
     @RequestMapping(value = "/basic")
     public ModelAndView basic(HttpServletRequest request) {
         User cur_user = (User) request.getSession().getAttribute("cur_user");
-        Integer userId = cur_user.getId();
+        Integer id = cur_user.getId();
         ModelAndView mv = new ModelAndView();
         mv.setViewName("/user/basic");
         return mv;
+    }
+
+    @RequestMapping(value = "/getUser")
+    @ResponseBody
+    public User getUser(HttpServletRequest request) {
+        String id = request.getParameter("id");
+        User user = userService.getUserById(Integer.parseInt(id));
+        return user;
     }
 
 
