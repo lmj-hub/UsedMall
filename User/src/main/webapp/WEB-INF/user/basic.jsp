@@ -12,7 +12,6 @@
     <title>个人设置</title>
     <link rel="icon" href="<%=basePath%>img/logo.jpg" type="image/x-icon"/>
     <link rel="stylesheet" href="<%=basePath%>css/font-awesome.min.css" />
-    <link rel="stylesheet" href="<%=basePath%>css/userhome.css" />
     <link rel="stylesheet" href="<%=basePath%>css/user.css" />
      <!-- bootstrap -->
     <link rel="stylesheet" href="<%=basePath%>css/bootstrap.min.css" />
@@ -20,54 +19,6 @@
     <script type="text/javascript" src="<%=basePath%>js/bootstrap.min.js"></script>
 </head>
 <body>
-        <!--
-            描述：左侧个人中心栏
-        -->
-        <div id="user_nav">
-            <div class="home_nav">
-                <ul>
-                    <a href="<%=basePath%>/">
-                        <li class="notice">
-                            <div></div>
-                            <span>订单中心</span>
-                            <strong></strong>
-                        </li>
-                    </a>
-                    <a href="<%=basePath%>/">
-                        <li class="fri">
-                            <div></div>
-                            <span>关注列表</span>
-                            <strong></strong>
-                        </li>
-                    </a>
-                    <a href="<%=basePath%>/">
-                        <li class="store">
-                            <div></div>
-                            <span>发布物品</span>
-                            <strong></strong>
-                        </li>
-                    </a>
-                    <a href="<%=basePath%>/">
-                        <li class="second">
-                            <div></div>
-                            <span>我的闲置</span>
-                            <strong></strong>
-                        </li>
-                    </a>
-                     <a href="<%=basePath%>user/basic">
-                        <li class="set">
-                            <div></div>
-                            <span>个人设置</span>
-                            <strong></strong>
-                        </li>
-                    </a>
-                </ul>
-            </div>
-        </div>
-        <!--
-
-            描述：右侧内容区域
-        -->
         <div id="user_content">
             <div class="basic">
                 <form:form action="../user/updateInfo" method="post" commandName="user" role="form">
@@ -105,8 +56,5 @@
                 </form:form>
             </div>
         </div>
-    </div>
-</div>
-
 </body>
 </html>
