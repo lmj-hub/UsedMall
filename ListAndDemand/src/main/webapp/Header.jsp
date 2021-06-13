@@ -26,8 +26,8 @@
         <ul class="topbar-items topbar-items-right">
             <li class="item"><a href="/User/LoginAndRegister.jsp">登录</a></li>
             <li class="item"><a href="#">个人中心</a></li>
-            <li class="item"><a href="#">需求管理</a></li>
-            <li class="item"><a href="#">商品管理</a></li>
+            <li class="item"><a href="/ReleaseAndBuy/myRelease">需求管理</a></li>
+            <li class="item"><a href="/ReleaseAndBuy/myRelease">商品管理</a></li>
             <li class="item"><a href="#">我的订单</a></li>
             <li class="item"><a href="#">收藏夹</a></li>
             <li class="item"><a href="/ReleaseAndBuy/checkMyCart">购物车</a></li>

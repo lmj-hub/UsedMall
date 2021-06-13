@@ -1,6 +1,6 @@
 ﻿$(function(){
 	getPage(1)
-	control_all()
+	control_goods_all()
 	delete_all()
 })
 
@@ -178,7 +178,7 @@ function built_page_info(result){
 	}
 	
 	//单击全选框控制单选框
-function control_all(){
+function control_goods_all(){
 	$(".update_goods_checkAll").click(function(){
 		var checkAll = $(this).prop("checked")
 		$(".checkitem").prop("checked",checkAll)
@@ -196,10 +196,6 @@ function removePatch(){
 		var goodsId=""
 		var goodsName=""
 		$("#delete_patch").click(function(){
-			//清空购物车
-			if($(".update_goods_checkAll").prop("checked")==true){
-				delete_all()
-			}else{
 				if($(".checkitem:checked").length==0){
 					confirm("请勾选上要删除的商品哦~")
 					return;
@@ -210,7 +206,6 @@ function removePatch(){
 					goodsName+=$(this).parents("tr").find("td:eq(2)" ).text()+","
 				})
 				delete_one(goodsId,goodsName)
-			}
 		})
 	}
 

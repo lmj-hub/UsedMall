@@ -1,6 +1,6 @@
 package com.order.controller;
 
-import com.feng.service.impl.UserServiceImpl;
+import com.feng.service.UserServiceImpl;
 import com.order.domain.Order;
 import com.order.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;

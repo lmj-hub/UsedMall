@@ -1,6 +1,6 @@
 ﻿$(function(){
 	getRePage(1)
-	control_all
+	control_re_all()
 	removeMany()
 	remove_all()
 })
@@ -148,7 +148,7 @@ $(document).on("click",".edit_re_btn",function(){
 		}
 	}
 
-function control_all(){
+function control_re_all(){
 	$(".update_re_checkAll").click(function(){
 		var checkAll = $(this).prop("checked")
 		$(".re_checkitem").prop("checked",checkAll)
@@ -165,10 +165,6 @@ function control_all(){
 function removeMany(){
 		var reId=""
 		$("#delete_patch_re").click(function(){
-			//清空
-			if($(".update_re_checkAll").prop("checked")==true){
-				remove_all()
-			}else{
 				if($(".re_checkitem:checked").length==0){
 					confirm("请勾选上要删除的需求哦~")
 					return;
@@ -178,7 +174,6 @@ function removeMany(){
 					reId+=$(this).parents("tr").find("td:eq(1)").text()+"-"
 				})
 				delete_re(reId)
-			}
 		})
 	}
 
