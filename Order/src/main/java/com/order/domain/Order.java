@@ -16,7 +16,7 @@ public class Order implements Serializable {
     private int buyerId;                //买家id
     private int sellerId;               //卖家id
     private String oType;               //订单类型，分商品订单和需求订单
-    private String goodsList;           //两个数为一个商品的 id+num
+    private String goodsImg;           //图片地址
     private Date generateDate;          //订单生成日期
     private String status;              //订单状态
     private String address;             //交易地址
@@ -24,12 +24,15 @@ public class Order implements Serializable {
     private String evaluation;             //对卖家的交易星数评价和文字评价+对买家的
     private String phone;                  //收货人联系电话
     private String receiverName;
+    private String goodsId;
+    private int goodsNum;
+    private String goodsName;
 
-    public Order(int buyerId, int sellerId, String oType, String goodsList, Date generateDate, String status, String address, double paidAccount, String evaluation, String phone, String receiverName) {
+    public Order(int buyerId, int sellerId, String oType, String goodsImg, Date generateDate, String status, String address, double paidAccount, String evaluation, String phone, String receiverName, String goodsId, int goodsNum, String goodsName) {
         this.buyerId = buyerId;
         this.sellerId = sellerId;
         this.oType = oType;
-        this.goodsList = goodsList;
+        this.goodsImg = goodsImg;
         this.generateDate = generateDate;
         this.status = status;
         this.address = address;
@@ -37,6 +40,9 @@ public class Order implements Serializable {
         this.evaluation = evaluation;
         this.phone = phone;
         this.receiverName = receiverName;
+        this.goodsId = goodsId;
+        this.goodsNum = goodsNum;
+        this.goodsName = goodsName;
     }
 
 

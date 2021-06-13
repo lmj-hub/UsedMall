@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <meta charset="utf-8">
@@ -13,64 +14,65 @@
     <div class="container">
         <h1 align="center">导航栏</h1><br/>
         <div class="row">
-            <div class="col-md-3 col-md-offset-0"><span style="font-size: 20px"><b>填写并核对订单信息</b></span></div>
-        </div>
+            <div class="col-md-3 col-md-offset-0"><span style="font-size: 20px"><b>我的购买订单</b></span></div>
+        </div><br>
         <div class="row">
-            <div class="col-sm-6 col-md-3">
-                <div class="thumbnail">
-                    <img src="/wp-content/uploads/2014/06/kittens.jpg" alt="通用的占位符缩略图">
-                    <div class="caption">
-                        <h3>缩略图标签</h3>
-                        <p>一些示例文本。一些示例文本。</p>
-                        <p>
-                            <a href="#" class="btn btn-primary" role="button">按钮</a>
-                            <a href="#" class="btn btn-default" role="button">按钮</a>
-                        </p>
+            <c:forEach items="${page.list }" var="p">
+                <div class="col-sm-6 col-md-3">
+                    <div class="thumbnail">
+                        <img src="${p.goodsImg}" alt="商品图片">
+                        <div class="caption">
+                            <h4>订单编号 &nbsp<input style="width: 100px" type="text" value="${p.orderId}" readonly="readonly"/></h4>
+                            <table class="table table-striped table-hover"style="width: 1120px">
+                                <tr>
+                                    <td>订单状态</td>
+                                    <td>${p.status}</td>
+                                </tr>
+                                <tr>
+                                    <td width="100px">收件人</td>
+                                    <td width="160px">${p.receiverName}</td>
+                                </tr>
+                                <tr>
+                                    <td>收货地址</td>
+                                    <td>${p.address}</td>
+                                </tr>
+                                <tr>
+                                    <td>联系电话</td>
+                                    <td>${p.phone}</td>
+                                </tr>
+                                <tr>
+                                    <td>商品名称</td>
+                                    <td>${p.goodsName}</td>
+                                </tr>
+                                <tr>
+                                    <td>商品数量</td>
+                                    <td>${p.goodsNum}</td>
+                                </tr>
+                            </table>
+                            <p align="center">
+
+                                <c:if test="${p.status!='已完成'}">
+                                    <c:if test="${p.status!='已取消'}">
+                                        <a href="cancel?orderId=${p.orderId}" class="btn btn-danger" role="button">取消订单</a>
+                                        <a href="confirm?orderId=${p.orderId}" class="btn btn-primary" role="button">确认收货</a>
+                                    </c:if>
+                                </c:if>
+                            </p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-sm-6 col-md-3">
-                <div class="thumbnail">
-                    <img src="/wp-content/uploads/2014/06/kittens.jpg" alt="通用的占位符缩略图">
-                    <div class="caption">
-                        <h3>缩略图标签</h3>
-                        <p>一些示例文本。一些示例文本。</p>
-                        <p>
-                            <a href="#" class="btn btn-primary" role="button">按钮</a>
-                            <a href="#" class="btn btn-default" role="button">按钮</a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-3">
-                <div class="thumbnail">
-                    <img src="/wp-content/uploads/2014/06/kittens.jpg" alt="通用的占位符缩略图">
-                    <div class="caption">
-                        <h3>缩略图标签</h3>
-                        <p>一些示例文本。一些示例文本。</p>
-                        <p>
-                            <a href="#" class="btn btn-primary" role="button">按钮</a>
-                            <a href="#" class="btn btn-default" role="button">按钮</a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-3">
-                <div class="thumbnail">
-                    <img src="/wp-content/uploads/2014/06/kittens.jpg" alt="通用的占位符缩略图">
-                    <div class="caption">
-                        <h3>缩略图标签</h3>
-                        <p>一些示例文本。一些示例文本。</p>
-                        <p>
-                            <a href="#" class="btn btn-primary" role="button">按钮</a>
-                            <a href="#" class="btn btn-default" role="button">按钮</a>
-                        </p>
-                    </div>
-                </div>
-            </div>
+            </c:forEach>
         </div>
 
-    </div>
+        <div align="center">
+            <ul class="pagination">
+                <li><a href="allBuyOrder?num=${page.prePageNum}">&laquo;</a></li>
+                <c:forEach var="i" begin="1" end="${page.totalPageNum}">
+                    <li><a href="allBuyOrder?num=${i}">${i}</a></li>
+                </c:forEach>
+                <li><a href="allBuyOrder?num=${page.nextPageNum}">&raquo;</a></li>
+            </ul>
+        </div>
 
     <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>

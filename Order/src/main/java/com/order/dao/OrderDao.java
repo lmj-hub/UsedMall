@@ -1,6 +1,7 @@
 package com.order.dao;
 
 import com.order.domain.Order;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
@@ -12,10 +13,13 @@ public interface OrderDao {
     List<Order> findAll();
 
     //根据买家id查询
-    List<Order> findByBuyerId(int uid);
+    List<Order> findByBuyerId(@Param("buyerId")int buyerId,@Param("oType")String oType,@Param("startIndex")int startIndex);
+
+    int countByBuyer(@Param("buyerId") int buyerId,@Param("oType") String oType);
+    int countBySeller(@Param("sellerId") int sellerId,@Param("oType")String oType);
 
     //根据卖家id查询
-    List<Order> findBySellerId(int uid);
+    List<Order> findBySellerId(@Param("sellerId")int sellerId,@Param("oType")String oType,@Param("startIndex")int startIndex);
 
     boolean creatOrder(Order order);
     boolean deleteOrder(int oid);

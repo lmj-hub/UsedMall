@@ -98,7 +98,7 @@
                         <td style="width: 180px"></td>
                     </tr>
                     <tr>
-                        <td><input name="receiverName" type="text" onfocus=this.blur() value='<%=session.getAttribute("receiverName")%>' style="background: #ddd" /></td>
+                        <td><input name="receiverName" type="text" onfocus=this.blur() value='<%=session.getAttribute("receiverName")%>' /></td>
                         <td><input name="address" type="text" onfocus=this.blur() value='<%=session.getAttribute("address")%>' style="width: 350px" /></td>
                         <td><input name="phone" type="text" onfocus=this.blur() value='<%=session.getAttribute("phone")%>' /></td>
                         <td>
@@ -125,7 +125,7 @@
                         <td><img src="${pageContext.request.contextPath}/<%=session.getAttribute("photoUrl")%>" width="200px"></td>
                         <td style="vertical-align: middle"><input name="description" type="text" onfocus=this.blur() value='<%=session.getAttribute("description")%>' /></td>
                         <td style="vertical-align: middle"><input name="price" type="text" onfocus=this.blur() value='<%=session.getAttribute("price")%>' /></td>
-                        <td style="vertical-align: middle"><input name="num" type="text" onfocus=this.blur() value='<%=session.getAttribute("num")%>'/></td>
+                        <td style="vertical-align: middle"><input name="goodsNum" type="text" onfocus=this.blur() value='<%=session.getAttribute("num")%>'/></td>
                     </tr>
                 </table>
                 <div class="form-group" style="position: relative;right: 100px" align="right">

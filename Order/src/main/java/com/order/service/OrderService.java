@@ -1,6 +1,7 @@
 package com.order.service;
 
 import com.order.domain.Order;
+import com.order.domain.PageModel;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,10 +12,10 @@ public interface OrderService {
     List<Order> findAll();
 
     //根据买家id查询
-    List<Order> findByBuyerId(int uid);
+    PageModel findByBuyerId(int uid, String oType, int num);
 
     //根据卖家id查询
-    List<Order> findBySellerId(int uid);
+    List<Order> findBySellerId(int uid,String oType,int num);
 
     boolean creatOrder(Order order);
     boolean deleteOrder(int oid);

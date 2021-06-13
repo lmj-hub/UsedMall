@@ -6,8 +6,8 @@
 <mapper namespace="com.order.dao.OrderDao">
 
     <insert id="creatOrder" parameterType="order">
-        insert into ss_order (buyerId,sellerId,oType,goodsList,generateDate,status,address,paidAccount,evaluation,phone,receiverName)
-        values (#{buyerId},#{sellerId},#{oType},#{goodsList},#{generateDate},#{status},#{address},#{paidAccount},#{evaluation},#{phone},#{receiverName});
+        insert into ss_order (buyerId,sellerId,oType,goodsImg,generateDate,status,address,paidAccount,evaluation,phone,receiverName,goodsId,goodsNum,goodsName)
+        values (#{buyerId},#{sellerId},#{oType},#{goodsImg},#{generateDate},#{status},#{address},#{paidAccount},#{evaluation},#{phone},#{receiverName},#{goodsId},#{goodsNum},#{goodsName});
     </insert>
 
     <delete id="deleteOrder" parameterType="int">
@@ -16,13 +16,13 @@
 
     <update id="updateOrder" parameterType="order">
         update ss_order set
-        buyerId=#{buyerId},sellerId=#{sellerId},oType=#{oType},goodsList=#{goodsList},generateDate=#{generateDate},status=#{status},address=#{address},paidAccount=#{paidAccount},evaluation=#{evaluation},phone=#{phone},receiverName=#{receiverName}
+        buyerId=#{buyerId},sellerId=#{sellerId},oType=#{oType},goodsImg=#{goodsImg},generateDate=#{generateDate},status=#{status},address=#{address},paidAccount=#{paidAccount},evaluation=#{evaluation},phone=#{phone},receiverName=#{receiverName},goodsId=#{goodsId},goodsNum={goodsNum},goodsName={goodsName}
         where orderId = #{orderId};
     </update>
 
     <update id="cancelOrder" parameterType="int">
         update ss_order set
-        status="订单已取消"
+        status="已取消"
         where orderId=#{oid};
     </update>
 
@@ -31,16 +31,25 @@
     </select>
 
     <select id="findByBuyerId" resultType="order">
-        select * from ss_order where buyerId=#{uid};
+        select * from ss_order where buyerId=#{buyerId} and oType=#{oType} limit #{startIndex},4;
     </select>
 
     <select id="findBySellerId" resultType="order">
-        select * from ss_order where sellerId=#{uid};
+        select * from ss_order where sellerId=#{sellerId} and oType=#{oType} limit #{startIndex},4;
     </select>
+
+    <select id="countByBuyer" resultType="int">
+        select count(*) from ss_order where buyerId=#{buyerId} and oType=#{oType}
+    </select>
+
+    <select id="countBySeller" resultType="int">
+        select count(*) from ss_order where sellerId=#{sellerId} and oType=#{oType}
+    </select>
+
 
     <update id="confirmOrder" parameterType="int">
         update ss_order set
-            status="订单已完成"
+            status="已完成"
         where orderId=#{oid};
     </update>
 </mapper>

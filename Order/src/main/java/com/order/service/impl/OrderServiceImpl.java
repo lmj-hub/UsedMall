@@ -2,6 +2,7 @@ package com.order.service.impl;
 
 import com.order.dao.OrderDao;
 import com.order.domain.Order;
+import com.order.domain.PageModel;
 import com.order.service.OrderService;
 import org.ietf.jgss.Oid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,14 +21,27 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> findByBuyerId(int uid) {
-        return orderDao.findByBuyerId(uid);
+    public PageModel findByBuyerId(int uid, String oType,int num) {
+        //设置一页显示的商品个数
+        int pageSize = 3;
+        //获取总的商品个数
+        int totalRecords = orderDao.countByBuyer(uid,oType);
+        //初始化模型
+        PageModel pm = new PageModel(num,totalRecords,pageSize);
+        //获取所有的商品
+        List list = orderDao.findByBuyerId(uid,oType,pm.getStartIndex());
+        pm.setList(list);
+        pm.setUrl("/FindAllServlet");
+        return pm;
+//        return orderDao.findByBuyerId(uid,oType,startIndex);
     }
 
     @Override
-    public List<Order> findBySellerId(int uid) {
-        return orderDao.findBySellerId(uid);
+    public List<Order> findBySellerId(int uid,String oType,int num) {
+//        return orderDao.findBySellerId(uid,oType, startIndex);
+        return null;
     }
+
 
     @Override
     public boolean creatOrder(Order order) {
