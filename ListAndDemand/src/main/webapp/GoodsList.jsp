@@ -24,17 +24,32 @@
     <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
     <script type="text/javascript" src="js/onloada.js"></script>
 
-
 </head>
 <body>
 
 <%@ include file="/Header.jsp"%>
 
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $("#in").bind("input propertychange", function() {
+            var value=$("#in").val();
+            if(value !==""&& value.replace(/(^\s*)|(\s*$)/g, "")){
+                $("#submit").attr("disabled",false);
+            }else{
+                $("#submit").attr("disabled",true);
+            }
+        })
+    });
+
+</script>
+
+
 <div class="main">
     <div class="pannel-div search">
-        <form action="/ListAndDemand/FindNameServlet" method="post">
+        <form action="/ListAndDemand/FindNameServlet" method="post" onsubmit="return func()">
             <input type="text" class="in" id="in" name="uname" placeholder="请输入查询内容" />
-            <button class="btn_search">搜索</button>
+            <button class="btn_search" id="submit" disabled="disabled">搜索</button>
         </form>
     </div>
 </div>
