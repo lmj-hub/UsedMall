@@ -125,7 +125,7 @@
                         <td><img src="${pageContext.request.contextPath}/<%=session.getAttribute("photoUrl")%>" width="200px"></td>
                         <td style="vertical-align: middle"><input name="description" type="text" onfocus=this.blur() value='<%=session.getAttribute("description")%>' /></td>
                         <td style="vertical-align: middle"><input name="price" type="text" onfocus=this.blur() value='<%=session.getAttribute("price")%>' /></td>
-                        <td style="vertical-align: middle"><input name="goodsNum" type="text" onfocus=this.blur() value='<%=session.getAttribute("num")%>'/></td>
+                        <td style="vertical-align: middle"><input name="num" type="text" onfocus=this.blur() value='<%=session.getAttribute("goodsNum")%>'/></td>
                     </tr>
                 </table>
                 <div class="form-group" style="position: relative;right: 100px" align="right">
