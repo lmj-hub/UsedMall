@@ -3,19 +3,18 @@ package com.order.controller;
 import com.order.domain.Order;
 import com.order.domain.PageModel;
 import com.order.service.OrderService;
+import org.gdut.idlegoods.bean.Goods;
+import org.gdut.idlegoods.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 
 @CrossOrigin
 //@RestController
@@ -26,21 +25,27 @@ public class OrderController {
     private OrderService orderService;
 
     @RequestMapping("/toCreate")
-    public void toCreate(HttpSession session,String goodsId,int num, String price,String description, String photoUrl,
-                         int sellerId,HttpServletRequest request,HttpServletResponse response) throws Exception {
-        session.setAttribute("goodsId",goodsId);
-        session.setAttribute("goodsNum",num);
-        session.setAttribute("price",price);
-        session.setAttribute("description",description.replace("'",""));
-//        System.out.println(description);
-        session.setAttribute("photoUrl",photoUrl.replace("'",""));
-        session.setAttribute("sellerId",sellerId);
-        //        userId
+    public void toCreate(HttpSession session,String goodsList,HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String[] idNum = goodsList.split(",");
+        String userId = idNum[0];
+        String goodsId = idNum[1];
+        int goodsNum = Integer.parseInt(idNum[2]);
+        Goods goods = new GoodsService().getOneGoods(goodsId);
 
+        session.setAttribute("goodsId",goodsId);
+        session.setAttribute("goodsNum",goodsNum);
+        session.setAttribute("price",goods.getGoodsPrice());
+        session.setAttribute("description",goods.getGoodsDesp());
+        session.setAttribute("photoUrl",goods.getGoodsImgurl());
+        session.setAttribute("sellerId",goods.getSellerId());
+//        User user = service.getUser(userID)
+//        session.setAttribute("receiverName",user.name);
+//        session.setAttribute("address",user.address);
+//        session.setAttribute("phone",user.phone);
         session.setAttribute("receiverName","小刚");
         session.setAttribute("address","华南师范大学");
         session.setAttribute("phone","1598476325");
-        session.setAttribute("paidAccount",Double.parseDouble(price)*num);
+        session.setAttribute("paidAccount",Double.parseDouble(goods.getGoodsPrice())*goodsNum);
         request.getRequestDispatcher("WEB-INF/pages/createOrder.jsp").forward(request,response);
     }
 
@@ -73,7 +78,7 @@ public class OrderController {
         }else {
             num = Integer.parseInt(request.getParameter("num"));
         }
-        //调用service层 完成查询
+
         PageModel pm = orderService.findByBuyerId(userId,"商品订单",num);
         request.setAttribute("page", pm);
         request.getRequestDispatcher("WEB-INF/pages/showOrder.jsp").forward(request,response);
