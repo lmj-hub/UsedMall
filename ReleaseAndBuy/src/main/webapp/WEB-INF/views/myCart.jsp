@@ -37,7 +37,7 @@ session.setAttribute("cart", cart);
 					<a class="navbar-brand" href="#" >导航</a>
 					<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 						<div class="navbar-nav">
-							<a class="nav-link glyphicon glyphicon-home" href="#">首页</a>
+							<a class="nav-link glyphicon glyphicon-home" href="/ListAndDemand/index.jsp">首页</a>
 							<a class="nav-link  active glyphicon glyphicon-shopping-cart" href="${PATH }/checkMyCart">我的购物车</a>
 							<a class="nav-link  glyphicon glyphicon glyphicon-plus" href="${PATH}/myRelease">发布查看</a>
 						</div>
