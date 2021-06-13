@@ -76,7 +76,7 @@ public class GoodsController {
 			String ip = request.getServerName();//获取服务器名称(ip)
 			int port = request.getServerPort();	//获取服务器端口号
 			String date = new Date().getTime()+"";//获取时间戳
-			String userPicturePath ="/picture"+getUserId(request);//获取用户对应的图片文件夹
+			String userPicturePath ="/picture"+goodService.getUserId(request);//获取用户对应的图片文件夹
 			String rootPath = goodService.getImgUrl(request);//服务器的ROOT文件夹
 			String realPath=rootPath+userPicturePath;
 			String name = date+file.getOriginalFilename();
@@ -97,7 +97,7 @@ public class GoodsController {
 					bso.flush();
 				}
 				goods.setGoodsImgurl("http://"+ip+":"+port+userPicturePath+"/"+name);
-				int sellerId = Integer.parseInt(getUserId(request));
+				int sellerId = Integer.parseInt(goodService.getUserId(request));
 				goods.setSellerId(sellerId);
 			}finally {
 				in.close();
@@ -112,7 +112,7 @@ public class GoodsController {
 	@ResponseBody
 	@RequestMapping(value="/addToCart",method=RequestMethod.POST)
 	public Message addToCart(Goods goods,HttpServletRequest request,Map<String,Object> map) {
-		String userId = getUserId(request);
+		String userId = goodService.getUserId(request);
 		Cart cart =(Cart) request.getSession().getAttribute(userId);
 		if(cart==null) {
 			cart = new Cart();
@@ -126,7 +126,7 @@ public class GoodsController {
 	@ResponseBody
 	@RequestMapping(value="/deleteGoods/{goodsId}",method=RequestMethod.DELETE)
 	public Message deleteGoods(@PathVariable("goodsId") String goodsId,HttpServletRequest request) {
-		String userId = getUserId(request);
+		String userId = goodService.getUserId(request);
 		Cart cart = (Cart)request.getSession().getAttribute(userId);
 		if(goodsId.contains("-")) {
 		//删除多个
@@ -145,7 +145,7 @@ public class GoodsController {
 	@ResponseBody
 	@RequestMapping(value="/clearCart",method=RequestMethod.DELETE)
 	public Message clearGoods(HttpServletRequest request) {
-		String userId = getUserId(request);
+		String userId = goodService.getUserId(request);
 		Cart cart =(Cart) request.getSession().getAttribute(userId);
 		goodService.clear(cart);
 		return Message.success();
@@ -154,7 +154,7 @@ public class GoodsController {
 	//查看购物车
 	@RequestMapping("/checkMyCart")
 	public String showCart(HttpServletRequest request,Map<String,Object> map) {
-		String userId = getUserId(request);
+		String userId = goodService.getUserId(request);
 		Cart cart =(Cart) request.getSession().getAttribute(userId);
 		if(cart==null) {
 			cart = new Cart();
@@ -163,6 +163,7 @@ public class GoodsController {
 		return "myCart";
 	}
 	
+	/*
 	//获取用户id
 	public String getUserId(HttpServletRequest request) {
 		ServletContext context = request.getSession().getServletContext();
@@ -172,7 +173,7 @@ public class GoodsController {
 		String idstr=userId.intValue()+"";
 		return idstr;
 	}
-	
+	*/
 	//获取所有商品种类
 	@ResponseBody
 	@RequestMapping("/categories")
@@ -185,7 +186,7 @@ public class GoodsController {
 	@RequestMapping(value="/getMyGoods",method=RequestMethod.GET)
 	@ResponseBody
 	public Message getMyGoods(@RequestParam(value="pn", defaultValue="1") Integer pn,HttpServletRequest request) {
-		Integer userId = Integer.parseInt(getUserId(request));
+		Integer userId = Integer.parseInt(goodService.getUserId(request));
 		//pn为当前页，每页放5条数据
 		PageHelper.startPage(pn,5);
 		//查询数据(默认是分页查询)
@@ -251,7 +252,7 @@ public class GoodsController {
 		@ResponseBody
 		@RequestMapping(value="/clearPublishedGoods",method = RequestMethod.DELETE)
 		public Message clearPublishedGoods(HttpServletRequest request) {
-			String userId = getUserId(request);
+			String userId = goodService.getUserId(request);
 			boolean result = goodService.clearGoods(userId);
 			if(result) {
 				return Message.success();

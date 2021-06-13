@@ -3,7 +3,9 @@ package org.gdut.idlegoods.service;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.gdut.idlegoods.bean.Cart;
 import org.gdut.idlegoods.bean.Category;
@@ -111,4 +113,14 @@ public class GoodsService {
 		// TODO Auto-generated method stub
 		return goodsDao.clearGoods(userId);
 	}
+	
+	//获取用户id
+		public String getUserId(HttpServletRequest request) {
+			ServletContext context = request.getSession().getServletContext();
+			ServletContext targetContext = context.getContext("/User");
+			HttpSession session = (HttpSession)targetContext.getAttribute(request.getSession().getId());
+			Integer userId =(Integer) session.getAttribute("userId");
+			String idstr=userId.intValue()+"";
+			return idstr;
+		}
 }

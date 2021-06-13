@@ -14,7 +14,7 @@
 		removeOne()//删除单件商品
 		clearCart()//清空购物车
 		removePatch()//批量删除商品
-		 
+		countOne()//结算单件商品
 	
 	 
 /*	$("#publish_goods_btn").click(function(){
@@ -239,6 +239,26 @@ function registerSelectOne(){
 	
 }
 //结算一件商品
+function countOne(){
+	$(".goods_account").click(function(){
+		var goodsId = $(this).attr("acc_id");
+		var num = $(this).parents("tr").find("td:eq(3)").text();
+		var data=goodsId+","+num
+		$.ajax({
+			url:"/Order/toCreate",
+			type:"post",
+			data:"data="+data,
+			success:function(data){
+				if(data==true){
+					alert("订单处理成功！")
+				}else{
+					alert("订单处理失败")
+				}
+			}
+				
+		})
+	})
+}
 
 //批量结算商品
 
