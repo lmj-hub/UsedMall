@@ -41,6 +41,7 @@ public class UserController {
         User user = userService.selectUserByUserName(target.getUsername(), target.getPassword());
         if (user != null) {
             HttpSession session = request.getSession();
+            request.getSession().setAttribute("cur_user", user);
             session.setAttribute("userId", user.getId());
             //方便同一个Tomcat下不同web实例共享Session
             session.getServletContext().setAttribute(session.getId(), session);

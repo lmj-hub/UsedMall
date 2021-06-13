@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page isELIgnored="false" %>
 <html>
 <head>
     <title>导航头</title>
@@ -7,6 +9,13 @@
 
 </head>
 <body>
+
+<%
+    ServletContext context = request.getSession().getServletContext();
+    ServletContext targetContext = context.getContext("/User");
+    session = (HttpSession)targetContext.getAttribute(request.getSession().getId());
+    pageContext.setAttribute("login",session==null?true:false);
+%>
 <div class="topbar">
     <!-- layout样式控制页眉内容的宽度 -->
     <div class="layout">
@@ -24,8 +33,11 @@
         </ul>
         <!-- 页眉右侧内容. topbar-items: 统一控制链接样式, topbar-items-right: 控制居右  -->
         <ul class="topbar-items topbar-items-right">
-            <li class="item"><a href="/User/LoginAndRegister.jsp">登录</a></li>
-            <li class="item"><a href="#">个人中心</a></li>
+
+            <c:if test="${login}">
+                <li class="item"><a href="/User/LoginAndRegister.jsp">登录</a></li>
+            </c:if>
+            <li class="item"><a href="/User/user/basic">个人中心</a></li>
             <li class="item"><a href="/ReleaseAndBuy/myRelease">需求管理</a></li>
             <li class="item"><a href="/ReleaseAndBuy/myRelease">商品管理</a></li>
             <li class="item"><a href="#">我的订单</a></li>
@@ -38,3 +50,4 @@
 
 </body>
 </html>
+
