@@ -26,8 +26,7 @@
 <%@ include file="/Header.jsp"%>
 
 
-
-
+<%--添加购物车--%>
 <script language="JavaScript">
     function submit(){
         $.ajax({
@@ -44,6 +43,28 @@
             },
             timeout:'3000',
             cache:true
+        })
+    }
+</script>
+
+<%--立即购买--%>
+<script language="JavaScript">
+    function buy(){
+        var goodsId = ${one.goods_id};
+        var num = ${one.goods_num};
+        var data = goodsId+","+num
+        $.ajax({
+            url:"/Order/toCreate",
+            type:"post",
+            data:"data="+data,
+
+            success:function(data){
+                if(data==true){
+                    alert("订单处理成功！")
+                }else{
+                    alert("订单处理失败")
+                }
+            }
         })
     }
 </script>
@@ -73,7 +94,7 @@
 
         </ul>
         <div class="action">
-            <a class="buy" >立即购买</a>
+            <a class="buy" onclick="buy()" >立即购买</a>
             <a class="addCar" onclick="submit()"><i></i>加入购物车</a>
         </div>
     </div>
