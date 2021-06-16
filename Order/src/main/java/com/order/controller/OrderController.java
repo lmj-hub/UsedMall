@@ -1,5 +1,7 @@
 package com.order.controller;
 
+import com.feng.model.User;
+import com.feng.service.UserServiceImpl;
 import com.order.domain.Order;
 import com.order.domain.PageModel;
 import com.order.service.OrderService;
@@ -31,20 +33,17 @@ public class OrderController {
         int goodsNum = Integer.parseInt(idNum[1]);
         Goods goods = new GoodsService().getOneGoods(goodsId);
         String buyerId = new GoodsService().getUserId(request);
-
+        session.setAttribute("userId",buyerId);
         session.setAttribute("goodsId",goodsId);
         session.setAttribute("goodsNum",goodsNum);
         session.setAttribute("price",goods.getGoodsPrice());
         session.setAttribute("description",goods.getGoodsDesp());
         session.setAttribute("photoUrl",goods.getGoodsImgurl());
         session.setAttribute("sellerId",goods.getSellerId());
-//        User user = service.getUser(userID)
-//        session.setAttribute("receiverName",user.name);
-//        session.setAttribute("address",user.address);
-//        session.setAttribute("phone",user.phone);
-        session.setAttribute("receiverName","小刚");
-        session.setAttribute("address","华南师范大学");
-        session.setAttribute("phone","1598476325");
+        User user = new UserServiceImpl().getUserById(Integer.parseInt(buyerId));
+        session.setAttribute("receiverName",user.getUsername());
+        session.setAttribute("address",user.getAddress());
+        session.setAttribute("phone",user.getPhone());
         session.setAttribute("paidAccount",Double.parseDouble(goods.getGoodsPrice())*goodsNum);
         request.getRequestDispatcher("WEB-INF/pages/createOrder.jsp").forward(request,response);
         return "true";
@@ -72,7 +71,7 @@ public class OrderController {
 
     @RequestMapping("/allBuyOrder")
     public void allBuyOrder(HttpSession session,HttpServletRequest request,HttpServletResponse response) throws Exception {
-        int userId = 111;
+        int userId = (int) session.getAttribute("userId");
         int num;
         if (request.getParameter("num")==null){
             num=1;
@@ -83,6 +82,21 @@ public class OrderController {
         PageModel pm = orderService.findByBuyerId(userId,"商品订单",num);
         request.setAttribute("page", pm);
         request.getRequestDispatcher("WEB-INF/pages/showOrder.jsp").forward(request,response);
+    }
+
+    @RequestMapping("/allSellOrder")
+    public void allSellOrder(HttpSession session,HttpServletRequest request,HttpServletResponse response) throws Exception {
+        int userId = (int) session.getAttribute("userId");
+        int num;
+        if (request.getParameter("num")==null){
+            num=1;
+        }else {
+            num = Integer.parseInt(request.getParameter("num"));
+        }
+
+        PageModel pm = orderService.findBySellerId(userId,"商品订单",num);
+        request.setAttribute("page", pm);
+        request.getRequestDispatcher("WEB-INF/pages/showSellOrder.jsp").forward(request,response);
     }
 
     @RequestMapping("/cancel")
@@ -103,4 +117,19 @@ public class OrderController {
             return "forward:allBuyOrder";
         }
     }
+
+    @RequestMapping("/send")
+    public String sendOrder(int orderId){
+        if(orderService.sendOrder(orderId)){
+            return "forward:allSellOrder";
+        }else {
+            return "forward:allSellOrder";
+        }
+    }
+
+    @RequestMapping("/header")
+    public String header(){
+        return "Header";
+    }
+
 }

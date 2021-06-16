@@ -23,7 +23,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public PageModel findByBuyerId(int uid, String oType,int num) {
         //设置一页显示的商品个数
-        int pageSize = 3;
+        int pageSize = 4;
         //获取总的商品个数
         int totalRecords = orderDao.countByBuyer(uid,oType);
         //初始化模型
@@ -31,15 +31,24 @@ public class OrderServiceImpl implements OrderService {
         //获取所有的商品
         List list = orderDao.findByBuyerId(uid,oType,pm.getStartIndex());
         pm.setList(list);
-        pm.setUrl("/FindAllServlet");
+//        pm.setUrl("/FindAllServlet");
         return pm;
 //        return orderDao.findByBuyerId(uid,oType,startIndex);
     }
 
     @Override
-    public List<Order> findBySellerId(int uid,String oType,int num) {
-//        return orderDao.findBySellerId(uid,oType, startIndex);
-        return null;
+    public PageModel findBySellerId(int uid,String oType,int num) {
+        //设置一页显示的商品个数
+        int pageSize = 4;
+        //获取总的商品个数
+        int totalRecords = orderDao.countBySeller(uid,oType);
+        //初始化模型
+        PageModel pm = new PageModel(num,totalRecords,pageSize);
+        //获取所有的商品
+        List list = orderDao.findBySellerId(uid,oType,pm.getStartIndex());
+        pm.setList(list);
+//        pm.setUrl("/FindAllServlet");
+        return pm;
     }
 
 
@@ -68,4 +77,8 @@ public class OrderServiceImpl implements OrderService {
         return orderDao.confirmOrder(oid);
     }
 
+    @Override
+    public boolean sendOrder(int oid) {
+        return orderDao.sendOrder(oid);
+    }
 }

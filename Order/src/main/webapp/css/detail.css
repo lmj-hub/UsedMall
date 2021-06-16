@@ -1,0 +1,91 @@
+/* 所有标签默认内外间距 */
+body, div, p, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6,
+span, em, a, strong, form, input, button, textarea, table, th, td {
+    margin: 0; padding: 0;
+}
+
+/* 字体类标签无特殊样式(大小,粗细,倾斜等) */
+h1, h2, h3, h4, h5, h6, em, i, strong {
+    font-size: 100%; font-weight: normal; font-style: normal;
+}
+
+/* 列表无默认符号*/
+ul, ol {
+    list-style: none;
+}
+
+/* 网页的默认字体及颜色 */
+body {
+    color: #333; font-size: 12px; font-family: Microsoft Yahei; line-height: 18px;
+}
+
+/* 链接默认颜色,无下划线 */
+a {
+    color: #08c; text-decoration: none;
+}
+/* 控制网页内容宽度. 左右外边距为auto时, 当宽度小于父容器宽度时会居中 */
+.layout {
+    width: 1400px;
+    /*margin: 0 auto;*/
+}
+.topbar {
+    background-color: #363636;
+}
+.topbar-items-left {
+    float: left;
+}
+
+.topbar-items-right {
+    float: right;
+}
+.topbar {
+    height: 40px; background-color: #363636;
+}.topbar-items li {
+     float: left; padding: 0 12px;
+ }
+.topbar-items li a {
+    color: #bfbfbf; line-height: 40px;
+}.logo {
+     float: left;
+ }
+
+.searchbar {
+    float: right;
+}
+.header {
+    height: 70px;
+}
+
+.searchbar .search-input {
+    float: left; height: 30px; width: 340px; padding: 5px 10px;
+    font-size: 14px; border: 2px solid #FC8080; border-right: none;
+}
+
+.searchbar .search-btn {
+    float: left; height: 44px; text-align: center; line-height: 44px;
+    font-size: 14px; padding: 0 20px; color: #fff;
+}
+
+.searchbar .search-goods {
+    background-color: #FC5656;
+}
+
+.searchbar .search-shop {
+    background-color: #aaa;
+}
+
+.searchbar .searchbox {
+    height: 44px;
+}
+
+.searchbar .keywords {
+    margin-top: 6px;
+}
+
+.searchbar .keywords a {
+    margin-right: 10px;
+}
+
+.header {
+    height: 70px; padding: 15px 0;
+}

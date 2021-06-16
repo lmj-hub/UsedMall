@@ -26,6 +26,7 @@ public interface OrderDao {
     boolean updateOrder(Order order);
     boolean cancelOrder(int oid);
     boolean confirmOrder(int oid);
+    boolean sendOrder(int oid);
 
 
 }

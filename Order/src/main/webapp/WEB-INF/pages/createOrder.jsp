@@ -67,8 +67,8 @@
     </style>
 </head>
 <body>
+<jsp:include page="Header.jsp"></jsp:include><br/>
 <div class="container">
-    <h1 align="center">导航栏</h1><br/>
     <div class="row">
         <div class="col-md-3 col-md-offset-0"><span style="font-size: 20px"><b>填写并核对订单信息</b></span></div>
         <div class="col-md" id="stepflex">

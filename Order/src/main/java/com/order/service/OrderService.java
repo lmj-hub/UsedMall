@@ -15,11 +15,12 @@ public interface OrderService {
     PageModel findByBuyerId(int uid, String oType, int num);
 
     //根据卖家id查询
-    List<Order> findBySellerId(int uid,String oType,int num);
+    PageModel findBySellerId(int uid,String oType,int num);
 
     boolean creatOrder(Order order);
     boolean deleteOrder(int oid);
     boolean updateOrder(Order order);
     boolean cancelOrder(int oid);
     boolean confirmOrder(int oid);
+    boolean sendOrder(int oid);
 }

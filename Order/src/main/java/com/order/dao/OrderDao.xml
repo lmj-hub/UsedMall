@@ -52,4 +52,10 @@
             status="已完成"
         where orderId=#{oid};
     </update>
+
+    <update id="sendOrder" parameterType="int">
+        update ss_order set
+            status="已发货"
+        where orderId=#{oid};
+    </update>
 </mapper>

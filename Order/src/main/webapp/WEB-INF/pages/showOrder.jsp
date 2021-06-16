@@ -5,20 +5,20 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>查看订单</title>
+    <title>查看购买订单</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/node_modules/bootstrap/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
 </head>
 <body>
+    <jsp:include page="Header.jsp"></jsp:include><br>
     <div class="container">
-        <h1 align="center">导航栏</h1><br/>
         <div class="row">
-            <div class="col-md-3 col-md-offset-0"><span style="font-size: 20px"><b>我的购买订单</b></span></div>
+            <div class="col-md-3 col-md-offset-0"><span class="text-primary" style="font-size: 20px"><b>我的购买订单</b></span></div>
         </div><br>
         <div class="row">
             <c:forEach items="${page.list }" var="p">
-                <div class="col-sm-6 col-md-3">
+                <div class="col-sm-6 col-md-3 ">
                     <div class="thumbnail">
                         <img src="${p.goodsImg}" alt="商品图片">
                         <div class="caption">
@@ -53,8 +53,10 @@
 
                                 <c:if test="${p.status!='已完成'}">
                                     <c:if test="${p.status!='已取消'}">
-                                        <a href="cancel?orderId=${p.orderId}" class="btn btn-danger" role="button">取消订单</a>
                                         <a href="confirm?orderId=${p.orderId}" class="btn btn-primary" role="button">确认收货</a>
+                                        <c:if test="${p.status!='已发货'}}">
+                                            <a href="cancel?orderId=${p.orderId}" class="btn btn-danger" role="button">取消订单</a>
+                                        </c:if>
                                     </c:if>
                                 </c:if>
                             </p>

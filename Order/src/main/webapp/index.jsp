@@ -12,8 +12,9 @@
 </head>
 <body>
     <a href="toCreate?goodsId=101&goodsNum=1&price=220&description='没什么就这样帮，试试长度'&photoUrl='images/管理学1.png'&sellerId=22">创建订单</a>
-    <a href="allBuyOrder">查看所有订单</a>
-    <a href="cancelOrder.jsp">取消订单</a>
-    <a href="confirmReceipt.jsp">确认收货</a>
+    <a href="allBuyOrder">查看所有购买订单</a>
+    <a href="allSellOrder">查看所有售卖订单</a>
+    <a href="header">查看所有售卖订单</a>
+
 </body>
 </html>
