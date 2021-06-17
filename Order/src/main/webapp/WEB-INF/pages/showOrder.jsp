@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>查看购买订单</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/bootstrap-3.4.1-dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
 </head>
@@ -54,7 +54,7 @@
                                 <c:if test="${p.status!='已完成'}">
                                     <c:if test="${p.status!='已取消'}">
                                         <a href="confirm?orderId=${p.orderId}" class="btn btn-primary" role="button">确认收货</a>
-                                        <c:if test="${p.status!='已发货'}}">
+                                        <c:if test="${p.status!='已发货'}">
                                             <a href="cancel?orderId=${p.orderId}" class="btn btn-danger" role="button">取消订单</a>
                                         </c:if>
                                     </c:if>
@@ -77,6 +77,6 @@
         </div>
 
     <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
-    <script src="${pageContext.request.contextPath}/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="${pageContext.request.contextPath}/bootstrap-3.4.1-dist/js/bootstrap.min.js"></script>
 </body>
 </html>

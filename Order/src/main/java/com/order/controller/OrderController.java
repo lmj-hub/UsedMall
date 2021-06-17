@@ -53,7 +53,7 @@ public class OrderController {
 
     @RequestMapping("/create")
     public String createOrder(HttpServletRequest request, HttpServletResponse response, Order order,HttpSession session) throws Exception {
-        order.setPaidAccount(Double.parseDouble(request.getParameter("price"))*Double.parseDouble(request.getParameter("num")));
+        order.setPaidAccount(Double.parseDouble(request.getParameter("price"))*Double.parseDouble(request.getParameter("goodsNum")));
         order.setGoodsId(request.getParameter("goodsId"));
         order.setGoodsNum(Integer.parseInt(request.getParameter("goodsNum")));
         order.setGoodsName("test");
@@ -63,17 +63,19 @@ public class OrderController {
         order.setOType("商品订单");
         order.setGenerateDate(new Date());
         order.setStatus("待发货");
+        order.setBuyerId((Integer) session.getAttribute("sellerId"));
+        order.setBuyerId(Integer.parseInt((String)session.getAttribute("userId")));
         System.out.println(order.toString());
         if(orderService.creatOrder(order)){
-            return "success";//返回购物车
+            return "forward:/allBuyOrder";//返回购物车
         }else {
-            return "failed";//报错页面，再返回购物车
+            return "forward:/allBuyOrder";//报错页面，再返回购物车
         }
     }
 
     @RequestMapping("/allBuyOrder")
     public void allBuyOrder(HttpSession session,HttpServletRequest request,HttpServletResponse response) throws Exception {
-        int userId = (int) session.getAttribute("userId");
+        int userId = Integer.parseInt ((String) session.getAttribute("userId"));
         int num;
         if (request.getParameter("num")==null){
             num=1;
@@ -133,7 +135,7 @@ public class OrderController {
     public String header(){
         return "Header";
     }
-    
+
     public Goods getGoods(String GoodsId) {
     	return orderService.getGoods(GoodsId);
     }
@@ -150,7 +152,7 @@ public class OrderController {
 	public User getUser(String userId) {
 		return orderService.getUser(userId);
 	}
-	
+
 	//控制前往订单页面
 	@RequestMapping("/toOrder")
 	public String toOrder() {

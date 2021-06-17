@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>立即下单</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/bootstrap-3.4.1-dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
     <style>
@@ -125,7 +125,7 @@
                         <td><img src="${pageContext.request.contextPath}/<%=session.getAttribute("photoUrl")%>" width="200px"></td>
                         <td style="vertical-align: middle"><input name="description" type="text" onfocus=this.blur() value='<%=session.getAttribute("description")%>' /></td>
                         <td style="vertical-align: middle"><input name="price" type="text" onfocus=this.blur() value='<%=session.getAttribute("price")%>' /></td>
-                        <td style="vertical-align: middle"><input name="num" type="text" onfocus=this.blur() value='<%=session.getAttribute("goodsNum")%>'/></td>
+                        <td style="vertical-align: middle"><input name="goodsNum" type="text" onfocus=this.blur() value='<%=session.getAttribute("goodsNum")%>'/></td>
                     </tr>
                 </table>
                 <div class="form-group" style="position: relative;right: 100px" align="right">
@@ -171,7 +171,7 @@
 
 
 <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
-<script src="${pageContext.request.contextPath}/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/bootstrap-3.4.1-dist/js/bootstrap.min.js"></script>
 <script type="text/javascript">
     changeBuyerInfo= function(){
         if (document.getElementById("newBuyerName").value!=""&&document.getElementById("newAddress").value!=""&&document.getElementById("newPhone").value!=""){
