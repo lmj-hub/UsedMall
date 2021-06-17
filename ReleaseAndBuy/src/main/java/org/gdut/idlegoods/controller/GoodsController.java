@@ -36,7 +36,7 @@ import com.github.pagehelper.PageInfo;
 
 /**
  * @author mj
- *ÉÌÆ·¿ØÖÆÆ÷£¬¸ºÔğÓëÇ°¶Ë½»»¥
+ *å•†å“æ§åˆ¶å™¨ï¼Œè´Ÿè´£ä¸å‰ç«¯äº¤äº’
  */
 @Controller
 @SessionAttributes(types = Cart.class)
@@ -44,13 +44,13 @@ public class GoodsController {
 	@Autowired
 	GoodsService goodService;
 	
-	//×ª·¢ÇëÇóµ½"ÎÒµÄ·¢²¼"Ò³Ãæ
+	//è½¬å‘è¯·æ±‚åˆ°"æˆ‘çš„å‘å¸ƒ"é¡µé¢
 	@RequestMapping(value="/myRelease",method=RequestMethod.GET)
 	public String toRelease() {
 		return "myRelease";
 	}
 	
-	//·¢²¼ÉÌÆ·
+	//å‘å¸ƒå•†å“
 	@ResponseBody
 	@RequestMapping(value="/publishGoods",method=RequestMethod.POST)
 	public Message releaseGoods(@RequestParam(value = "file",required=false) MultipartFile file,
@@ -70,14 +70,15 @@ public class GoodsController {
 	}
 	
 	
-	//»ñÈ¡Í¼Æ¬Â·¾¶£¬²¢°ÑÉÏ´«Í¼Æ¬´æÔÚ·şÎñÆ÷µÄROOTÎÄ¼ş¼ĞÏÂ
+	//è·å–å›¾ç‰‡è·¯å¾„ï¼Œå¹¶æŠŠä¸Šä¼ å›¾ç‰‡å­˜åœ¨æœåŠ¡å™¨çš„ROOTæ–‡ä»¶å¤¹ä¸‹
 	public Goods getImgUrl(MultipartFile file,Goods goods,HttpServletRequest request) throws IOException {
-			ServletContext sctx = request.getServletContext();//»ñÈ¡¹¤³ÌÂ·¾¶£¬°ÑÍ¼Æ¬±£´æÔÚ¹¤³ÌÂ·¾¶Ö®ÏÂ
-			String ip = request.getServerName();//»ñÈ¡·şÎñÆ÷Ãû³Æ(ip)
-			int port = request.getServerPort();	//»ñÈ¡·şÎñÆ÷¶Ë¿ÚºÅ
-			String date = new Date().getTime()+"";//»ñÈ¡Ê±¼ä´Á
-			String userPicturePath ="/picture"+goodService.getUserId(request);//»ñÈ¡ÓÃ»§¶ÔÓ¦µÄÍ¼Æ¬ÎÄ¼ş¼Ğ
-			String rootPath = goodService.getImgUrl(request);//·şÎñÆ÷µÄROOTÎÄ¼ş¼Ğ
+			ServletContext sctx = request.getServletContext();//è·å–å·¥ç¨‹è·¯å¾„ï¼ŒæŠŠå›¾ç‰‡ä¿å­˜åœ¨å·¥ç¨‹è·¯å¾„ä¹‹ä¸‹
+			String ip = request.getServerName();//è·å–æœåŠ¡å™¨åç§°(ip)
+			int port = request.getServerPort();	//è·å–æœåŠ¡å™¨ç«¯å£å·
+			String date = new Date().getTime()+"";//è·å–æ—¶é—´æˆ³
+			String userPicturePath ="/picture"+goodService.getUserId(request);//è·å–ç”¨æˆ·å¯¹åº”çš„å›¾ç‰‡æ–‡ä»¶å¤¹
+			//String rootPath = goodService.getImgUrl(request);//æœåŠ¡å™¨çš„ROOTæ–‡ä»¶å¤¹
+			String rootPath = "/usr/local/tomcat/apache-tomcat-9.0.4/webapps/ROOT"
 			String realPath=rootPath+userPicturePath;
 			String name = date+file.getOriginalFilename();
 			File dir = new File(realPath);
@@ -108,7 +109,7 @@ public class GoodsController {
 			return goods;
 	}
 	
-	//Ìí¼ÓÉÌÆ·µ½¹ºÎï³µ
+	//æ·»åŠ å•†å“åˆ°è´­ç‰©è½¦
 	@ResponseBody
 	@RequestMapping(value="/addToCart",method=RequestMethod.POST)
 	public Message addToCart(Goods goods,HttpServletRequest request,Map<String,Object> map) {
@@ -122,14 +123,14 @@ public class GoodsController {
 		return Message.success();
 	}
 	
-	//´Ó¹ºÎï³µÉÏÒÆ³ıÉÌÆ·
+	//ä»è´­ç‰©è½¦ä¸Šç§»é™¤å•†å“
 	@ResponseBody
 	@RequestMapping(value="/deleteGoods/{goodsId}",method=RequestMethod.DELETE)
 	public Message deleteGoods(@PathVariable("goodsId") String goodsId,HttpServletRequest request) {
 		String userId = goodService.getUserId(request);
 		Cart cart = (Cart)request.getSession().getAttribute(userId);
 		if(goodsId.contains("-")) {
-		//É¾³ı¶à¸ö
+		//åˆ é™¤å¤šä¸ª
 			String[] ids=goodsId.split("-");
 			for(int i =0;i<ids.length;i++) {
 				goodService.deleteGoods(Integer.parseInt(ids[i]), cart);
@@ -141,7 +142,7 @@ public class GoodsController {
 		}
 	}
 	
-	//Çå¿Õ¹ºÎï³µ
+	//æ¸…ç©ºè´­ç‰©è½¦
 	@ResponseBody
 	@RequestMapping(value="/clearCart",method=RequestMethod.DELETE)
 	public Message clearGoods(HttpServletRequest request) {
@@ -151,7 +152,7 @@ public class GoodsController {
 		return Message.success();
 	}
 	
-	//²é¿´¹ºÎï³µ
+	//æŸ¥çœ‹è´­ç‰©è½¦
 	@RequestMapping("/checkMyCart")
 	public String showCart(HttpServletRequest request,Map<String,Object> map) {
 		String userId = goodService.getUserId(request);
@@ -164,7 +165,7 @@ public class GoodsController {
 	}
 	
 	/*
-	//»ñÈ¡ÓÃ»§id
+	//è·å–ç”¨æˆ·id
 	public String getUserId(HttpServletRequest request) {
 		ServletContext context = request.getSession().getServletContext();
 		ServletContext targetContext = context.getContext("/User");
@@ -174,7 +175,7 @@ public class GoodsController {
 		return idstr;
 	}
 	*/
-	//»ñÈ¡ËùÓĞÉÌÆ·ÖÖÀà
+	//è·å–æ‰€æœ‰å•†å“ç§ç±»
 	@ResponseBody
 	@RequestMapping("/categories")
 	public List getCategroies() {
@@ -182,21 +183,21 @@ public class GoodsController {
 	}
 	
 	
-	//²é¿´ÒÑ¾­·¢²¼µÄÉÌÆ·
+	//æŸ¥çœ‹å·²ç»å‘å¸ƒçš„å•†å“
 	@RequestMapping(value="/getMyGoods",method=RequestMethod.GET)
 	@ResponseBody
 	public Message getMyGoods(@RequestParam(value="pn", defaultValue="1") Integer pn,HttpServletRequest request) {
 		Integer userId = Integer.parseInt(goodService.getUserId(request));
-		//pnÎªµ±Ç°Ò³£¬Ã¿Ò³·Å5ÌõÊı¾İ
+		//pnä¸ºå½“å‰é¡µï¼Œæ¯é¡µæ”¾5æ¡æ•°æ®
 		PageHelper.startPage(pn,5);
-		//²éÑ¯Êı¾İ(Ä¬ÈÏÊÇ·ÖÒ³²éÑ¯)
+		//æŸ¥è¯¢æ•°æ®(é»˜è®¤æ˜¯åˆ†é¡µæŸ¥è¯¢)
 		List<Goods> goodsList = goodService.getMyGoods(userId);
-		//pageInfo·â×°ÁËÊı¾İĞÅÏ¢£¬ÀïÃæ°üº¬ÁËÏêÏ¸µÄ·ÖÒ³ĞÅÏ¢£¬°üÀ¨µ±Ç°Ò³µÄÊı¾İ
+		//pageInfoå°è£…äº†æ•°æ®ä¿¡æ¯ï¼Œé‡Œé¢åŒ…å«äº†è¯¦ç»†çš„åˆ†é¡µä¿¡æ¯ï¼ŒåŒ…æ‹¬å½“å‰é¡µçš„æ•°æ®
 		PageInfo<Goods> pageInfo = new PageInfo<Goods>(goodsList,3);
 		return Message.success().add("pageInfo", pageInfo);
 	}
 	
-	//Í¨¹ıÉÌÆ·id²éÕÒÉÌÆ·
+	//é€šè¿‡å•†å“idæŸ¥æ‰¾å•†å“
 	@ResponseBody
 	@RequestMapping(value="/getOneGoods/{currentId}",method = RequestMethod.GET)
 	public Message getOneGoods(@PathVariable("currentId") String goodsId) {
@@ -204,7 +205,7 @@ public class GoodsController {
 		return Message.success().add("goods", goods);
 	}
 	
-	//¸üĞÂÉÌÆ·
+	//æ›´æ–°å•†å“
 		@ResponseBody
 		@RequestMapping(value="/updateGoods",method=RequestMethod.POST)
 		public Message updateGoods(@RequestParam(value = "file",required=false) MultipartFile file,
@@ -227,19 +228,19 @@ public class GoodsController {
 		}
 	}
 		
-	//É¾³ıÉÌÆ·
+	//åˆ é™¤å•†å“
 		@ResponseBody
 		@RequestMapping(value="/delete/{goodsId}",method=RequestMethod.DELETE)
 	public Message delete(@PathVariable(value = "goodsId") String goodsId) {
 			if(goodsId.contains("-")) {
-				//É¾³ı¶à¸ö
+				//åˆ é™¤å¤šä¸ª
 					String[] ids=goodsId.split("-");
 					for(int i =0;i<ids.length;i++) {
 						goodService.delete(ids[i]);
 					}
 					return Message.success();
 			}else {
-				//É¾³ıµ¥¸ö
+				//åˆ é™¤å•ä¸ª
 						boolean result = goodService.delete(goodsId);
 						if(result) {
 							return Message.success();
@@ -248,7 +249,7 @@ public class GoodsController {
 			return Message.fail();
 		}
 		
-//Çå¿ÕËùÓĞ·¢²¼µÄÉÌÆ·
+//æ¸…ç©ºæ‰€æœ‰å‘å¸ƒçš„å•†å“
 		@ResponseBody
 		@RequestMapping(value="/clearPublishedGoods",method = RequestMethod.DELETE)
 		public Message clearPublishedGoods(HttpServletRequest request) {
