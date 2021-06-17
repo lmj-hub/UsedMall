@@ -51,7 +51,7 @@
 <script language="JavaScript">
     function buy(){
         var goodsId = ${one.goods_id};
-        var num = ${one.goods_num};
+        var num = 1;
         var data = goodsId+","+num
         $.ajax({
             url:"/Order/toCreate",
@@ -60,7 +60,7 @@
 
             success:function(data){
                 if(data==true){
-                    alert("订单处理成功！")
+                    window.location.href="/Order/toOrder"
                 }else{
                     alert("订单处理失败")
                 }
