@@ -31,7 +31,18 @@
 </mvc:interceptors>
 
 <!-- 支持ajax,jrs303校验等 -->
-<mvc:annotation-driven></mvc:annotation-driven>
+<mvc:annotation-driven>
+	<mvc:message-converters register-defaults="true">
+        <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+            <property name="supportedMediaTypes">
+                <list>
+                    <value>text/html;charset=UTF-8</value>
+                    <value>application/json;charset=UTF-8</value>
+                </list>
+            </property>
+        </bean>
+    </mvc:message-converters>
+</mvc:annotation-driven>
 <!-- 处理静态资源 -->
 <mvc:default-servlet-handler/>
 
