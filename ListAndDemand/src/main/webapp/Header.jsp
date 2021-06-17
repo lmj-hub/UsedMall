@@ -44,8 +44,8 @@
             <li class="item"><a href="/User/user/basic">个人中心</a></li>
             <li class="item"><a href="/ReleaseAndBuy/myRelease">需求管理</a></li>
             <li class="item"><a href="/ReleaseAndBuy/myRelease">商品管理</a></li>
-            <li class="item"><a href="/Order/allBuyOrder">我的订单</a></li>
-            <li class="item"><a href="#">收藏夹</a></li>
+            <li class="item"><a href="/Order/allBuyOrder">购买订单</a></li>
+            <li class="item"><a href="/Order/allSellOrder">售卖订单</a></li>
             <li class="item"><a href="/ReleaseAndBuy/checkMyCart">购物车</a></li>
         </ul>
     </div>

@@ -95,6 +95,9 @@ public class OrderController {
 
     @RequestMapping("/allSellOrder")
     public void allSellOrder(HttpSession session,HttpServletRequest request,HttpServletResponse response) throws Exception {
+        ServletContext context = request.getSession().getServletContext();
+        ServletContext targetContext = context.getContext("/User");
+        session = (HttpSession)targetContext.getAttribute(request.getSession().getId());
         int userId = (int) session.getAttribute("userId");
         int num;
         if (request.getParameter("num")==null){
