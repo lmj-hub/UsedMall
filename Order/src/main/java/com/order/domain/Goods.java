@@ -1,6 +1,5 @@
 package com.order.domain;
 
-import javax.validation.constraints.Pattern;
 
 /**
  * @author mj

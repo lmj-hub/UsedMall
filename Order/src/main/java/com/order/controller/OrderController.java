@@ -1,12 +1,10 @@
 package com.order.controller;
 
-import com.feng.service.UserServiceImpl;
 import com.order.domain.Goods;
 import com.order.domain.Order;
 import com.order.domain.PageModel;
 import com.order.domain.User;
 import com.order.service.OrderService;
-import org.gdut.idlegoods.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
