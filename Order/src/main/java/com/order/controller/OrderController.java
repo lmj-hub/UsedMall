@@ -5,7 +5,9 @@ import com.order.domain.Order;
 import com.order.domain.PageModel;
 import com.order.domain.User;
 import com.order.service.OrderService;
+import org.apache.taglibs.standard.lang.jstl.test.PageContextImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mock.web.MockPageContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +15,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.jsp.PageContext;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -75,7 +78,10 @@ public class OrderController {
 
     @RequestMapping("/allBuyOrder")
     public void allBuyOrder(HttpSession session,HttpServletRequest request,HttpServletResponse response) throws Exception {
-        int userId = Integer.parseInt ((String) session.getAttribute("userId"));
+        ServletContext context = request.getSession().getServletContext();
+        ServletContext targetContext = context.getContext("/User");
+        session = (HttpSession)targetContext.getAttribute(request.getSession().getId());
+        int userId = (Integer)session.getAttribute("userId");
         int num;
         if (request.getParameter("num")==null){
             num=1;

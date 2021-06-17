@@ -17,24 +17,24 @@
             <div class="col-md-3 col-md-offset-0"><span class="text-primary" style="font-size: 20px"><b>我的购买订单</b></span></div>
         </div><br>
         <div class="row">
-            <c:forEach items="${page.list }" var="p">
+            <c:forEach items="${page.list}" var="p">
                 <div class="col-sm-6 col-md-3 ">
                     <div class="thumbnail">
                         <img src="${p.goodsImg}" alt="商品图片">
                         <div class="caption">
-                            <h4>订单编号 &nbsp<input style="width: 100px" type="text" value="${p.orderId}" readonly="readonly"/></h4>
-                            <table class="table table-striped table-hover"style="width: 1120px">
+                            <h4>订单编号 &nbsp<input style="width: 100px" type="text" value="${p.orderId}" readonly="readonly"/></h4><br/>
+                            <table class="table table-striped table-hover"style="width: 240px">
                                 <tr>
                                     <td>订单状态</td>
                                     <td>${p.status}</td>
                                 </tr>
-                                <tr>
+                                <tr style="width: 240px">
                                     <td width="100px">收件人</td>
-                                    <td width="160px">${p.receiverName}</td>
+                                    <td width="140px">${p.receiverName}</td>
                                 </tr>
-                                <tr>
-                                    <td>收货地址</td>
-                                    <td>${p.address}</td>
+                                <tr style="width: 240px">
+                                    <td width="100px">收货地址</td>
+                                    <td width=140px">${p.address}</td>
                                 </tr>
                                 <tr>
                                     <td>联系电话</td>
