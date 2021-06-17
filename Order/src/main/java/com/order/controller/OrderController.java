@@ -42,7 +42,7 @@ public class OrderController {
         session.setAttribute("goodsId",goodsId);
         session.setAttribute("goodsNum",goodsNum);
         session.setAttribute("price",goods.getGoodsPrice());
-        session.setAttribute("description",goods.getGoodsDesp());
+        session.setAttribute("description",goods.getGoodsName());
         session.setAttribute("photoUrl",goods.getGoodsImgurl());
         session.setAttribute("sellerId",goods.getSellerId());
         //消除User的getUser的依赖
@@ -59,7 +59,7 @@ public class OrderController {
         order.setPaidAccount(Double.parseDouble(request.getParameter("price"))*Double.parseDouble(request.getParameter("goodsNum")));
         order.setGoodsId(request.getParameter("goodsId"));
         order.setGoodsNum(Integer.parseInt(request.getParameter("goodsNum")));
-        order.setGoodsName("test");
+        order.setGoodsName(request.getParameter("description"));
 //        goodsService取名字
         order.setGoodsImg((String) session.getAttribute("photoUrl"));
         order.setEvaluation("");
