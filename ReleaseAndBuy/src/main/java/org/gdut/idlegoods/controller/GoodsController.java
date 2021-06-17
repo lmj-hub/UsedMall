@@ -77,8 +77,8 @@ public class GoodsController {
 			int port = request.getServerPort();	//获取服务器端口号
 			String date = new Date().getTime()+"";//获取时间戳
 			String userPicturePath ="/picture"+goodService.getUserId(request);//获取用户对应的图片文件夹
-			String rootPath = goodService.getImgUrl(request);//服务器的ROOT文件夹
-			//String rootPath = "/usr/local/tomcat/apache-tomcat-9.0.4/webapps/ROOT"
+//			String rootPath = goodService.getImgUrl(request);//服务器的ROOT文件夹
+			String rootPath = "/usr/local/tomcat/apache-tomcat-9.0.4/webapps/ROOT";
 			String realPath=rootPath+userPicturePath;
 			String name = date+file.getOriginalFilename();
 			File dir = new File(realPath);
