@@ -53,7 +53,7 @@
     <insert id="insert" parameterType="com.feng.model.User" useGeneratedKeys="true" keyProperty="id">
         insert into user (id, username, password, address, phone, realname, sno, clazz, rdate)
         values (#{id,jdbcType=INTEGER},  #{username,jdbcType=VARCHAR},#{password,jdbcType=CHAR},
-                #{phone,jdbcType=CHAR}, #{address,jdbcType=VARCHAR},#{realname,jdbcType=VARCHAR},
+                #{address,jdbcType=VARCHAR},#{phone,jdbcType=CHAR},#{realname,jdbcType=VARCHAR},
                 #{sno,jdbcType=CHAR}, #{clazz,jdbcType=VARCHAR},#{rdate,jdbcType=VARCHAR}
               )
     </insert>
