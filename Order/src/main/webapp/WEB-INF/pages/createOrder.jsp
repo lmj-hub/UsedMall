@@ -122,7 +122,7 @@
                     <tr>
 
                         <td style="vertical-align: middle"><input name="goodsId" type="text" onfocus=this.blur() value='<%=session.getAttribute("goodsId")%>'/></td>
-                        <td><img src="${pageContext.request.contextPath}/<%=session.getAttribute("photoUrl")%>" width="200px"></td>
+                        <td><img src="<%=session.getAttribute("photoUrl")%>" width="200px"></td>
                         <td style="vertical-align: middle"><input name="description" type="text" onfocus=this.blur() value='<%=session.getAttribute("description")%>' /></td>
                         <td style="vertical-align: middle"><input name="price" type="text" onfocus=this.blur() value='<%=session.getAttribute("price")%>' /></td>
                         <td style="vertical-align: middle"><input name="goodsNum" type="text" onfocus=this.blur() value='<%=session.getAttribute("goodsNum")%>'/></td>
