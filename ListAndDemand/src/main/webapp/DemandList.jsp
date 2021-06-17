@@ -22,17 +22,20 @@
 } catch (ClassNotFoundException | SQLException e) {
     e.printStackTrace();
 } %>
-
+	<br><br><br>
+	<div class="container">
 <c:forEach items="${demands}" var="demands">
     <div class="list-group">
-        <a href="#" class="list-group-item list-group-item-action active">
+        <a href="#" class="list-group-item list-group-item-action ">
             <div class="d-flex w-100 justify-content-between">
                 <small>${demands.user_id}</small>
             </div>
             <p class="mb-1">${demands.re_msg}</p>
         </a>
     </div>
+        <hr>
 </c:forEach>
+    </div>
 
 
 </body>

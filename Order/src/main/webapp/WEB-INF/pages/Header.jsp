@@ -15,6 +15,7 @@
     ServletContext targetContext = context.getContext("/User");
     session = (HttpSession)targetContext.getAttribute(request.getSession().getId());
     pageContext.setAttribute("login",session==null?true:false);
+    pageContext.setAttribute("logout",session==null?false:true);
 %>
 <div class="topbar">
     <!-- layout样式控制页眉内容的宽度 -->
@@ -36,6 +37,9 @@
 
             <c:if test="${login}">
                 <li class="item"><a href="/User/LoginAndRegister.jsp">登录</a></li>
+            </c:if>
+            <c:if test="${logout}">
+                <li class="item"><a href="/User/LoginAndRegister.jsp">退出登录</a></li>
             </c:if>
             <li class="item"><a href="/User/user/basic">个人中心</a></li>
             <li class="item"><a href="/ReleaseAndBuy/myRelease">需求管理</a></li>

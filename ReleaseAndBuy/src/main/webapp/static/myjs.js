@@ -251,6 +251,7 @@ function countOne(){
 			success:function(data){
 				if(data==true){
 					window.location.href="/Order/toOrder"
+						removeAfterAccount(goodsId)
 				}else{
 					alert("订单处理失败")
 				}
@@ -260,6 +261,14 @@ function countOne(){
 	})
 }
 
+
+//结算后从购物车移除商品
+function removeAfterAccount(goodsId){
+	$.ajax({
+		url:"/ReleaseAndBuy/deleteGoods/"+goodsId,
+		type:"delete",
+	})
+}
 //批量结算商品
 
 //从购物车删除一件商品
