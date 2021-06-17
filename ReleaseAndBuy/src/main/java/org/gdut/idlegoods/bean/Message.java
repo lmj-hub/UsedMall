@@ -5,13 +5,13 @@ import java.util.Map;
 
 /**
  * @author Administrator
- *·â×°·µ»Ø¸øÇ°¶ËµÄÊı¾İ£¬Ê¹·µ»ØÊı¾İ¸ñÊ½Ò»ÖÂ
+ *å°è£…è¿”å›ç»™å‰ç«¯çš„æ•°æ®ï¼Œä½¿è¿”å›æ•°æ®æ ¼å¼ä¸€è‡´
  */
 public class Message {
-	//×´Ì¬Âë£¬·´Ó³´¦Àí½á¹û
-	//200±íÊ¾³É¹¦£¬-1±íÊ¾Ê§°Ü
+	//çŠ¶æ€ç ï¼Œåæ˜ å¤„ç†ç»“æœ
+	//200è¡¨ç¤ºæˆåŠŸï¼Œ-1è¡¨ç¤ºå¤±è´¥
 	 private int code;
-	 //·µ»ØĞÅÏ¢
+	 //è¿”å›ä¿¡æ¯
 	 private String msg;
 	 
 
@@ -19,22 +19,22 @@ public class Message {
 	 private Map<String,Object>  map = new HashMap<String,Object>();
 	 
 	 
-	 //·µ»Ø³É¹¦ĞÅÏ¢
+	 //è¿”å›æˆåŠŸä¿¡æ¯
 	 public static Message success() {
 		 Message message = new Message();
 		 message.setCode(200);
-		 message.setMsg("´¦Àí³É¹¦£¡");
+		 message.setMsg("Processing succeeded");
 		 return message;
 	 }
-	 //·µ»ØÊ§°ÜĞÅÏ¢
+	 //è¿”å›å¤±è´¥ä¿¡æ¯
 	 public static Message fail() {
 		 Message message = new Message();
 		 message.setCode(-1);
-		 message.setMsg("´¦ÀíÊ§°Ü£¡Çë¼ì²éÄúµÄÊäÈë¸ñÊ½»òË¢ĞÂºóÖØÊÔÓ´~");
+		 message.setMsg("Processing failed!");
 		 return message;
 	 }
 	 
-	 //Ìí¼Ó·µ»ØÊı¾İ
+	 //æ·»åŠ è¿”å›æ•°æ®
 	 public Message add(String key,Object value) {
 		 this.getMap().put(key, value);
 		 return this;
