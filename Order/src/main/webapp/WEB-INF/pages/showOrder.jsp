@@ -59,6 +59,9 @@
                                         </c:if>
                                     </c:if>
                                 </c:if>
+                                <c:if test="${p.status=='已完成'}">
+                                    <a href="refund?orderId=${p.orderId}" class="btn btn-warning" role="button">申请退货</a>
+                                </c:if>
                             </p>
                         </div>
                     </div>

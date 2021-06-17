@@ -66,7 +66,7 @@ public class OrderController {
         order.setOType("商品订单");
         order.setGenerateDate(new Date());
         order.setStatus("待发货");
-        order.setBuyerId((Integer) session.getAttribute("sellerId"));
+        order.setSellerId((Integer) session.getAttribute("sellerId"));
         order.setBuyerId(Integer.parseInt((String)session.getAttribute("userId")));
         if(orderService.creatOrder(order)){
             return "forward:/allBuyOrder";//返回购物车
