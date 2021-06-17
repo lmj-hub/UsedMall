@@ -1,8 +1,10 @@
 package com.order.service.impl;
 
 import com.order.dao.OrderDao;
+import com.order.domain.Goods;
 import com.order.domain.Order;
 import com.order.domain.PageModel;
+import com.order.domain.User;
 import com.order.service.OrderService;
 import org.ietf.jgss.Oid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,4 +83,16 @@ public class OrderServiceImpl implements OrderService {
     public boolean sendOrder(int oid) {
         return orderDao.sendOrder(oid);
     }
+
+	@Override
+	public Goods getGoods(String GoodsId) {
+		// TODO Auto-generated method stub
+		return orderDao.getGoods(GoodsId);
+	}
+
+	@Override
+	public User getUser(String userId) {
+		// TODO Auto-generated method stub
+		return orderDao.getUser(userId);
+	}
 }

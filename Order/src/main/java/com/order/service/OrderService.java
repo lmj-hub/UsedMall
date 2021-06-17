@@ -1,7 +1,10 @@
 package com.order.service;
 
+import com.order.domain.Goods;
 import com.order.domain.Order;
 import com.order.domain.PageModel;
+import com.order.domain.User;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,4 +26,7 @@ public interface OrderService {
     boolean cancelOrder(int oid);
     boolean confirmOrder(int oid);
     boolean sendOrder(int oid);
+    Goods getGoods(String GoodsId);
+
+	User getUser(String userId);
 }

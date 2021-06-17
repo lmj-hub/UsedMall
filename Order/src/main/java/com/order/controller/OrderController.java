@@ -1,15 +1,17 @@
 package com.order.controller;
 
-import com.feng.model.User;
 import com.feng.service.UserServiceImpl;
+import com.order.domain.Goods;
 import com.order.domain.Order;
 import com.order.domain.PageModel;
+import com.order.domain.User;
 import com.order.service.OrderService;
-import org.gdut.idlegoods.bean.Goods;
 import org.gdut.idlegoods.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -21,18 +23,20 @@ import java.util.List;
 @CrossOrigin
 //@RestController
 @Controller
-//@RequestMapping("/order")
+//@RequestMapping("/order"
 public class OrderController {
     @Autowired
     private OrderService orderService;
 
     @RequestMapping("/toCreate")
-    public @ResponseBody String toCreate(HttpSession session,@RequestParam("data") String goodsList,HttpServletRequest request, HttpServletResponse response) throws Exception {
+    @ResponseBody
+    public boolean toCreate(HttpSession session,@RequestParam("data") String goodsList,HttpServletRequest request, HttpServletResponse response) throws Exception {
         String[] idNum = goodsList.split(",");
         String goodsId = idNum[0];
         int goodsNum = Integer.parseInt(idNum[1]);
-        Goods goods = new GoodsService().getOneGoods(goodsId);
-        String buyerId = new GoodsService().getUserId(request);
+        Goods goods = getGoods(goodsId);
+        //消除依赖ReleaseAndBuy的getUserId
+        String buyerId = getUserId(request);
         session.setAttribute("userId",buyerId);
         session.setAttribute("goodsId",goodsId);
         session.setAttribute("goodsNum",goodsNum);
@@ -40,13 +44,13 @@ public class OrderController {
         session.setAttribute("description",goods.getGoodsDesp());
         session.setAttribute("photoUrl",goods.getGoodsImgurl());
         session.setAttribute("sellerId",goods.getSellerId());
-        User user = new UserServiceImpl().getUserById(Integer.parseInt(buyerId));
+        //消除User的getUser的依赖
+        User user = getUser(buyerId);
         session.setAttribute("receiverName",user.getUsername());
         session.setAttribute("address",user.getAddress());
         session.setAttribute("phone",user.getPhone());
         session.setAttribute("paidAccount",Double.parseDouble(goods.getGoodsPrice())*goodsNum);
-        request.getRequestDispatcher("WEB-INF/pages/createOrder.jsp").forward(request,response);
-        return "true";
+        return true;
     }
 
     @RequestMapping("/create")
@@ -131,5 +135,28 @@ public class OrderController {
     public String header(){
         return "Header";
     }
+    
+    public Goods getGoods(String GoodsId) {
+    	return orderService.getGoods(GoodsId);
+    }
+	//获取用户id
+	public String getUserId(HttpServletRequest request) {
+		ServletContext context = request.getSession().getServletContext();
+		ServletContext targetContext = context.getContext("/User");
+		HttpSession session = (HttpSession)targetContext.getAttribute(request.getSession().getId());
+		Integer userId =(Integer) session.getAttribute("userId");
+		String idstr=userId.intValue()+"";
+		return idstr;
+	}
+	//获取用户
+	public User getUser(String userId) {
+		return orderService.getUser(userId);
+	}
+	
+	//控制前往订单页面
+	@RequestMapping("/toOrder")
+	public String toOrder() {
+		return "createOrder";
+	}
 
 }

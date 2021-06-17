@@ -58,4 +58,10 @@
             status="已发货"
         where orderId=#{oid};
     </update>
+    <select id="getGoods" resultType="goods">
+    	select * from ss_goods where goods_id=#{goodsId}
+    </select>
+    <select id="getUser" resultType="user">
+    	select * from user where id=#{Id}
+    </select>
 </mapper>

@@ -251,6 +251,7 @@ function countOne(){
 			success:function(data){
 				if(data==true){
 					alert("订单处理成功！")
+					window.location.href="/Order/toOrder"
 				}else{
 					alert("订单处理失败")
 				}

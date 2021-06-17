@@ -1,6 +1,9 @@
 package com.order.dao;
 
+import com.order.domain.Goods;
 import com.order.domain.Order;
+import com.order.domain.User;
+
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
@@ -27,6 +30,9 @@ public interface OrderDao {
     boolean cancelOrder(int oid);
     boolean confirmOrder(int oid);
     boolean sendOrder(int oid);
+	Goods getGoods(String goodsId);
+	User getUser(String userId);
+	
 
 
 }
