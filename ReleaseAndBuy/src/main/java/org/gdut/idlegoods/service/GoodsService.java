@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * @author mj
- *´¦ÀíÓëÉÌÆ·Ïà¹ØµÄÒµÎñ
+ *å¤„ç†ä¸å•†å“ç›¸å…³çš„ä¸šåŠ¡
  */
 @Service
 public class GoodsService {
@@ -24,13 +24,13 @@ public class GoodsService {
 	@Autowired
 	GoodsDao goodsDao;
 
-	//·¢²¼ÉÌÆ·£¬°ÑÉÌÆ·±£´æ½øÊı¾İ¿â
+	//å‘å¸ƒå•†å“ï¼ŒæŠŠå•†å“ä¿å­˜è¿›æ•°æ®åº“
 	public boolean saveGoods(Goods dealedGoods) {
 		// TODO Auto-generated method stub
 		return goodsDao.saveGoods(dealedGoods);
 	}
 	
-	//Ìí¼ÓÒ»¼şÉÌÆ·µ½¹ºÎï³µ
+	//æ·»åŠ ä¸€ä»¶å•†å“åˆ°è´­ç‰©è½¦
 	public boolean addToCart(Goods goods,Cart cart) {
 		Integer goodsId = goods.getGoodsId();
 		HashMap<Integer,Object> basket = cart.getBasket();
@@ -45,7 +45,7 @@ public class GoodsService {
 		}
 	}
 	
-	//´Ó¹ºÎï³µÉ¾³ıÒ»¼şÉÌÆ·
+	//ä»è´­ç‰©è½¦åˆ é™¤ä¸€ä»¶å•†å“
 	
 	public boolean deleteGoods(Integer goodsId,Cart cart) {
 		HashMap<Integer,Object> basket = cart.getBasket();
@@ -58,7 +58,7 @@ public class GoodsService {
 	}
 	
 	
-	//Çå¿Õ¹ºÎï³µ
+	//æ¸…ç©ºè´­ç‰©è½¦
 	public boolean clear(Cart cart) {
 		cart.getBasket().clear();
 		cart.getCount().clear();
@@ -66,29 +66,29 @@ public class GoodsService {
 	}
 	
 	
-	//½áËã¹ºÎï³µÉÏµÄÄ³¼ş£¨Ğ©£©ÉÌÆ·
+	//ç»“ç®—è´­ç‰©è½¦ä¸Šçš„æŸä»¶ï¼ˆäº›ï¼‰å•†å“
 
 	
-	//»ñÈ¡Í¼Æ¬µÄ´æ´¢Â·¾¶
+	//è·å–å›¾ç‰‡çš„å­˜å‚¨è·¯å¾„
 	public String getImgUrl(HttpServletRequest request) {
-		//»ñµÃµ±Ç°ÏîÄ¿¸ùÂ·¾¶
+		//è·å¾—å½“å‰é¡¹ç›®æ ¹è·¯å¾„
 		String realPath = request.getServletContext().getRealPath("");
-		//×îºóÒ»¸ö"\"µÄË÷Òı
-		int index1 = realPath.lastIndexOf("\\");
+		//æœ€åä¸€ä¸ª"\"çš„ç´¢å¼•
+		int index1 = realPath.lastIndexOf("/");
 		String temPath = realPath.substring(0, index1);
-		//µ±Ç°×îºóÒ»¸ö"\"µÄË÷Òı£¬¼´Ïà¶ÔÓÚÕû¸ö¹¤×÷Â·¾¶µÄµ¹ÊıµÚ¶ş¸öË÷Òı
-		int index2 = temPath.lastIndexOf("\\");
+		//å½“å‰æœ€åä¸€ä¸ª"\"çš„ç´¢å¼•ï¼Œå³ç›¸å¯¹äºæ•´ä¸ªå·¥ä½œè·¯å¾„çš„å€’æ•°ç¬¬äºŒä¸ªç´¢å¼•
+		int index2 = temPath.lastIndexOf("/");
 		String imgUrl = realPath.substring(0,index2)+"/ROOT";
 		return imgUrl;
 		
 	}
 	
-	//»ñÈ¡ËùÓĞÉÌÆ·ÖÖÀà
+	//è·å–æ‰€æœ‰å•†å“ç§ç±»
 	public List<Category> getCategroies() {
 		return goodsDao.getCategories();
 	}
 	
-	//»ñÈ¡ÌØ¶¨ÓÃ»§·¢²¼µÄÉÌÆ·Êı¾İ
+	//è·å–ç‰¹å®šç”¨æˆ·å‘å¸ƒçš„å•†å“æ•°æ®
 	public List<Goods> getMyGoods(Integer userId) {
 		return goodsDao.getMyGoods(userId);
 	}
@@ -114,7 +114,7 @@ public class GoodsService {
 		return goodsDao.clearGoods(userId);
 	}
 	
-	//»ñÈ¡ÓÃ»§id
+	//è·å–ç”¨æˆ·id
 		public String getUserId(HttpServletRequest request) {
 			ServletContext context = request.getSession().getServletContext();
 			ServletContext targetContext = context.getContext("/User");
