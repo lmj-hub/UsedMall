@@ -5,7 +5,7 @@ import java.util.List;
 public class PageBean<T> {
     private int pc;//当前页面的页码数   由jsp传来
     private int ps;//当前页面的数据条数   自己定义
-    private int all;//数据库总的数据条数  数据库查询获得
+    private int all;//数据库总的数据条数
     private String url;//页面的路径
     private List<T> beanlist;
 
