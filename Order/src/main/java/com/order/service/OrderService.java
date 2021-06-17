@@ -25,6 +25,8 @@ public interface OrderService {
     boolean updateOrder(Order order);
     boolean cancelOrder(int oid);
     boolean confirmOrder(int oid);
+    boolean refundOrder(int oid);
+    boolean acceptReturn(int oid);
     boolean sendOrder(int oid);
     Goods getGoods(String GoodsId);
 

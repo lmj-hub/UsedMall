@@ -53,6 +53,18 @@
         where orderId=#{oid};
     </update>
 
+    <update id="refundOrder" parameterType="int">
+        update ss_order set
+            status="退货中"
+        where orderId=#{oid};
+    </update>
+
+    <update id="acceptReturn" parameterType="int">
+        update ss_order set
+            status="已退货"
+        where orderId=#{oid};
+    </update>
+
     <update id="sendOrder" parameterType="int">
         update ss_order set
             status="已发货"

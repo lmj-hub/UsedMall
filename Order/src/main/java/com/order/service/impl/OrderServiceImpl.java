@@ -80,6 +80,16 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public boolean refundOrder(int oid) {
+        return orderDao.refundOrder(oid);
+    }
+
+    @Override
+    public boolean acceptReturn(int oid) {
+        return orderDao.acceptReturn(oid);
+    }
+
+    @Override
     public boolean sendOrder(int oid) {
         return orderDao.sendOrder(oid);
     }

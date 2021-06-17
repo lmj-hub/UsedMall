@@ -50,12 +50,11 @@
                             </tr>
                         </table>
                         <p align="center">
-                            <c:if test="${p.status!='已完成'}">
-                                <c:if test="${p.status!='已取消'}">
-                                    <c:if test="${p.status!='已发货'}">
-                                        <a href="send?orderId=${p.orderId}" class="btn btn-primary" role="button">确认发货</a>
-                                    </c:if>
-                                </c:if>
+                            <c:if test="${p.status=='待发货'}">
+                                <a href="send?orderId=${p.orderId}" class="btn btn-primary" role="button">确认发货</a>
+                            </c:if>
+                            <c:if test="${p.status=='退货中'}">
+                                <a href="acceptReturn?orderId=${p.orderId}" class="btn btn-warning" role="button">收到退货</a>
                             </c:if>
                         </p>
                     </div>
@@ -66,7 +65,7 @@
 
     <div align="center">
         <ul class="pagination">
-            <li><a href="allBuyOrder?num=${page.prePageNum}">&laquo;</a></li>
+            <li><a href="allSellOrder?num=${page.prePageNum}">&laquo;</a></li>
             <c:forEach var="i" begin="1" end="${page.totalPageNum}">
                 <li><a href="allSellOrder?num=${i}">${i}</a></li>
             </c:forEach>

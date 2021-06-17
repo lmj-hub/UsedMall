@@ -130,6 +130,24 @@ public class OrderController {
         }
     }
 
+    @RequestMapping("/refund")
+    public String refundOrder(int orderId){
+        if(orderService.refundOrder(orderId)){
+            return "forward:allBuyOrder";
+        }else {
+            return "forward:allBuyOrder";
+        }
+    }
+
+    @RequestMapping("/acceptReturn")
+    public String acceptReturn(int orderId){
+        if(orderService.acceptReturn(orderId)){
+            return "forward:allSellOrder";
+        }else {
+            return "forward:allSellOrder";
+        }
+    }
+
     @RequestMapping("/send")
     public String sendOrder(int orderId){
         if(orderService.sendOrder(orderId)){
