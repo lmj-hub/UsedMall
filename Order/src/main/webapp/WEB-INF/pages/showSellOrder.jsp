@@ -23,7 +23,7 @@
                     <img src="${p.goodsImg}" alt="商品图片">
                     <div class="caption">
                         <h4>订单编号 &nbsp<input style="width: 100px" type="text" value="${p.orderId}" readonly="readonly"/></h4>
-                        <table class="table table-striped table-hover"style="width: 1120px">
+                        <table class="table table-striped table-hover"style="width: 240px">
                             <tr>
                                 <td>订单状态</td>
                                 <td>${p.status}</td>
