@@ -20,7 +20,7 @@
         <c:forEach items="${page.list }" var="p">
             <div class="col-sm-6 col-md-3">
                 <div class="thumbnail">
-                    <img src="${p.goodsImg}" alt="商品图片">
+                    <img src="${p.goodsImg}" alt="商品图片" width="168px">
                     <div class="caption">
                         <h4>订单编号 &nbsp<input style="width: 100px" type="text" value="${p.orderId}" readonly="readonly"/></h4>
                         <table class="table table-striped table-hover"style="width: 240px">
