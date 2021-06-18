@@ -53,10 +53,14 @@
 
                                 <c:if test="${p.status!='已完成'}">
                                     <c:if test="${p.status!='已取消'}">
+                                    <c:if test="${p.status!='退货中'}">
+                                    <c:if test="${p.status!='已退货'}">
                                         <a href="confirm?orderId=${p.orderId}" class="btn btn-primary" role="button">确认收货</a>
                                         <c:if test="${p.status!='已发货'}">
                                             <a href="cancel?orderId=${p.orderId}" class="btn btn-danger" role="button">取消订单</a>
                                         </c:if>
+                                    </c:if>
+                                    </c:if>
                                     </c:if>
                                 </c:if>
                                 <c:if test="${p.status=='已完成'}">
