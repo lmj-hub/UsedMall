@@ -4,7 +4,7 @@ import gdut.entity.Goods;
 import gdut.entity.PageBean;
 
 import java.util.List;
-
+//
 public interface GoodsDao {
     public PageBean<Goods> findByPage(int pc);
 
